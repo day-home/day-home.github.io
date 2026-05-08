@@ -3,22 +3,41 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Day의 드림홈 - 드림, 로그, 갤러리를 공유하는 공간">
   <title>Day의 드림홈</title>
 
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
       background-color: #fff7fb;
       color: #444;
-      font-family: sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       text-align: center;
-      margin-top: 100px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    main {
+      max-width: 600px;
+      width: 100%;
     }
 
     img {
       width: 220px;
+      height: auto;
       border-radius: 20px;
       margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
@@ -29,9 +48,10 @@
     p {
       font-size: 18px;
       margin-bottom: 30px;
+      color: #666;
     }
 
-    .menu a {
+    nav a {
       display: inline-block;
       margin: 10px;
       padding: 12px 20px;
@@ -40,32 +60,39 @@
       text-decoration: none;
       color: #ff7eb6;
       font-weight: bold;
-      box-shadow: 0 0 10px rgba(0,0,0,0.08);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
     }
 
-    .menu a:hover {
+    nav a:hover {
       background-color: #ffe4f0;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
     }
 
+    nav a:focus {
+      outline: 2px solid #ff7eb6;
+      outline-offset: 2px;
+    }
   </style>
 </head>
 
 <body>
+  <main>
+    <img src="main.png" alt="Day의 드림홈 프로필 이미지">
 
-  <img src="main.png">
+    <h1>Day의 드림홈 ✨</h1>
 
-  <h1>Day의 드림홈 ✨</h1>
+    <p>
+      드림 / 로그 / 설정 정리 중
+    </p>
 
-  <p>
-    드림 / 로그 / 설정 정리 중
-  </p>
-
-  <div class="menu">
-    <a href="">CHARACTER</a>
-    <a href="">LOG</a>
-    <a href="">GALLERY</a>
-  </div>
-
+    <nav>
+      <a href="character.html">CHARACTER</a>
+      <a href="log.html">LOG</a>
+      <a href="gallery.html">GALLERY</a>
+    </nav>
+  </main>
 </body>
 
 </html>
