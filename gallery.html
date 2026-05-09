@@ -283,14 +283,14 @@
       </button>
     </div>
 
-
-
-    // 이미지 추가는 여기서
+    <!-- ★★★ 새로운 이미지는 아래에 추가하세요 ★★★ -->
     <div class="gallery grid" id="gallery" role="region" aria-label="이미지 갤러리">
       <img src="main.png" alt="메인 이미지" loading="lazy">
       <img src="dream2.PNG" alt="드림 2 이미지" loading="lazy">
       <img src="dream3.png" alt="드림 3 이미지" loading="lazy">
+      <!-- 새 이미지 추가 예시: <img src="새이미지.png" alt="설명" loading="lazy"> -->
     </div>
+    <!-- ★★★ 위의 </div> 전에만 추가하세요 ★★★ -->
 
     <div class="slide-info" id="slideInfo" style="display: none;">
       <span id="currentSlide">1</span> / <span id="totalSlides">3</span>
@@ -303,6 +303,7 @@
       { src: 'main.png', alt: '메인 이미지' },
       { src: 'dream2.PNG', alt: '드림 2 이미지' },
       { src: 'dream3.png', alt: '드림 3 이미지' }
+      // 새 이미지 추가 예시: { src: '새이미지.png', alt: '설명' }
     ];
 
     // 모드 변경 함수
