@@ -10,6 +10,44 @@
   <link rel="preload" as="image" href="main.png">
   <title>GALLERY</title>
 
+/* 이미지 확대 모달 */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.85);
+
+  justify-content: center;
+  align-items: center;
+
+  padding: 30px;
+}
+
+.modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+}
+  
   <style>
     * {
       margin: 0;
@@ -221,6 +259,18 @@
   </style>
 </head>
 
+<!-- 이미지 확대 모달 -->
+
+<div class="modal" id="imageModal">
+
+  <span class="modal-close" id="modalClose">
+    ×
+  </span>
+
+  <img id="modalImage">
+
+</div>
+  
 <body>
   <main>
     <h1>GALLERY</h1>
@@ -341,6 +391,41 @@
       const gallery = document.getElementById('gallery');
       gallery.addEventListener('scroll', updateSlideInfo);
     });
+
+    // 이미지 클릭 확대 기능
+
+const modal = document.getElementById('imageModal');
+const modalImage = document.getElementById('modalImage');
+const modalClose = document.getElementById('modalClose');
+
+document.querySelectorAll('.gallery img').forEach(img => {
+
+  img.addEventListener('click', () => {
+
+    modal.classList.add('active');
+    modalImage.src = img.src;
+
+  });
+
+});
+
+modalClose.addEventListener('click', () => {
+
+  modal.classList.remove('active');
+
+});
+
+// 배경 클릭 시 닫기
+
+modal.addEventListener('click', (e) => {
+
+  if (e.target === modal) {
+
+    modal.classList.remove('active');
+
+  }
+
+});
   </script>
 
 </body>
