@@ -263,6 +263,42 @@
         width: 200px;
       }
     }
+        /* PINTEREST 느낌 GRID MODE */
+    .gallery.grid {
+      display: block;
+      column-count: 3;
+      column-gap: 20px;
+      padding: 20px 0;
+    }
+
+    .gallery.grid img {
+      display: block;
+      width: 100%;
+      max-width: none;
+      height: auto;
+      margin: 0 0 20px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    @media (max-width: 768px) {
+      .gallery.grid {
+        column-count: 2;
+        column-gap: 16px;
+      }
+
+      .gallery.grid img {
+        max-width: none;
+        margin-bottom: 16px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .gallery.grid {
+        column-count: 1;
+      }
+    }
+    
   </style>
 </head>
 
