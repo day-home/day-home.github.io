@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="main.png">
   <title>GALLERY</title>
 
   <style>
@@ -22,6 +23,11 @@
       text-align: center;
       padding: 30px 20px;
       min-height: 100vh;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     h1 {
@@ -43,7 +49,7 @@
 
     button {
       padding: 12px 24px;
-      border: none;
+      border: 2px solid transparent;
       border-radius: 15px;
       background-color: white;
       color: #333;
@@ -52,12 +58,18 @@
       font-size: 1rem;
       font-weight: 500;
       transition: all 0.3s ease;
+      font-family: 'Noto Serif KR', serif;
     }
 
     button:hover {
       background-color: #f0f0f0;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       transform: translateY(-2px);
+    }
+
+    button:focus-visible {
+      outline: 2px solid #ffb3d9;
+      outline-offset: 2px;
     }
 
     button.active {
@@ -82,6 +94,21 @@
 
     .gallery img:hover {
       transform: scale(1.05);
+    }
+
+    .gallery img.loading {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 200% 0;
+      }
+      100% {
+        background-position: -200% 0;
+      }
     }
 
     /* GRID MODE */
@@ -121,6 +148,14 @@
       height: auto;
       scroll-snap-align: start;
       scroll-snap-stop: always;
+    }
+
+    .slide-info {
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      letter-spacing: 0.05em;
     }
 
     /* 슬라이드 모드 스크롤바 스타일 */
@@ -187,59 +222,124 @@
 </head>
 
 <body>
+  <main>
+    <h1>GALLERY</h1>
 
-  <h1>GALLERY</h1>
+    <div class="buttons" role="group" aria-label="갤러리 보기 모드">
+      <button class="mode-btn active" data-mode="grid" aria-label="그리드 모드">
+        GRID
+      </button>
+      <button class="mode-btn" data-mode="scroll" aria-label="스크롤 모드">
+        SCROLL
+      </button>
+      <button class="mode-btn" data-mode="slide" aria-label="슬라이드 모드">
+        SLIDE
+      </button>
+    </div>
 
-  <div class="buttons" role="group" aria-label="갤러리 보기 모드">
-    <button onclick="setMode('grid')" class="mode-btn active" data-mode="grid" aria-label="그리드 모드">
-      GRID
-    </button>
-    <button onclick="setMode('scroll')" class="mode-btn" data-mode="scroll" aria-label="스크롤 모드">
-      SCROLL
-    </button>
-    <button onclick="setMode('slide')" class="mode-btn" data-mode="slide" aria-label="슬라이드 모드">
-      SLIDE
-    </button>
-  </div>
+    <div class="gallery grid" id="gallery" role="region" aria-label="이미지 갤러리">
+      <img src="main.png" alt="메인 이미지" loading="lazy">
+      <img src="dream2.PNG" alt="드림 2 이미지" loading="lazy">
+      <img src="dream3.png" alt="드림 3 이미지" loading="lazy">
+    </div>
 
-  <div class="gallery grid" id="gallery" role="region" aria-label="이미지 갤러리">
-    <img src="main.png" alt="메인 이미지" loading="lazy">
-    <img src="dream2.PNG" alt="드림 2 이미지" loading="lazy">
-    <img src="dream3.png" alt="드림 3 이미���" loading="lazy">
-  </div>
+    <div class="slide-info" id="slideInfo" style="display: none;">
+      <span id="currentSlide">1</span> / <span id="totalSlides">3</span>
+    </div>
+  </main>
 
   <script>
+    // 갤러리 이미지 설정
+    const GALLERY_IMAGES = [
+      { src: 'main.png', alt: '메인 이미지' },
+      { src: 'dream2.PNG', alt: '드림 2 이미지' },
+      { src: 'dream3.png', alt: '드림 3 이미지' }
+    ];
+
+    // 모드 변경 함수
     function setMode(mode) {
-      const gallery = document.getElementById("gallery");
+      const gallery = document.getElementById('gallery');
+      const slideInfo = document.getElementById('slideInfo');
       
-      // 클래스 업데이트
-      gallery.className = "gallery " + mode;
+      gallery.className = 'gallery ' + mode;
       
-      // 현재 활성 버튼 업데이트
-      document.querySelectorAll(".mode-btn").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.mode === mode);
+      // 활성 버튼 업데이트
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
       });
       
-      // 슬라이드 모드에서 스크롤 위치 초기화
-      if (mode === "slide") {
+      // 슬라이드 정보 표시 여부
+      slideInfo.style.display = mode === 'slide' ? 'block' : 'none';
+      
+      if (mode === 'slide') {
         setTimeout(() => {
           gallery.scrollLeft = 0;
+          updateSlideInfo();
         }, 0);
+      }
+      
+      // 로컬스토리지에 저장
+      try {
+        localStorage.setItem('galleryMode', mode);
+      } catch (e) {
+        console.warn('localStorage 저장 실패:', e);
       }
     }
 
-    // 로컬스토리지에서 마지막 모드 복원
-    document.addEventListener("DOMContentLoaded", () => {
-      const savedMode = localStorage.getItem("galleryMode") || "grid";
-      setMode(savedMode);
-    });
+    // 슬라이드 정보 업데이트
+    function updateSlideInfo() {
+      const gallery = document.getElementById('gallery');
+      const slideWidth = gallery.querySelector('img').offsetWidth + 20; // gap 포함
+      const currentIndex = Math.round(gallery.scrollLeft / slideWidth) + 1;
+      document.getElementById('currentSlide').textContent = Math.min(currentIndex, GALLERY_IMAGES.length);
+    }
 
-    // 모드 변경 시 저장
-    document.querySelectorAll(".mode-btn").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        const mode = e.target.dataset.mode;
-        localStorage.setItem("galleryMode", mode);
+    // 이미지 로드 에러 처리
+    function handleImageError(img) {
+      img.alt = '이미지 로드 실패';
+      img.style.opacity = '0.5';
+      console.warn('이미지 로드 실패:', img.src);
+    }
+
+    // 이미지에 로드 이벤트 리스너 추가
+    function attachImageListeners() {
+      document.querySelectorAll('.gallery img').forEach(img => {
+        img.addEventListener('error', function() {
+          handleImageError(this);
+        });
+        img.addEventListener('load', function() {
+          this.classList.remove('loading');
+        });
+        // 초기 로딩 상태
+        if (!img.complete) {
+          img.classList.add('loading');
+        }
       });
+    }
+
+    // 슬라이드 모드에서 스크롤 위치 감지
+    document.addEventListener('DOMContentLoaded', () => {
+      // 저장된 모드 복원
+      let savedMode = 'grid';
+      try {
+        savedMode = localStorage.getItem('galleryMode') || 'grid';
+      } catch (e) {
+        console.warn('localStorage 읽기 실패:', e);
+      }
+      
+      setMode(savedMode);
+      attachImageListeners();
+      
+      // 버튼 클릭 이벤트 (인라인 핸들러 제거)
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          setMode(e.target.dataset.mode);
+        });
+      });
+
+      // 슬라이드 모드 스크롤 감지
+      const gallery = document.getElementById('gallery');
+      gallery.addEventListener('scroll', updateSlideInfo);
     });
   </script>
 
