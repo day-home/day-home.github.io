@@ -2,43 +2,110 @@
 <html lang="ko">
 
 <head>
-  <meta charset="UTF-8">
-  <title>GALLERY</title>
+<meta charset="UTF-8">
+<title>GALLERY</title>
 
-  <style>
+<style>
 
-    body {
-      background-color: #fff7fb;
-      font-family: sans-serif;
-      text-align: center;
-      padding: 50px;
-    }
+body {
+  background-color: #fff7fb;
+  font-family: sans-serif;
+  text-align: center;
+  padding: 30px;
+}
 
-    h1 {
-      margin-bottom: 40px;
-    }
+h1 {
+  margin-bottom: 20px;
+}
 
-    .gallery img {
-      width: 300px;
-      border-radius: 15px;
-      margin: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
+.buttons {
+  margin-bottom: 30px;
+}
 
-  </style>
+button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 15px;
+  background-color: white;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.gallery {
+  gap: 20px;
+}
+
+.gallery img {
+  width: 300px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* GRID */
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* SCROLL */
+
+.scroll {
+  display: block;
+}
+
+.scroll img {
+  display: block;
+  margin: 20px auto;
+}
+
+/* SLIDE */
+
+.slide {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 20px;
+}
+
+.slide img {
+  flex-shrink: 0;
+}
+
+</style>
 </head>
 
 <body>
 
-  <h1>GALLERY ✨</h1>
+<h1>GALLERY ✨</h1>
 
-  <div class="gallery">
+<div class="buttons">
+  <button onclick="setMode('grid')">GRID</button>
+  <button onclick="setMode('scroll')">SCROLL</button>
+  <button onclick="setMode('slide')">SLIDE</button>
+</div>
 
-    <img src="main.png">
-    <img src="dream2.PNG">
-    <img src="dream3.png">
+<div class="gallery grid" id="gallery">
 
-  </div>
+  <img src="main.png">
+  <img src="dream2.PNG">
+  <img src="dream3.png">
+
+</div>
+
+<script>
+
+function setMode(mode) {
+
+  const gallery = document.getElementById("gallery");
+
+  gallery.className = "gallery " + mode;
+
+}
+
+</script>
 
 </body>
 
