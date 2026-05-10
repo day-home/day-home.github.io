@@ -209,6 +209,19 @@
       word-break: break-all;
       line-height: 1.4;
     }
+
+    .image-card {
+      cursor: grab;
+    }
+    
+    .image-card.dragging {
+      opacity: 0.45;
+      transform: scale(0.98);
+    }
+    
+    .image-list {
+      user-select: none;
+    }
   </style>
 </head>
 
@@ -330,7 +343,8 @@
 
       const { data, error } = await client
         .from('gallery_images')
-        .select('id, image_url, file_path, alt, note, created_at, uploaded_by')
+        .select('id, image_url, file_path, alt, note, sort_order, created_at, uploaded_by')
+        .order('sort_order', { ascending: true })
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -349,6 +363,8 @@
       data.forEach(image => {
         const card = document.createElement('div');
         card.className = 'image-card';
+        card.dataset.id = image.id;
+        card.draggable = true;
 
         card.innerHTML = `
           <img src="${image.image_url}" alt="${escapeHtml(image.alt || '갤러리 이미지')}">
@@ -383,6 +399,7 @@
 
         imageList.appendChild(card);
       });
+        setupDragAndDrop();
     }
 
     async function updateImageInfo(id, newAlt, newNote) {
@@ -568,6 +585,76 @@
     });
 
     checkSession();
+
+    let draggedCard = null;
+let orderChanged = false;
+
+function setupDragAndDrop() {
+  const cards = imageList.querySelectorAll('.image-card');
+
+  cards.forEach(card => {
+    card.addEventListener('dragstart', () => {
+      draggedCard = card;
+      orderChanged = false;
+      card.classList.add('dragging');
+    });
+
+    card.addEventListener('dragend', async () => {
+      card.classList.remove('dragging');
+
+      if (orderChanged) {
+        await saveImageOrder();
+      }
+
+      draggedCard = null;
+      orderChanged = false;
+    });
+
+    card.addEventListener('dragover', (e) => {
+      e.preventDefault();
+
+      if (!draggedCard || draggedCard === card) {
+        return;
+      }
+
+      const rect = card.getBoundingClientRect();
+      const shouldPlaceAfter = e.clientY > rect.top + rect.height / 2;
+
+      if (shouldPlaceAfter) {
+        card.after(draggedCard);
+      } else {
+        card.before(draggedCard);
+      }
+
+      orderChanged = true;
+    });
+  });
+}
+
+async function saveImageOrder() {
+  setStatus('순서 저장 중...');
+
+  const cards = Array.from(imageList.querySelectorAll('.image-card'));
+
+  const results = await Promise.all(
+    cards.map((card, index) => {
+      return client
+        .from('gallery_images')
+        .update({ sort_order: index + 1 })
+        .eq('id', Number(card.dataset.id));
+    })
+  );
+
+  const failed = results.find(result => result.error);
+
+  if (failed) {
+    console.error(failed.error);
+    setStatus('순서 저장 실패: ' + failed.error.message);
+    return;
+  }
+
+  setStatus('순서 저장 완료!');
+}
   </script>
 </body>
 
