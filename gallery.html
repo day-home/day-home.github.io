@@ -691,6 +691,893 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  const VALID_MODES = ['grid', 'scroll', 'slide'];
+
+  const SUPABASE_URL = 'https://dudbooumvtecogoixnxt.supabase.co';
+  const SUPABASE_KEY = '여기에 네 Publishable key 그대로 넣기';
+
+  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  async function loadGalleryImages() {
+    const gallery = document.getElementById('gallery');
+
+    gallery.innerHTML = '<p style="color:#8c5c75;">이미지를 불러오는 중...</p>';
+
+    const { data, error } = await client
+      .from('gallery_images')
+      .select('id, image_url, alt, created_at')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error(error);
+      gallery.innerHTML = '<p style="color:#8c5c75;">이미지를 불러오지 못했어요.</p>';
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      gallery.innerHTML = '<p style="color:#8c5c75;">아직 등록된 이미지가 없어요.</p>';
+      return;
+    }
+
+    gallery.innerHTML = '';
+
+    data.forEach(image => {
+      const figure = document.createElement('figure');
+      figure.className = 'art-card';
+
+      const img = document.createElement('img');
+      img.src = image.image_url;
+      img.alt = image.alt || '갤러리 이미지';
+      img.loading = 'lazy';
+
+      const caption = document.createElement('figcaption');
+      caption.textContent = image.alt || 'Gallery';
+
+      figure.appendChild(img);
+      figure.appendChild(caption);
+      gallery.appendChild(figure);
+    });
+
+    attachImageListeners();
+    updateSlideInfo();
+  }
+
+  function getGalleryImages() {
+    return document.querySelectorAll('#gallery img');
+  }
+
+  function getGalleryItems() {
+    return document.querySelectorAll('#gallery .art-card');
+  }
+
+  function updateSlideInfo() {
+    const gallery = document.getElementById('gallery');
+    const items = getGalleryItems();
+    const currentSlide = document.getElementById('currentSlide');
+    const totalSlides = document.getElementById('totalSlides');
+
+    totalSlides.textContent = items.length;
+
+    if (items.length === 0) {
+      currentSlide.textContent = 0;
+      return;
+    }
+
+    const galleryStyle = window.getComputedStyle(gallery);
+    const gap = parseInt(galleryStyle.gap, 10) || 0;
+    const slideWidth = items[0].offsetWidth + gap;
+
+    if (slideWidth <= 0) {
+      currentSlide.textContent = 1;
+      return;
+    }
+
+    const currentIndex = Math.round(gallery.scrollLeft / slideWidth) + 1;
+    currentSlide.textContent = Math.min(currentIndex, items.length);
+  }
+
+  function setMode(mode) {
+    const gallery = document.getElementById('gallery');
+    const slideInfo = document.getElementById('slideInfo');
+
+    if (!VALID_MODES.includes(mode)) {
+      mode = 'grid';
+    }
+
+    gallery.className = 'gallery ' + mode;
+
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.mode === mode);
+    });
+
+    slideInfo.style.display = mode === 'slide' ? 'block' : 'none';
+
+    if (mode === 'slide') {
+      setTimeout(() => {
+        gallery.scrollLeft = 0;
+        updateSlideInfo();
+      }, 0);
+    } else {
+      updateSlideInfo();
+    }
+
+    try {
+      localStorage.setItem('galleryMode', mode);
+    } catch (e) {
+      console.warn('localStorage 저장 실패:', e);
+    }
+  }
+
+  function handleImageError(img) {
+    const card = img.closest('.art-card');
+    img.alt = '이미지 로드 실패';
+    img.style.opacity = '0.5';
+
+    if (card) {
+      card.style.opacity = '0.65';
+    }
+
+    console.warn('이미지 로드 실패:', img.src);
+  }
+
+  function attachImageListeners() {
+    getGalleryImages().forEach(img => {
+      const card = img.closest('.art-card');
+
+      img.addEventListener('error', function () {
+        handleImageError(this);
+      });
+
+      img.addEventListener('load', function () {
+        if (card) {
+          card.classList.remove('loading');
+        }
+        updateSlideInfo();
+      });
+
+      if (!img.complete && card) {
+        card.classList.add('loading');
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    let savedMode = 'grid';
+
+    try {
+      savedMode = localStorage.getItem('galleryMode') || 'grid';
+    } catch (e) {
+      console.warn('localStorage 읽기 실패:', e);
+    }
+
+    if (!VALID_MODES.includes(savedMode)) {
+      savedMode = 'grid';
+    }
+
+    await loadGalleryImages();
+    setMode(savedMode);
+
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setMode(btn.dataset.mode);
+      });
+    });
+
+    const gallery = document.getElementById('gallery');
+    gallery.addEventListener('scroll', updateSlideInfo);
+
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalCaption = document.getElementById('modalCaption');
+    const modalClose = document.getElementById('modalClose');
+
+    gallery.addEventListener('click', (e) => {
+      const card = e.target.closest('.art-card');
+
+      if (!card || !gallery.contains(card)) {
+        return;
+      }
+
+      const img = card.querySelector('img');
+      const caption = card.querySelector('figcaption');
+
+      if (!img) {
+        return;
+      }
+
+      modal.classList.add('active');
+      modalImage.src = img.src;
+      modalImage.alt = img.alt;
+      modalCaption.textContent = caption ? caption.textContent : img.alt;
+    });
+
+    const closeModal = () => {
+      modal.classList.remove('active');
+    };
+
+    modalClose.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    modalClose.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        closeModal();
+      }
+    });
+  });
+</script>
+</body>
+
+</html>        radial-gradient(circle at 50% 100%, rgba(255, 210, 232, 0.62), transparent 38%),
+        #fff7fb;
+      color: #444;
+      font-family: 'Gowun Dodum', sans-serif;
+      text-align: center;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 179, 217, 0.14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 179, 217, 0.14) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(circle at center, black, transparent 78%);
+      opacity: 0.58;
+    }
+
+    body::after {
+      content: "✦";
+      position: fixed;
+      right: 9vw;
+      top: 11vh;
+      color: rgba(255, 126, 182, 0.32);
+      font-size: 92px;
+      pointer-events: none;
+      animation: floatStar 5.5s ease-in-out infinite;
+    }
+
+    @keyframes floatStar {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(14px) rotate(8deg);
+      }
+    }
+
+    .petal {
+      position: fixed;
+      z-index: 0;
+      width: 12px;
+      height: 18px;
+      border-radius: 50% 50% 50% 0;
+      background: rgba(255, 179, 217, 0.42);
+      pointer-events: none;
+      animation: fall 10s linear infinite;
+    }
+
+    .petal.one {
+      left: 10%;
+      top: -30px;
+      animation-delay: 0s;
+    }
+
+    .petal.two {
+      left: 68%;
+      top: -40px;
+      animation-delay: 2.2s;
+      animation-duration: 12s;
+    }
+
+    .petal.three {
+      left: 88%;
+      top: -20px;
+      animation-delay: 4.8s;
+      animation-duration: 11s;
+    }
+
+    .petal.four {
+      left: 35%;
+      top: -35px;
+      animation-delay: 6s;
+      animation-duration: 13s;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(110vh) rotate(240deg);
+        opacity: 0;
+      }
+    }
+
+    .home-button {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #333;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      font-family: 'Gowun Dodum', sans-serif;
+    }
+
+    .home-button:hover {
+      background-color: #ffb3d9;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 179, 217, 0.4);
+    }
+
+    .home-button:focus-visible {
+      outline: 2px solid #ffb3d9;
+      outline-offset: 2px;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1180px;
+      margin: 56px auto 0;
+    }
+
+    .page-hero {
+      position: relative;
+      margin-bottom: 26px;
+      padding: 34px 24px 30px;
+      border: 1px solid rgba(255, 170, 210, 0.7);
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(14px);
+      box-shadow:
+        0 18px 50px rgba(210, 116, 160, 0.16),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+    }
+
+    .page-hero::before {
+      content: "";
+      position: absolute;
+      inset: 13px;
+      border: 1px dashed rgba(255, 159, 203, 0.55);
+      border-radius: 24px;
+      pointer-events: none;
+    }
+
+    .kicker {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: #ff7eb6;
+      font-size: 0.82rem;
+      font-weight: bold;
+      letter-spacing: 0.2em;
+    }
+
+    h1 {
+      margin-bottom: 14px;
+      color: #333;
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      line-height: 1.15;
+    }
+
+    .subtitle {
+      color: #777;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .control-panel {
+      position: sticky;
+      top: 14px;
+      z-index: 50;
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 auto 28px;
+      padding: 10px;
+      border: 1px solid rgba(255, 190, 220, 0.75);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 12px 30px rgba(210, 116, 160, 0.14);
+    }
+
+    .buttons {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      letter-spacing: 0.08em;
+    }
+
+    button {
+      position: relative;
+      padding: 11px 20px;
+      overflow: hidden;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #444;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      font-size: 0.95rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      font-family: 'Gowun Dodum', sans-serif;
+    }
+
+    button::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 179, 217, 0.35), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    button span {
+      position: relative;
+      z-index: 1;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 159, 203, 0.65);
+      box-shadow: 0 6px 16px rgba(210, 116, 160, 0.16);
+    }
+
+    button:hover::before {
+      opacity: 1;
+    }
+
+    button:focus-visible {
+      outline: 2px solid #ffb3d9;
+      outline-offset: 2px;
+    }
+
+    button.active {
+      background-color: #ffb3d9;
+      color: white;
+      box-shadow: 0 6px 18px rgba(255, 179, 217, 0.45);
+    }
+
+    .gallery-frame {
+      position: relative;
+      padding: 24px;
+      border: 1px solid rgba(255, 170, 210, 0.65);
+      border-radius: 34px;
+      background: rgba(255, 255, 255, 0.58);
+      backdrop-filter: blur(12px);
+      box-shadow:
+        0 18px 50px rgba(210, 116, 160, 0.14),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+    }
+
+    .gallery-frame::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px dashed rgba(255, 159, 203, 0.45);
+      border-radius: 26px;
+      pointer-events: none;
+    }
+
+    .gallery {
+      position: relative;
+      z-index: 1;
+      gap: 20px;
+    }
+
+    .art-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 190, 220, 0.8);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: 0 12px 30px rgba(210, 116, 160, 0.14);
+      cursor: pointer;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+
+    .art-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), transparent 45%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .art-card:hover {
+      transform: translateY(-7px) scale(1.015);
+      border-color: #ff9fcb;
+      box-shadow: 0 18px 42px rgba(210, 116, 160, 0.22);
+    }
+
+    .art-card:hover::before {
+      opacity: 1;
+    }
+
+    .art-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 20px 20px 0 0;
+      object-fit: contain;
+      transition: transform 0.45s ease, opacity 0.3s ease;
+    }
+
+    .art-card:hover img {
+      transform: scale(1.035);
+    }
+
+    .art-card figcaption {
+      position: relative;
+      z-index: 3;
+      padding: 12px 14px 14px;
+      color: #8c5c75;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      background: linear-gradient(135deg, #fffafd, #fff0f7);
+    }
+
+    .art-card.loading {
+      min-height: 160px;
+      background:
+        linear-gradient(90deg, #fff0f7 25%, #ffffff 50%, #fff0f7 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 200% 0;
+      }
+
+      100% {
+        background-position: -200% 0;
+      }
+    }
+
+    /* PINTEREST GRID MODE */
+    .gallery.grid {
+      display: block;
+      column-count: 3;
+      column-gap: 20px;
+    }
+
+    .gallery.grid .art-card {
+      display: inline-block;
+      width: 100%;
+      margin: 0 0 20px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /* SCROLL MODE */
+    .gallery.scroll {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .gallery.scroll .art-card {
+      width: min(680px, 100%);
+    }
+
+    /* SLIDE MODE */
+    .gallery.slide {
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      padding: 8px 2px 34px;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      justify-content: flex-start;
+    }
+
+    .gallery.slide .art-card {
+      flex: 0 0 min(340px, 78vw);
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .gallery.slide::-webkit-scrollbar {
+      height: 9px;
+    }
+
+    .gallery.slide::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 999px;
+    }
+
+    .gallery.slide::-webkit-scrollbar-thumb {
+      background: #ffb3d9;
+      border-radius: 999px;
+    }
+
+    .gallery.slide::-webkit-scrollbar-thumb:hover {
+      background: #ff99cc;
+    }
+
+    .slide-info {
+      width: fit-content;
+      margin: 18px auto 0;
+      padding: 8px 15px;
+      border: 1px solid rgba(255, 190, 220, 0.75);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.75);
+      color: #8c5c75;
+      font-size: 0.92rem;
+      letter-spacing: 0.08em;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 20px rgba(210, 116, 160, 0.12);
+    }
+
+    /* 이미지 확대 모달 */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      inset: 0;
+      padding: 30px;
+      background:
+        radial-gradient(circle at center, rgba(255, 190, 220, 0.16), transparent 40%),
+        rgba(0, 0, 0, 0.86);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      max-width: 94%;
+      max-height: 94%;
+      text-align: center;
+    }
+
+    .modal img {
+      max-width: 100%;
+      max-height: 82vh;
+      border: 8px solid rgba(255, 255, 255, 0.9);
+      border-radius: 18px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-caption {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #8c5c75;
+      font-size: 0.92rem;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 42px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      transform: scale(1.18);
+    }
+
+    @media (max-width: 900px) {
+      .gallery.grid {
+        column-count: 2;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 34px 16px 64px;
+      }
+
+      main {
+        margin-top: 54px;
+      }
+
+      .page-hero {
+        padding: 30px 20px 26px;
+      }
+
+      .gallery-frame {
+        padding: 18px;
+        border-radius: 28px;
+      }
+
+      .gallery-frame::before {
+        inset: 10px;
+        border-radius: 22px;
+      }
+
+      .control-panel {
+        position: relative;
+        top: auto;
+        border-radius: 24px;
+      }
+
+      button {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .gallery.grid {
+        column-count: 2;
+        column-gap: 14px;
+      }
+
+      .gallery.grid .art-card {
+        margin-bottom: 14px;
+      }
+
+      .art-card {
+        border-radius: 18px;
+      }
+
+      .art-card img {
+        border-radius: 16px 16px 0 0;
+      }
+
+      .art-card figcaption {
+        padding: 10px 10px 12px;
+        font-size: 0.82rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .home-button {
+        top: 12px;
+        left: 12px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+      }
+
+      .subtitle {
+        font-size: 0.92rem;
+      }
+
+      .page-hero {
+        border-radius: 26px;
+      }
+
+      .page-hero::before {
+        border-radius: 20px;
+      }
+
+      .buttons {
+        gap: 6px;
+      }
+
+      button {
+        padding: 9px 13px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .gallery.grid {
+        column-count: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="index.html" class="home-button" aria-label="홈으로 이동">HOME</a>
+
+  <span class="petal one"></span>
+  <span class="petal two"></span>
+  <span class="petal three"></span>
+  <span class="petal four"></span>
+
+  <!-- 이미지 확대 모달 -->
+  <div class="modal" id="imageModal">
+    <span class="modal-close" id="modalClose" role="button" tabindex="0" aria-label="모달 닫기">×</span>
+
+    <div class="modal-content">
+      <img id="modalImage" alt="확대된 이미지">
+      <div class="modal-caption" id="modalCaption"></div>
+    </div>
+  </div>
+
+  <main>
+    <header class="page-hero">
+      <span class="kicker">DREAM ARCHIVE</span>
+      <h1>GALLERY</h1>
+      <p class="subtitle">
+        흩어진 장면들을 모아둔 작은 전시실<br>
+        이미지를 누르면 크게 볼 수 있어요
+      </p>
+    </header>
+
+    <section class="control-panel" aria-label="갤러리 보기 모드 선택">
+      <div class="buttons" role="group" aria-label="갤러리 보기 모드">
+        <button class="mode-btn active" data-mode="grid" aria-label="그리드 모드">
+          <span>GRID</span>
+        </button>
+        <button class="mode-btn" data-mode="scroll" aria-label="스크롤 모드">
+          <span>SCROLL</span>
+        </button>
+        <button class="mode-btn" data-mode="slide" aria-label="슬라이드 모드">
+          <span>SLIDE</span>
+        </button>
+      </div>
+    </section>
+
+<section class="gallery-frame">
+  <div class="gallery grid" id="gallery" role="region" aria-label="이미지 갤러리"></div>
+</section>
+
+    <div class="slide-info" id="slideInfo" style="display: none;">
+      <span id="currentSlide">1</span> / <span id="totalSlides">0</span>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
   <script>
     const VALID_MODES = ['grid', 'scroll', 'slide'];
