@@ -681,52 +681,68 @@
       </div>
     </section>
 
-    <section class="gallery-frame">
-      <!-- 이미지 추가는 여기서 -->
-      <div class="gallery grid" id="gallery" role="region" aria-label="이미지 갤러리">
-
-        <figure class="art-card">
-          <img src="main.png" alt="메인 이미지" loading="lazy">
-          <figcaption>CroNua</figcaption>
-        </figure>
-
-        <figure class="art-card">
-          <img src="dream2.PNG" alt="드림 2 이미지" loading="lazy">
-          <figcaption>피아노</figcaption>
-        </figure>
-
-        <figure class="art-card">
-          <img src="dream3.png" alt="드림 3 이미지" loading="lazy">
-          <figcaption>집무실</figcaption>
-        </figure>
-
-        <figure class="art-card">
-          <img src="nua.PNG" alt="누아 단독" loading="lazy">
-          <figcaption>바닷가 누아</figcaption>
-        </figure>
-
-        <figure class="art-card">
-          <img src="crocodile.png" alt="크로커다일 증사" loading="lazy">
-          <figcaption>크로커다일 증사</figcaption>
-        </figure>
-
-        <!-- 새 이미지 추가 예시:
-        <figure class="art-card">
-          <img src="파일명.png" alt="이미지 설명" loading="lazy">
-          <figcaption>이미지 설명</figcaption>
-        </figure>
-        -->
-
-      </div>
-    </section>
+<section class="gallery-frame">
+  <div class="gallery grid" id="gallery" role="region" aria-label="이미지 갤러리"></div>
+</section>
 
     <div class="slide-info" id="slideInfo" style="display: none;">
       <span id="currentSlide">1</span> / <span id="totalSlides">0</span>
     </div>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
   <script>
     const VALID_MODES = ['grid', 'scroll', 'slide'];
+
+    const SUPABASE_URL = 'https://dudbooumvtecogoixnxt.supabase.co/rest/v1/';
+const SUPABASE_KEY = 'sb_publishable_grHBsQLl5SyuMEjJfjJjIA_-7cNluPl';
+
+const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function loadGalleryImages() {
+  const gallery = document.getElementById('gallery');
+
+  gallery.innerHTML = '<p style="color:#8c5c75;">이미지를 불러오는 중...</p>';
+
+  const { data, error } = await client
+    .from('gallery_images')
+    .select('id, image_url, alt, created_at')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error(error);
+    gallery.innerHTML = '<p style="color:#8c5c75;">이미지를 불러오지 못했어요.</p>';
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    gallery.innerHTML = '<p style="color:#8c5c75;">아직 등록된 이미지가 없어요.</p>';
+    return;
+  }
+
+  gallery.innerHTML = '';
+
+  data.forEach(image => {
+    const figure = document.createElement('figure');
+    figure.className = 'art-card';
+
+    const img = document.createElement('img');
+    img.src = image.image_url;
+    img.alt = image.alt || '갤러리 이미지';
+    img.loading = 'lazy';
+
+    const caption = document.createElement('figcaption');
+    caption.textContent = image.alt || 'Gallery';
+
+    figure.appendChild(img);
+    figure.appendChild(caption);
+    gallery.appendChild(figure);
+  });
+
+  attachImageListeners();
+  updateSlideInfo();
+}
 
     function getGalleryImages() {
       return document.querySelectorAll('#gallery img');
@@ -840,11 +856,10 @@
         savedMode = 'grid';
       }
 
-      attachImageListeners();
-      updateSlideInfo();
+      await loadGalleryImages();
       setMode(savedMode);
 
-      document.querySelectorAll('.mode-btn').forEach(btn => {
+      document.addEventListener('DOMContentLoaded', async () => {
         btn.addEventListener('click', () => {
           setMode(btn.dataset.mode);
         });
