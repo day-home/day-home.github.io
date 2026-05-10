@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>GALLERY ADMIN</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #fff7fb;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      color: #333;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    h1 {
+      margin: 0 0 20px;
+      font-weight: 400;
+      text-align: center;
+      letter-spacing: 0.08em;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 6px;
+      font-size: 0.9rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 12px;
+      border: 0;
+      border-radius: 14px;
+      background: #ffb3d9;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ff99cc;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .status {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+
+    .link {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      color: #555;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <h1>ADMIN</h1>
+
+    <div id="loginBox">
+      <label for="email">관리자 이메일</label>
+      <input id="email" type="email" autocomplete="email">
+
+      <label for="password">비밀번호</label>
+      <input id="password" type="password" autocomplete="current-password">
+
+      <button id="loginBtn">로그인</button>
+    </div>
+
+    <div id="uploadBox" class="hidden">
+      <label for="imageFile">올릴 이미지</label>
+      <input id="imageFile" type="file" accept="image/*" multiple>
+
+      <label for="altText">이미지 설명</label>
+      <input id="altText" type="text" placeholder="예: 드림 이미지">
+
+      <button id="uploadBtn">이미지 업로드</button>
+      <button id="logoutBtn" type="button">로그아웃</button>
+
+      <a class="link" href="gallery.html">갤러리 보러가기</a>
+    </div>
+
+    <div id="status" class="status"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL = 'https://dudbooumvtecogoixnxt.supabase.co/rest/v1/';
+    const SUPABASE_KEY = 'sb_publishable_grHBsQLl5SyuMEjJfjJjIA_-7cNluPl';
+
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const loginBox = document.getElementById('loginBox');
+    const uploadBox = document.getElementById('uploadBox');
+    const statusEl = document.getElementById('status');
+
+    function setStatus(message) {
+      statusEl.textContent = message;
+    }
+
+    function showUploadBox() {
+      loginBox.classList.add('hidden');
+      uploadBox.classList.remove('hidden');
+    }
+
+    function showLoginBox() {
+      loginBox.classList.remove('hidden');
+      uploadBox.classList.add('hidden');
+    }
+
+    async function checkSession() {
+      const { data } = await client.auth.getSession();
+
+      if (data.session) {
+        showUploadBox();
+        setStatus('로그인되어 있어요.');
+      } else {
+        showLoginBox();
+      }
+    }
+
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        setStatus('이메일과 비밀번호를 입력해줘.');
+        return;
+      }
+
+      setStatus('로그인 중...');
+
+      const { error } = await client.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) {
+        setStatus('로그인 실패: ' + error.message);
+        return;
+      }
+
+      showUploadBox();
+      setStatus('로그인 성공!');
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await client.auth.signOut();
+      showLoginBox();
+      setStatus('로그아웃했어.');
+    });
+
+    document.getElementById('uploadBtn').addEventListener('click', async () => {
+      const fileInput = document.getElementById('imageFile');
+      const altInput = document.getElementById('altText');
+
+      const files = Array.from(fileInput.files);
+
+      if (files.length === 0) {
+        setStatus('이미지를 먼저 선택해줘.');
+        return;
+      }
+
+      const { data: userData, error: userError } = await client.auth.getUser();
+
+      if (userError || !userData.user) {
+        setStatus('로그인이 필요해.');
+        return;
+      }
+
+      setStatus('업로드 중...');
+
+      let successCount = 0;
+      let failCount = 0;
+
+      for (const file of files) {
+        try {
+          if (!file.type.startsWith('image/')) {
+            failCount++;
+            continue;
+          }
+
+          if (file.size > 50 * 1024 * 1024) {
+            failCount++;
+            continue;
+          }
+
+          const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+          const uniqueName = Date.now() + '-' + Math.random().toString(36).slice(2) + '-' + safeName;
+
+          const { error: uploadError } = await client
+            .storage
+            .from('gallery')
+            .upload(uniqueName, file, {
+              cacheControl: '3600',
+              upsert: false
+            });
+
+          if (uploadError) {
+            throw uploadError;
+          }
+
+          const { data: publicUrlData } = client
+            .storage
+            .from('gallery')
+            .getPublicUrl(uniqueName);
+
+          const imageUrl = publicUrlData.publicUrl;
+
+          const { error: insertError } = await client
+            .from('gallery_images')
+            .insert({
+              image_url: imageUrl,
+              file_path: uniqueName,
+              alt: altInput.value.trim() || file.name,
+              uploaded_by: userData.user.id
+            });
+
+          if (insertError) {
+            throw insertError;
+          }
+
+          successCount++;
+        } catch (error) {
+          console.error(error);
+          failCount++;
+        }
+      }
+
+      fileInput.value = '';
+      altInput.value = '';
+
+      setStatus(`업로드 완료!\n성공: ${successCount}개\n실패: ${failCount}개`);
+    });
+
+    checkSession();
+  </script>
+</body>
+</html>
