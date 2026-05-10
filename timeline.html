@@ -3,15 +3,267 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>타임라인</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIMELINE</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #fff7fb;
+      color: #444;
+      font-family: 'Gowun Dodum', sans-serif;
+      padding: 40px 20px;
+    }
+
+    .home-button {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background-color: white;
+      color: #333;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      transition: all 0.3s ease;
+    }
+
+    .home-button:hover {
+      background-color: #ffb3d9;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 179, 217, 0.4);
+    }
+
+    main {
+      max-width: 900px;
+      margin: 60px auto 0;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.3rem;
+      margin-bottom: 12px;
+      color: #333;
+      letter-spacing: 0.08em;
+    }
+
+    .sub {
+      text-align: center;
+      color: #777;
+      margin-bottom: 50px;
+      font-size: 1rem;
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      padding-left: 120px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 95px;
+      width: 4px;
+      height: 100%;
+      background: #ffc7e2;
+      border-radius: 999px;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 40px;
+      min-height: 80px;
+    }
+
+    .timeline-date {
+      position: absolute;
+      left: -120px;
+      top: 5px;
+      width: 90px;
+      text-align: right;
+      font-size: 1rem;
+      color: #aa6c8f;
+      font-weight: bold;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -33px;
+      top: 10px;
+      width: 18px;
+      height: 18px;
+      background-color: #ff9fcb;
+      border: 4px solid #fff7fb;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px #ffd5e8;
+    }
+
+    .timeline-content {
+      background: white;
+      border-radius: 18px;
+      padding: 18px 22px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      text-align: left;
+    }
+
+    .timeline-content h2 {
+      font-size: 1.15rem;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .timeline-content p {
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: #666;
+    }
+
+    .timeline-content .small {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.88rem;
+      color: #999;
+    }
+
+    @media (max-width: 768px) {
+      .timeline {
+        padding-left: 70px;
+      }
+
+      .timeline::before {
+        left: 30px;
+      }
+
+      .timeline-date {
+        position: static;
+        width: auto;
+        text-align: left;
+        margin-bottom: 8px;
+        color: #aa6c8f;
+        font-size: 0.95rem;
+      }
+
+      .timeline-dot {
+        left: -49px;
+        top: 32px;
+      }
+
+      .timeline-item {
+        margin-bottom: 28px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .sub {
+        font-size: 0.95rem;
+      }
+
+      .timeline-content {
+        padding: 16px 18px;
+      }
+
+      .timeline-content h2 {
+        font-size: 1.05rem;
+      }
+
+      .timeline-content p {
+        font-size: 0.93rem;
+      }
+
+      .home-button {
+        top: 12px;
+        left: 12px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <a href="index.html" class="home-button">HOME</a>
 
-<h1>타임라인</h1>
+  <main>
+    <h1>TIMELINE</h1>
+    <p class="sub">시간의 흐름에 따라 정리한 기록</p>
 
-<p>여기에 설정 적기</p>
+    <section class="timeline">
 
+      <div class="timeline-item">
+        <div class="timeline-date">어린 시절</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h2>첫 시작</h2>
+          <p>
+            이 시기의 설정이나 사건을 적는 칸.  
+            간단한 소개나 배경 설명을 넣으면 됨.
+          </p>
+          <span class="small">예: 드레스로자 / 보호받던 시기</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">이후</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h2>중요 사건 발생</h2>
+          <p>
+            캐릭터 관계 변화, 사건, 전환점 같은 걸 적으면 좋음.
+          </p>
+          <span class="small">예: 관계의 균열 / 떠남 / 재회</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">몇 년 후</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h2>새로운 만남</h2>
+          <p>
+            여기에는 다른 인물과의 만남이나 세계관 변화 같은 걸 적을 수 있음.
+          </p>
+          <span class="small">예: 크로커다일과 조우</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">현재</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h2>지금의 상태</h2>
+          <p>
+            현재 관계, 분위기, 앞으로의 방향 같은 내용을 정리하면 깔끔함.
+          </p>
+          <span class="small">예: 현재의 관계성과 감정선</span>
+        </div>
+      </div>
+
+    </section>
+  </main>
 </body>
 
 </html>
