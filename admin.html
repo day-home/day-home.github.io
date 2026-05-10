@@ -1,4 +1,4 @@
-어드민  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -14,7 +14,10 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: #fff7fb;
+      background:
+        radial-gradient(circle at 15% 12%, rgba(255, 190, 220, 0.45), transparent 28%),
+        radial-gradient(circle at 82% 16%, rgba(255, 226, 240, 0.95), transparent 32%),
+        #fff7fb;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       display: flex;
       justify-content: center;
@@ -25,24 +28,26 @@
 
     .box {
       width: 100%;
-      max-width: 420px;
-      background: white;
-      border-radius: 20px;
+      max-width: 430px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 190, 220, 0.8);
+      border-radius: 24px;
       padding: 28px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 12px 30px rgba(210, 116, 160, 0.18);
     }
 
     h1 {
-      margin: 0 0 20px;
-      font-weight: 400;
+      margin: 0 0 22px;
       text-align: center;
-      letter-spacing: 0.08em;
+      font-weight: 400;
+      letter-spacing: 0.12em;
     }
 
     label {
       display: block;
       margin: 14px 0 6px;
       font-size: 0.9rem;
+      color: #8c5c75;
     }
 
     input {
@@ -51,13 +56,14 @@
       border: 1px solid #ddd;
       border-radius: 12px;
       font-size: 1rem;
+      background: white;
     }
 
     button {
       width: 100%;
-      margin-top: 18px;
+      margin-top: 16px;
       padding: 12px;
-      border: 0;
+      border: none;
       border-radius: 14px;
       background: #ffb3d9;
       color: white;
@@ -75,16 +81,18 @@
 
     .status {
       margin-top: 16px;
-      font-size: 0.9rem;
-      line-height: 1.5;
+      color: #8c5c75;
+      line-height: 1.6;
       white-space: pre-line;
+      text-align: center;
+      font-size: 0.92rem;
     }
 
     .link {
       display: block;
-      text-align: center;
       margin-top: 18px;
-      color: #555;
+      text-align: center;
+      color: #666;
       text-decoration: none;
       font-size: 0.9rem;
     }
@@ -110,7 +118,7 @@
       <input id="imageFile" type="file" accept="image/*" multiple>
 
       <label for="altText">이미지 설명</label>
-      <input id="altText" type="text" placeholder="예: 드림 이미지">
+      <input id="altText" type="text" placeholder="예: CroNua">
 
       <button id="uploadBtn">이미지 업로드</button>
       <button id="logoutBtn" type="button">로그아웃</button>
@@ -137,14 +145,14 @@
       statusEl.textContent = message;
     }
 
-    function showUploadBox() {
-      loginBox.classList.add('hidden');
-      uploadBox.classList.remove('hidden');
-    }
-
     function showLoginBox() {
       loginBox.classList.remove('hidden');
       uploadBox.classList.add('hidden');
+    }
+
+    function showUploadBox() {
+      loginBox.classList.add('hidden');
+      uploadBox.classList.remove('hidden');
     }
 
     async function checkSession() {
@@ -152,9 +160,10 @@
 
       if (data.session) {
         showUploadBox();
-        setStatus('로그인되어 있어요.');
+        setStatus('로그인되어 있어.');
       } else {
         showLoginBox();
+        setStatus('');
       }
     }
 
@@ -192,7 +201,6 @@
     document.getElementById('uploadBtn').addEventListener('click', async () => {
       const fileInput = document.getElementById('imageFile');
       const altInput = document.getElementById('altText');
-
       const files = Array.from(fileInput.files);
 
       if (files.length === 0) {
@@ -219,13 +227,13 @@
             continue;
           }
 
-          if (file.size > 50 * 1024 * 1024) {
-            failCount++;
-            continue;
-          }
-
           const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-          const uniqueName = Date.now() + '-' + Math.random().toString(36).slice(2) + '-' + safeName;
+          const uniqueName =
+            Date.now() +
+            '-' +
+            Math.random().toString(36).slice(2) +
+            '-' +
+            safeName;
 
           const { error: uploadError } = await client
             .storage
