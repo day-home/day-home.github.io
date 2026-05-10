@@ -8,7 +8,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Serif+KR:wght@300;500;700&display=swap"
+    rel="stylesheet">
 
   <style>
     * {
@@ -17,12 +19,110 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      background-color: #fff7fb;
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding: 40px 20px 80px;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 190, 220, 0.45), transparent 28%),
+        radial-gradient(circle at 88% 18%, rgba(255, 226, 240, 0.95), transparent 30%),
+        radial-gradient(circle at 50% 100%, rgba(255, 210, 232, 0.6), transparent 38%),
+        #fff7fb;
       color: #444;
       font-family: 'Gowun Dodum', sans-serif;
-      min-height: 100vh;
-      padding: 40px 20px 70px;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 179, 217, 0.14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 179, 217, 0.14) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(circle at center, black, transparent 78%);
+      opacity: 0.6;
+    }
+
+    body::after {
+      content: "✦";
+      position: fixed;
+      right: 9vw;
+      top: 11vh;
+      color: rgba(255, 126, 182, 0.32);
+      font-size: 92px;
+      pointer-events: none;
+      animation: floatStar 5.5s ease-in-out infinite;
+    }
+
+    @keyframes floatStar {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(14px) rotate(8deg);
+      }
+    }
+
+    .petal {
+      position: fixed;
+      z-index: 0;
+      width: 12px;
+      height: 18px;
+      border-radius: 50% 50% 50% 0;
+      background: rgba(255, 179, 217, 0.42);
+      pointer-events: none;
+      animation: fall 10s linear infinite;
+    }
+
+    .petal.one {
+      left: 11%;
+      top: -30px;
+      animation-delay: 0s;
+    }
+
+    .petal.two {
+      left: 70%;
+      top: -40px;
+      animation-delay: 2.2s;
+      animation-duration: 12s;
+    }
+
+    .petal.three {
+      left: 88%;
+      top: -20px;
+      animation-delay: 4.8s;
+      animation-duration: 11s;
+    }
+
+    .petal.four {
+      left: 35%;
+      top: -35px;
+      animation-delay: 6s;
+      animation-duration: 13s;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(110vh) rotate(240deg);
+        opacity: 0;
+      }
     }
 
     .home-button {
@@ -35,13 +135,14 @@
       justify-content: center;
       padding: 10px 16px;
       border-radius: 999px;
-      background-color: white;
+      background-color: rgba(255, 255, 255, 0.9);
       color: #333;
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: bold;
       letter-spacing: 0.08em;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(10px);
       transition: all 0.3s ease;
     }
 
@@ -58,30 +159,63 @@
     }
 
     main {
-      max-width: 950px;
-      margin: 55px auto 0;
+      position: relative;
+      z-index: 1;
+      max-width: 980px;
+      margin: 56px auto 0;
+    }
+
+    .page-hero {
+      position: relative;
+      margin-bottom: 52px;
+      padding: 34px 24px 30px;
+      border: 1px solid rgba(255, 170, 210, 0.7);
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(14px);
+      text-align: center;
+      box-shadow:
+        0 18px 50px rgba(210, 116, 160, 0.16),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+    }
+
+    .page-hero::before {
+      content: "";
+      position: absolute;
+      inset: 13px;
+      border: 1px dashed rgba(255, 159, 203, 0.55);
+      border-radius: 24px;
+      pointer-events: none;
+    }
+
+    .kicker {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: #ff7eb6;
+      font-size: 0.82rem;
+      font-weight: bold;
+      letter-spacing: 0.2em;
     }
 
     h1 {
-      text-align: center;
-      font-size: 2.5rem;
       color: #333;
-      letter-spacing: 0.12em;
-      margin-bottom: 12px;
-      font-weight: 400;
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      line-height: 1.15;
+      margin-bottom: 14px;
     }
 
     .subtitle {
-      text-align: center;
       color: #777;
       font-size: 1rem;
-      margin-bottom: 55px;
-      line-height: 1.7;
+      line-height: 1.8;
     }
 
     .timeline {
       position: relative;
-      max-width: 880px;
+      max-width: 920px;
       margin: 0 auto;
     }
 
@@ -90,90 +224,188 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 145px;
+      left: 170px;
       width: 4px;
-      background: #ffc7e2;
       border-radius: 999px;
+      background: linear-gradient(to bottom, #ffc7e2, #ff9fcb, #ffc7e2);
+      box-shadow: 0 0 18px rgba(255, 159, 203, 0.55);
+    }
+
+    .timeline::after {
+      content: "";
+      position: absolute;
+      top: -120px;
+      left: 170px;
+      width: 4px;
+      height: 150px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.95), transparent);
+      animation: lineShine 6.5s ease-in-out infinite;
+    }
+
+    @keyframes lineShine {
+      0% {
+        transform: translateY(0);
+        opacity: 0;
+      }
+
+      25% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(1200px);
+        opacity: 0;
+      }
     }
 
     .timeline-item {
       position: relative;
-      padding-left: 190px;
+      padding-left: 220px;
       margin-bottom: 42px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .timeline-period {
       position: absolute;
       left: 0;
       top: 8px;
-      width: 115px;
-      text-align: right;
+      width: 145px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 170, 210, 0.75);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.78);
       color: #aa6c8f;
-      font-size: 1.05rem;
+      text-align: right;
+      font-size: 0.98rem;
       font-weight: bold;
-      line-height: 1.4;
+      line-height: 1.45;
+      box-shadow: 0 6px 18px rgba(210, 116, 160, 0.12);
+      word-break: keep-all;
     }
 
     .timeline-dot {
       position: absolute;
-      left: 137px;
-      top: 10px;
-      width: 20px;
-      height: 20px;
+      left: 161px;
+      top: 18px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       background-color: #ff9fcb;
-      border: 4px solid #fff7fb;
-      box-shadow: 0 0 0 3px #ffd5e8;
+      border: 5px solid #fff7fb;
+      box-shadow:
+        0 0 0 3px #ffd5e8,
+        0 0 18px rgba(255, 126, 182, 0.6);
+      animation: pulseDot 2.8s ease-in-out infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.12);
+      }
     }
 
     .timeline-card {
-      background-color: white;
-      border-radius: 20px;
-      padding: 22px 24px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(255, 190, 220, 0.75);
+      border-radius: 24px;
+      padding: 24px 26px;
       text-align: left;
+      box-shadow: 0 12px 32px rgba(210, 116, 160, 0.13);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .timeline-card::before {
+      content: "✦";
+      position: absolute;
+      right: 18px;
+      top: 12px;
+      color: rgba(255, 126, 182, 0.2);
+      font-size: 2.1rem;
+      pointer-events: none;
+    }
+
+    .timeline-card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(to bottom, #ffb3d9, #ffe1ef);
+      opacity: 0.9;
+    }
+
+    .timeline-card:hover {
+      transform: translateY(-5px);
+      border-color: #ff9fcb;
+      box-shadow: 0 18px 42px rgba(210, 116, 160, 0.2);
     }
 
     .timeline-card h2 {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 14px;
       color: #333;
-      font-size: 1.25rem;
-      margin-bottom: 12px;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.28rem;
+      font-weight: 500;
       line-height: 1.5;
     }
 
     .age {
-      background-color: #fff0f7;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 16px;
+      padding: 11px 13px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #fff0f7, #fffafd);
       color: #8c5c75;
-      border-radius: 12px;
-      padding: 10px 12px;
       font-size: 0.92rem;
-      line-height: 1.6;
-      margin-bottom: 14px;
+      line-height: 1.65;
     }
 
     .timeline-card ul {
+      position: relative;
+      z-index: 1;
       list-style: none;
-      line-height: 1.8;
       color: #555;
       font-size: 1rem;
+      line-height: 1.85;
     }
 
     .timeline-card li {
       position: relative;
-      padding-left: 18px;
       margin-bottom: 6px;
+      padding-left: 20px;
     }
 
     .timeline-card li::before {
-      content: "•";
+      content: "✧";
       position: absolute;
       left: 0;
+      top: 0;
       color: #ff8fc1;
+      font-size: 0.9rem;
       font-weight: bold;
     }
 
     .bridge-card {
-      background-color: #fff0f7;
+      background: linear-gradient(135deg, rgba(255, 240, 247, 0.95), rgba(255, 255, 255, 0.9));
       border: 1px dashed #ffaad2;
     }
 
@@ -182,59 +414,66 @@
     }
 
     .note {
-      margin-top: 12px;
+      position: relative;
+      z-index: 1;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(255, 170, 210, 0.7);
       color: #999;
       font-size: 0.9rem;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     @media (max-width: 768px) {
       body {
-        padding: 35px 16px 60px;
+        padding: 34px 16px 64px;
       }
 
       main {
-        margin-top: 55px;
+        margin-top: 54px;
       }
 
-      h1 {
-        font-size: 2rem;
-      }
-
-      .subtitle {
-        margin-bottom: 40px;
+      .page-hero {
+        padding: 30px 20px 26px;
+        margin-bottom: 42px;
       }
 
       .timeline::before {
-        left: 18px;
+        left: 22px;
+      }
+
+      .timeline::after {
+        left: 22px;
       }
 
       .timeline-item {
-        padding-left: 50px;
+        padding-left: 56px;
         margin-bottom: 34px;
       }
 
       .timeline-period {
         position: static;
-        width: auto;
+        width: fit-content;
+        max-width: 100%;
+        margin-bottom: 10px;
         text-align: left;
-        margin-bottom: 8px;
-        font-size: 1rem;
+        font-size: 0.92rem;
       }
 
       .timeline-dot {
-        left: 10px;
-        top: 4px;
-        width: 18px;
-        height: 18px;
+        left: 13px;
+        top: 8px;
+        width: 20px;
+        height: 20px;
       }
 
       .timeline-card {
-        padding: 18px 18px;
+        padding: 20px 20px;
+        border-radius: 20px;
       }
 
       .timeline-card h2 {
-        font-size: 1.12rem;
+        font-size: 1.15rem;
       }
 
       .timeline-card ul {
@@ -255,15 +494,37 @@
       }
 
       h1 {
-        font-size: 1.7rem;
+        font-size: 1.75rem;
       }
 
       .subtitle {
         font-size: 0.92rem;
       }
 
+      .page-hero {
+        border-radius: 26px;
+      }
+
+      .page-hero::before {
+        border-radius: 20px;
+      }
+
       .timeline-card {
-        border-radius: 16px;
+        padding: 18px 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      .timeline-item {
+        opacity: 1;
+        transform: none;
       }
     }
   </style>
@@ -272,12 +533,20 @@
 <body>
   <a href="index.html" class="home-button" aria-label="홈으로 이동">HOME</a>
 
+  <span class="petal one"></span>
+  <span class="petal two"></span>
+  <span class="petal three"></span>
+  <span class="petal four"></span>
+
   <main>
-    <h1>TIMELINE</h1>
-    <p class="subtitle">
-      드림 시간순 사건 & 설정 정리<br>
-      시간대별 사건과 캐릭터 나이
-    </p>
+    <header class="page-hero">
+      <span class="kicker">DREAM CHRONICLE</span>
+      <h1>TIMELINE</h1>
+      <p class="subtitle">
+        드림 시간순 사건 & 설정 정리<br>
+        시간대별 사건과 캐릭터 나이
+      </p>
+    </header>
 
     <section class="timeline" aria-label="드림 시간순 타임라인">
 
@@ -315,7 +584,7 @@
           <ul>
             <li>누아는 드레스로자 외곽에서 거주</li>
             <li>가끔 본성에 출입하며 돈키호테 패밀리와 접촉함</li>
-            <li>도플라밍고는 누아의 자유에 불만을 가짐 </li>
+            <li>도플라밍고는 누아의 자유에 불만을 가짐</li>
             <li>언젠가 트라우마를 심어 재구속하려는 계획이 자리 잡기 시작함</li>
             <li>누아는 세상 경험 없이 순수하고 깨끗한 상태를 유지함</li>
           </ul>
@@ -368,7 +637,7 @@
       </article>
 
       <article class="timeline-item">
-        <div class="timeline-period">17세<br>원작 1부 시점 (2년 전)</div>
+        <div class="timeline-period">17세<br>원작 1부 시점<br>(2년 전)</div>
         <div class="timeline-dot"></div>
 
         <div class="timeline-card">
@@ -379,12 +648,12 @@
           </p>
 
           <ul>
-            <li>알라바스타 사건에서 크로커다일이 루피에게 패배.</li>
-            <li>원작에서는 임펠다운에 수감되지만, 드림 설정에서는 부하와 누아의 개입으로 탈출.</li>
-            <li>공식 기록상 크로커다일은 도주 처리.</li>
-            <li>크로커다일 칠무해 자격은 박탈.</li>
+            <li>알라바스타 사건에서 크로커다일이 루피에게 패배</li>
+            <li>원작에서는 임펠다운에 수감되지만, 드림 설정에서는 부하와 누아의 개입으로 탈출</li>
+            <li>공식 기록상 크로커다일은 도주 처리</li>
+            <li>크로커다일 칠무해 자격은 박탈</li>
             <li>은신 후에도 누아와의 생활은 지속됨</li>
-            <li>도플라밍고는 아직 누아의 위치를 모름. 사망 추정중</li>
+            <li>도플라밍고는 아직 누아의 위치를 모름. 사망 추정 중</li>
           </ul>
         </div>
       </article>
@@ -424,9 +693,9 @@
           <ul>
             <li>도플라밍고와 누아의 서사를 쌓기 좋은 구간</li>
             <li>전쟁 이후 흔들린 누아의 감정과 신체 상태를 정리할 수 있음</li>
-            <li>도플라밍고의 회유, 집착, 심리전이 본격화 됨</li>
+            <li>도플라밍고의 회유, 집착, 심리전이 본격화됨</li>
             <li>크로커다일과의 관계도 보호, 안정, 불안이 섞인 방향으로 깊어질 수 있음</li>
-            <li>인물들과의 관계 쌓기 좋은 시기.</li>
+            <li>인물들과의 관계 쌓기 좋은 시기</li>
           </ul>
 
           <p class="note">
@@ -436,7 +705,7 @@
       </article>
 
       <article class="timeline-item">
-        <div class="timeline-period">19세 <br> 원작 2부 (2년 후) </div>
+        <div class="timeline-period">19세<br>원작 2부<br>(2년 후)</div>
         <div class="timeline-dot"></div>
 
         <div class="timeline-card">
@@ -457,6 +726,29 @@
 
     </section>
   </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = document.querySelectorAll('.timeline-item');
+
+      if (!('IntersectionObserver' in window)) {
+        items.forEach(item => item.classList.add('visible'));
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, {
+        threshold: 0.12
+      });
+
+      items.forEach(item => observer.observe(item));
+    });
+  </script>
 </body>
 
 </html>
