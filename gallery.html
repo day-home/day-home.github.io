@@ -81,6 +81,48 @@
       box-shadow: 0 4px 12px rgba(255, 179, 217, 0.4);
     }
 
+    .home-button {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background-color: white;
+      color: #333;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      transition: all 0.3s ease;
+      font-family: 'Noto Serif KR', serif;
+    }
+
+    .home-button:hover {
+      background-color: #ffb3d9;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 179, 217, 0.4);
+    }
+
+    .home-button:focus-visible {
+      outline: 2px solid #ffb3d9;
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 480px) {
+      .home-button {
+        top: 12px;
+        left: 12px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+    }
+    
     .gallery {
       gap: 20px;
     }
@@ -303,6 +345,9 @@
 </head>
 
 <body>
+
+  <a href="index.html" class="home-button" aria-label="홈으로 이동">HOME</a>
+  
   <!-- 이미지 확대 모달 -->
   <div class="modal" id="imageModal">
     <span class="modal-close" id="modalClose" role="button" tabindex="0" aria-label="모달 닫기">×</span>
