@@ -21,7 +21,8 @@
       background-color: #fff7fb;
       color: #444;
       font-family: 'Gowun Dodum', sans-serif;
-      padding: 40px 20px;
+      min-height: 100vh;
+      padding: 40px 20px 70px;
     }
 
     .home-button {
@@ -51,216 +52,407 @@
       box-shadow: 0 4px 12px rgba(255, 179, 217, 0.4);
     }
 
+    .home-button:focus-visible {
+      outline: 2px solid #ffb3d9;
+      outline-offset: 2px;
+    }
+
     main {
-      max-width: 900px;
-      margin: 60px auto 0;
+      max-width: 950px;
+      margin: 55px auto 0;
     }
 
     h1 {
       text-align: center;
-      font-size: 2.3rem;
-      margin-bottom: 12px;
+      font-size: 2.5rem;
       color: #333;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+      font-weight: 400;
     }
 
-    .sub {
+    .subtitle {
       text-align: center;
       color: #777;
-      margin-bottom: 50px;
       font-size: 1rem;
+      margin-bottom: 55px;
+      line-height: 1.7;
     }
 
     .timeline {
       position: relative;
-      max-width: 800px;
+      max-width: 880px;
       margin: 0 auto;
-      padding-left: 120px;
     }
 
     .timeline::before {
       content: "";
       position: absolute;
       top: 0;
-      left: 95px;
+      bottom: 0;
+      left: 145px;
       width: 4px;
-      height: 100%;
       background: #ffc7e2;
       border-radius: 999px;
     }
 
     .timeline-item {
       position: relative;
-      margin-bottom: 40px;
-      min-height: 80px;
+      padding-left: 190px;
+      margin-bottom: 42px;
     }
 
-    .timeline-date {
+    .timeline-period {
       position: absolute;
-      left: -120px;
-      top: 5px;
-      width: 90px;
+      left: 0;
+      top: 8px;
+      width: 115px;
       text-align: right;
-      font-size: 1rem;
       color: #aa6c8f;
+      font-size: 1.05rem;
       font-weight: bold;
+      line-height: 1.4;
     }
 
     .timeline-dot {
       position: absolute;
-      left: -33px;
+      left: 137px;
       top: 10px;
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
       background-color: #ff9fcb;
       border: 4px solid #fff7fb;
-      border-radius: 50%;
       box-shadow: 0 0 0 3px #ffd5e8;
     }
 
-    .timeline-content {
-      background: white;
-      border-radius: 18px;
-      padding: 18px 22px;
+    .timeline-card {
+      background-color: white;
+      border-radius: 20px;
+      padding: 22px 24px;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
       text-align: left;
     }
 
-    .timeline-content h2 {
-      font-size: 1.15rem;
+    .timeline-card h2 {
       color: #333;
-      margin-bottom: 8px;
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+      line-height: 1.5;
     }
 
-    .timeline-content p {
-      font-size: 0.98rem;
-      line-height: 1.7;
-      color: #666;
+    .age {
+      background-color: #fff0f7;
+      color: #8c5c75;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 14px;
     }
 
-    .timeline-content .small {
-      display: block;
-      margin-top: 10px;
-      font-size: 0.88rem;
+    .timeline-card ul {
+      list-style: none;
+      line-height: 1.8;
+      color: #555;
+      font-size: 1rem;
+    }
+
+    .timeline-card li {
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 6px;
+    }
+
+    .timeline-card li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #ff8fc1;
+      font-weight: bold;
+    }
+
+    .bridge-card {
+      background-color: #fff0f7;
+      border: 1px dashed #ffaad2;
+    }
+
+    .bridge-card h2 {
+      color: #9a5e7d;
+    }
+
+    .note {
+      margin-top: 12px;
       color: #999;
+      font-size: 0.9rem;
+      line-height: 1.6;
     }
 
     @media (max-width: 768px) {
-      .timeline {
-        padding-left: 70px;
+      body {
+        padding: 35px 16px 60px;
+      }
+
+      main {
+        margin-top: 55px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .subtitle {
+        margin-bottom: 40px;
       }
 
       .timeline::before {
-        left: 30px;
+        left: 18px;
       }
 
-      .timeline-date {
+      .timeline-item {
+        padding-left: 50px;
+        margin-bottom: 34px;
+      }
+
+      .timeline-period {
         position: static;
         width: auto;
         text-align: left;
         margin-bottom: 8px;
-        color: #aa6c8f;
-        font-size: 0.95rem;
+        font-size: 1rem;
       }
 
       .timeline-dot {
-        left: -49px;
-        top: 32px;
+        left: 10px;
+        top: 4px;
+        width: 18px;
+        height: 18px;
       }
 
-      .timeline-item {
-        margin-bottom: 28px;
+      .timeline-card {
+        padding: 18px 18px;
+      }
+
+      .timeline-card h2 {
+        font-size: 1.12rem;
+      }
+
+      .timeline-card ul {
+        font-size: 0.95rem;
+      }
+
+      .age {
+        font-size: 0.87rem;
       }
     }
 
     @media (max-width: 480px) {
-      h1 {
-        font-size: 1.8rem;
-      }
-
-      .sub {
-        font-size: 0.95rem;
-      }
-
-      .timeline-content {
-        padding: 16px 18px;
-      }
-
-      .timeline-content h2 {
-        font-size: 1.05rem;
-      }
-
-      .timeline-content p {
-        font-size: 0.93rem;
-      }
-
       .home-button {
         top: 12px;
         left: 12px;
         padding: 8px 12px;
         font-size: 0.8rem;
       }
+
+      h1 {
+        font-size: 1.7rem;
+      }
+
+      .subtitle {
+        font-size: 0.92rem;
+      }
+
+      .timeline-card {
+        border-radius: 16px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <a href="index.html" class="home-button">HOME</a>
+  <a href="index.html" class="home-button" aria-label="홈으로 이동">HOME</a>
 
   <main>
     <h1>TIMELINE</h1>
-    <p class="sub">시간의 흐름에 따라 정리한 기록</p>
+    <p class="subtitle">
+      드림 시간순 사건 & 설정 정리<br>
+      시간대별 사건과 캐릭터 나이
+    </p>
 
-    <section class="timeline">
+    <section class="timeline" aria-label="드림 시간순 타임라인">
 
-      <div class="timeline-item">
-        <div class="timeline-date">어린 시절</div>
+      <article class="timeline-item">
+        <div class="timeline-period">0~6세</div>
         <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h2>첫 시작</h2>
-          <p>
-            이 시기의 설정이나 사건을 적는 칸.  
-            간단한 소개나 배경 설명을 넣으면 됨.
-          </p>
-          <span class="small">예: 드레스로자 / 보호받던 시기</span>
-        </div>
-      </div>
 
-      <div class="timeline-item">
-        <div class="timeline-date">이후</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h2>중요 사건 발생</h2>
-          <p>
-            캐릭터 관계 변화, 사건, 전환점 같은 걸 적으면 좋음.
-          </p>
-          <span class="small">예: 관계의 균열 / 떠남 / 재회</span>
-        </div>
-      </div>
+        <div class="timeline-card">
+          <h2>드레스로자의 온실</h2>
 
-      <div class="timeline-item">
-        <div class="timeline-date">몇 년 후</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h2>새로운 만남</h2>
-          <p>
-            여기에는 다른 인물과의 만남이나 세계관 변화 같은 걸 적을 수 있음.
+          <p class="age">
+            누아 0~6세 / 도플라밍고 22~28세 / 크로커다일 27~33세 / 에이스 3~9세 / 루피 0~6세
           </p>
-          <span class="small">예: 크로커다일과 조우</span>
-        </div>
-      </div>
 
-      <div class="timeline-item">
-        <div class="timeline-date">현재</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <h2>지금의 상태</h2>
-          <p>
-            현재 관계, 분위기, 앞으로의 방향 같은 내용을 정리하면 깔끔함.
-          </p>
-          <span class="small">예: 현재의 관계성과 감정선</span>
+          <ul>
+            <li>누아는 드레스로자 본성 및 외곽 별채에서 도플라밍고에게 길러짐</li>
+            <li>세상과 단절된 “온실 속 화초” 상태</li>
+            <li>도플라밍고는 보호자이자 누아의 절대적인 애착 대상</li>
+            <li>도플라밍고는 이미 소유욕 기반의 통제를 시작함</li>
+          </ul>
         </div>
-      </div>
+      </article>
+
+      <article class="timeline-item">
+        <div class="timeline-period">6~14세</div>
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-card">
+          <h2>외곽 별채의 성장기</h2>
+
+          <p class="age">
+            누아 6~14세 / 도플라밍고 28~36세 / 크로커다일 33~41세 / 에이스 9~17세 / 루피 6~14세
+          </p>
+
+          <ul>
+            <li>누아는 드레스로자 외곽에서 거주</li>
+            <li>가끔 본성에 출입하며 패밀리와 접촉함</li>
+            <li>도플라밍고의 소유욕은 점점 강화됨</li>
+            <li>언젠가 트라우마를 심어 재구속하려는 계획이 자리 잡기 시작함</li>
+            <li>누아는 세상 경험 없이 순수하고 무방비한 상태를 유지함</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="timeline-item">
+        <div class="timeline-period">14~15세</div>
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-card">
+          <h2>계획적 방치와 표류</h2>
+
+          <p class="age">
+            누아 14~15세 / 도플라밍고 36~37세 / 크로커다일 41~42세 / 에이스 17~18세 / 루피 14~15세
+          </p>
+
+          <ul>
+            <li>도플라밍고는 누아와 함께 여행을 떠난 뒤 계획적으로 방치함</li>
+            <li>누아는 버려졌다는 충격으로 멘탈이 붕괴된 채 섬에 표류함</li>
+            <li>이후 소규모 섬을 경유함</li>
+            <li>해류와 상선의 도움으로 알라바스타 근처에 도착함</li>
+            <li>크로커다일과 첫 조우하고, 보호를 받기 시작함</li>
+            <li>도플라밍고는 초반에 방심했고, 스마일 및 해군 견제로 인해 추적에 실패함</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="timeline-item">
+        <div class="timeline-period">15~16세</div>
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-card">
+          <h2>크로커다일과의 동거 1년차</h2>
+
+          <p class="age">
+            누아 15~16세 / 도플라밍고 37~38세 / 크로커다일 42~43세 / 에이스 18~19세 / 루피 15~16세
+          </p>
+
+          <ul>
+            <li>크로커다일과의 동거 1년차</li>
+            <li>누아는 크로커다일에게 강하게 붙어 있는 껌딱지 상태가 됨</li>
+            <li>크로커다일과의 관계를 통해 치유 관계가 확립됨</li>
+            <li>누아의 정신은 서서히 회복됨</li>
+            <li>알라바스타 근처에서 에이스와 첫 만남을 가짐</li>
+            <li>짧은 항해와 사소한 모험을 통해 에이스와 친구 관계가 형성됨</li>
+            <li>이 시기부터 삼각 구도의 복선이 준비됨</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="timeline-item">
+        <div class="timeline-period">17세<br>원작 2년 전</div>
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-card">
+          <h2>알라바스타 사건 이후</h2>
+
+          <p class="age">
+            누아 17세 / 도플라밍고 39세 / 크로커다일 44세 / 에이스 20세 / 루피 17세
+          </p>
+
+          <ul>
+            <li>알라바스타 사건에서 크로커다일이 패배함</li>
+            <li>원작에서는 임펠다운에 수감되지만, 드림 설정에서는 부하와 누아의 개입으로 탈출함</li>
+            <li>공식 기록상 크로커다일은 도주 처리됨</li>
+            <li>칠무해 자격은 박탈됨</li>
+            <li>은신 후에도 누아와의 껌딱지 생활은 지속됨</li>
+            <li>도플라밍고는 아직 누아의 위치를 모름</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="timeline-item">
+        <div class="timeline-period">정상전쟁<br>2년 전</div>
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-card">
+          <h2>마린포드 참전</h2>
+
+          <p class="age">
+            누아 17세 / 도플라밍고 39세 / 크로커다일 44세 / 에이스 20세 / 루피 17세
+          </p>
+
+          <ul>
+            <li>누아는 에이스를 구하기 위해 마린포드에 참전함</li>
+            <li>크로커다일은 보호 목적과 함께 은근히 전장에 개입함</li>
+            <li>도플라밍고는 전쟁에 참여하지만, 관망과 심리전을 중심으로 움직임</li>
+            <li>전쟁 이후 누아의 멘탈과 신체가 크게 흔들림</li>
+            <li>이 시점 이후 도플라밍고와의 본격적인 재회 및 회유가 시작될 수 있음</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="timeline-item">
+        <div class="timeline-period">2년 공백</div>
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-card bridge-card">
+          <h2>흔들린 뒤의 재구성</h2>
+
+          <p class="age">
+            정상전쟁 이후 ~ 원작 2년 후 이전
+          </p>
+
+          <ul>
+            <li>도플라밍고와 누아의 서사를 쌓기 좋은 구간</li>
+            <li>전쟁 이후 흔들린 누아의 감정과 신체 상태를 정리할 수 있음</li>
+            <li>도플라밍고의 회유, 집착, 심리전이 본격화될 수 있음</li>
+            <li>크로커다일과의 관계도 보호, 안정, 불안이 섞인 방향으로 깊어질 수 있음</li>
+          </ul>
+
+          <p class="note">
+            이 부분은 나중에 사건을 더 추가하기 좋은 “비어 있는 챕터”로 두면 좋아.
+          </p>
+        </div>
+      </article>
+
+      <article class="timeline-item">
+        <div class="timeline-period">2년 후</div>
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-card">
+          <h2>관계 안정기와 후반 구도</h2>
+
+          <p class="age">
+            누아 19세 / 도플라밍고 41세 / 크로커다일 46세 / 에이스 22세 / 루피 19세
+          </p>
+
+          <ul>
+            <li>정상전쟁 이후 각자 변화함</li>
+            <li>도플라밍고는 루피에게 패배한 뒤 임펠다운 또는 해군 수감 상태가 됨</li>
+            <li>누아와 크로커다일의 관계는 안정기에 들어감</li>
+            <li>삼각관계의 후반부가 진행됨</li>
+          </ul>
+        </div>
+      </article>
 
     </section>
   </main>
