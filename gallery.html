@@ -291,7 +291,7 @@
     .gallery-message {
       color: #8c5c75;
       padding: 18px;
-      text-align: left;
+      text-align: center;
     }
 
     .art-card {
@@ -458,12 +458,28 @@
 
     .modal-caption {
       display: inline-block;
+      max-width: min(820px, 92vw);
       margin-top: 12px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.92);
       color: #8c5c75;
       font-size: 0.92rem;
+      line-height: 1.7;
+      text-align: center;
+      white-space: normal;
+    }
+
+    .modal-caption strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #70465d;
+      font-weight: 700;
+    }
+
+    .modal-note {
+      display: block;
+      margin-top: 4px;
     }
 
     .modal-close {
@@ -656,6 +672,15 @@
 
     const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
     async function loadGalleryImages() {
       const gallery = document.getElementById('gallery');
 
@@ -663,7 +688,7 @@
 
       const { data, error } = await client
         .from('gallery_images')
-        .select('id, image_url, alt, created_at')
+        .select('id, image_url, alt, note, created_at')
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -682,6 +707,7 @@
       data.forEach(image => {
         const figure = document.createElement('figure');
         figure.className = 'art-card';
+        figure.dataset.note = image.note || '';
 
         const img = document.createElement('img');
         img.src = image.image_url;
@@ -843,14 +869,22 @@
           return;
         }
 
+        const titleText = caption ? caption.textContent : img.alt;
+        const noteText = card.dataset.note || '';
+
         modal.classList.add('active');
         modalImage.src = img.src;
         modalImage.alt = img.alt;
-        modalCaption.textContent = caption ? caption.textContent : img.alt;
+
+        modalCaption.innerHTML = noteText
+          ? `<strong>${escapeHtml(titleText)}</strong><span class="modal-note">${escapeHtml(noteText).replace(/\n/g, '<br>')}</span>`
+          : escapeHtml(titleText);
       });
 
       const closeModal = () => {
         modal.classList.remove('active');
+        modalImage.src = '';
+        modalCaption.textContent = '';
       };
 
       modalClose.addEventListener('click', closeModal);
