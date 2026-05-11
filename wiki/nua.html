@@ -7,6 +7,44 @@
   <title>아트리타스 누아</title>
 
   <style>
+
+    .profile-img {
+      display: block;
+      width: 100%;
+      max-height: 360px;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border: 8px solid #fff;
+      border-radius: 22px;
+      box-shadow: 0 10px 24px rgba(210, 116, 160, 0.16);
+    }
+    
+    .pending {
+      color: #8a6f78;
+      border-bottom: 1px dashed rgba(180, 107, 145, 0.7);
+      cursor: help;
+    }
+    
+    .small-note {
+      color: #9b7b83;
+      font-size: 0.9em;
+    }
+    
+    .keyword-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    
+    .keyword-list span {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 179, 217, 0.22);
+      color: #9b5d7b;
+      font-size: 13px;
+    }
+    
     * {
       margin: 0;
       padding: 0;
@@ -158,34 +196,85 @@
       </p>
     </header>
 
-    <aside class="info-box">
-      <dl>
-        <div>
-          <dt>이름</dt>
-          <dd>아트리타스 누아</dd>
-        </div>
-        <div>
-          <dt>이명</dt>
-          <dd>미친개</dd>
-        </div>
-        <div>
-          <dt>나이</dt>
-          <dd>17세 → 19세</dd>
-        </div>
-        <div>
-          <dt>신장 / 체중</dt>
-          <dd>165cm / 58kg</dd>
-        </div>
-        <div>
-          <dt>소속</dt>
-          <dd>前 돈키호테 패밀리 / 현재 없음</dd>
-        </div>
-        <div>
-          <dt>능력</dt>
-          <dd>견문색 패기, 예민한 감각</dd>
-        </div>
-      </dl>
-    </aside>
+<aside class="info-box">
+  <img class="profile-img" src="../img/nua.png" alt="아트리타스 누아">
+
+  <dl>
+    <div>
+      <dt>이름</dt>
+      <dd>아트리타스 누아 <span class="small-note">(Atritas Nua)</span></dd>
+    </div>
+
+    <div>
+      <dt>이명</dt>
+      <dd>미친개</dd>
+    </div>
+
+    <div>
+      <dt>생일</dt>
+      <dd>2월 23일 <span class="small-note">/ 물고기자리</span></dd>
+    </div>
+
+    <div>
+      <dt>나이</dt>
+      <dd>17세 <span class="small-note">2년 전</span> → 19세 <span class="small-note">2년 후</span></dd>
+    </div>
+
+    <div>
+      <dt>신장 / 체중</dt>
+      <dd>165cm / 58kg</dd>
+    </div>
+
+    <div>
+      <dt>혈액형</dt>
+      <dd>F형 <span class="small-note">ABO식으로는 B형</span></dd>
+    </div>
+
+    <div>
+      <dt>출생지</dt>
+      <dd>
+        <span class="pending" title="드레스로자에서 자랐지만 출생지는 아직 확정되지 않음">신세계?</span>
+      </dd>
+    </div>
+
+    <div>
+      <dt>성장지</dt>
+      <dd>드레스로자</dd>
+    </div>
+
+    <div>
+      <dt>능력</dt>
+      <dd>견문색 패기 <span class="small-note">도플라밍고 감지에 특화</span></dd>
+    </div>
+
+    <div>
+      <dt>특성</dt>
+      <dd>촉각, 청각, 미각 중심의 예민한 감각</dd>
+    </div>
+
+    <div>
+      <dt>소속</dt>
+      <dd>前 돈키호테 패밀리 / 현재 없음</dd>
+    </div>
+
+    <div>
+      <dt>좋아하는 음식</dt>
+      <dd>고구마, 딸기, 케첩</dd>
+    </div>
+
+    <div>
+      <dt>싫어하는 음식</dt>
+      <dd>커피, 생토마토</dd>
+    </div>
+
+    <div>
+      <dt>취미</dt>
+      <dd>
+        <span class="pending" title="아직 확정되지 않은 설정">갯벌 진흙 만지기?</span>
+      </dd>
+    </div>
+  </dl>
+</aside>
 
     <section>
       <h2>개요</h2>
@@ -195,29 +284,108 @@
       </p>
       <p>
         자유로움을 사랑하지만, 버려짐에 대한 두려움을 마음속 깊이 품고 있다.
+        타인의 시선에는 크게 관심이 없으나, 자신이 소중하게 여기는 존재의 상태에는
+        집착적으로 가까운 관심을 보인다.
+      </p>
+    
+      <div class="keyword-list">
+        <span>감각적</span>
+        <span>즉흥적</span>
+        <span>자유로움</span>
+        <span>애착</span>
+        <span>버려짐 불안</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>성격</h2>
+      <p>
+        누아는 자존감이 높지만 타인의 시선에는 무관심한 편이다.
+        감정 표현은 본능적이고 즉흥적이며, 자신의 감각과 기분을 기준으로 행동한다.
+      </p>
+      <p>
+        타인의 감정에 완전히 둔한 것은 아니지만, 그 감정의 이유를 깊게 따지지는 않는다.
+        상대가 기분이 나쁘거나 분위기가 묘하다는 것은 날카롭게 느끼지만,
+        왜 그런지까지 매번 이해하려고 하지는 않는다.
+      </p>
+      <p>
+        사랑에 있어서도 확인받기보다는 자신이 느끼는 감정을 우선한다.
+        “내가 좋아하니까 곁에 있는 것”이라는 태도가 강하며,
+        소중한 존재에게는 서투른 방식으로 배려를 시도한다.
       </p>
     </section>
 
     <section>
+      <h2>식습관</h2>
+      <p>
+        누아는 감각 중심의 식사자다. 맛 자체보다 질감, 온도, 분위기를 중요하게 여기며,
+        포슬포슬하고 새콤달콤한 음식과 부드러운 식감을 선호한다.
+      </p>
+      <p>
+        고구마와 딸기를 특히 좋아하고, 생토마토는 싫어하지만 케첩이나 소스 형태는 괜찮아한다.
+        커피는 쓴맛도 싫어하지만, 마신 뒤 체력이 급격히 떨어지기 때문에 피한다.
+      </p>
+      <p>
+        불안할수록 식욕이 줄고, 안정될수록 먹는 양이 늘어난다.
+        누가 쳐다보는 상태에서 먹는 것을 불편해하며, 혼자 조용히 먹는 것을 선호한다.
+      </p>
+    </section>
+    
+    <section>
       <h2>과거와 현재</h2>
       <p>
         어린 시절 누아는
-        <a class="wiki-link" href="./doflamingo.html">도플라밍고</a>의 보호 아래 자랐다.
-        이후 도플라밍고가 의도적으로 그녀를 버리면서 깊은 트라우마가 형성되었다.
+        <a class="wiki-link" href="./doflamingo.html">도플라밍고</a>의 보호 아래
+        드레스로자 왕궁과 외곽 별채에서 자랐다.
+        출생지는 아직 확정되지 않았으나, 성장지는 드레스로자다.
       </p>
       <p>
-        방랑하던 누아는
-        <a class="wiki-link" href="./crocodile.html">크로커다일</a>의 영역에 들어오게 되고,
-        그에게 보호받으며 현재의 관계를 형성한다.
+        도플라밍고는 누아를 보호하는 동시에 세상과 단절된 환경에 두었고,
+        이후 의도적으로 그녀를 “쓸모없다”며 버렸다.
+        이 사건은 누아에게 깊은 트라우마로 남았다.
+      </p>
+      <p>
+        충격 속에서 방랑하던 누아는 선박을 통해 도플라밍고의 감시망을 벗어났고,
+        이후 <a class="wiki-link" href="./crocodile.html">크로커다일</a>의 영역에 들어오게 된다.
+        현재의 보호 관계는 이 시점부터 형성되었다.
+      </p>
+    </section>
+
+    <section>
+      <h2>초회복 실험</h2>
+      <p>
+        누아는 도플라밍고가 불로불사 연구에 착수하기 전,
+        인간의 회복 능력 강화를 목적으로 진행한 초회복 실험의 피실험체였다.
+      </p>
+      <p>
+        실험은 완전한 회복 능력을 만드는 데에는 실패했지만,
+        누아의 피부 조직은 흉터 없이 재생되는 체질로 변했다.
+        일반인보다 회복이 약간 빠르며, 중상 이상의 상처도 피부 표면에는 흉터가 남지 않는다.
+      </p>
+      <p>
+        다만 내부 장기 피로가 누적될 경우 회복력이 급격히 떨어진다.
+        겉보기에는 깨끗하고 건강해 보이지만, 몸 안쪽의 피로는 쉽게 쌓이는 편이다.
       </p>
     </section>
 
     <section>
       <h2>관계</h2>
+    
       <p>
-        크로커다일은 누아에게 보호자이자 안식처에 가까운 존재다.
-        도플라밍고는 과거의 보호자이자 상처의 원인이고,
-        에이스는 통제나 소유가 없는 자유로운 신뢰 관계에 가깝다.
+        <a class="wiki-link" href="./crocodile.html">크로커다일</a>은 누아에게
+        보호자이자 가장 편히 머무를 수 있는 안식처에 가깝다.
+        누아는 그가 자신을 어떻게 생각하는지보다,
+        자신이 그를 좋아한다는 사실을 더 중요하게 여긴다.
+      </p>
+    
+      <p>
+        <a class="wiki-link" href="./doflamingo.html">도플라밍고</a>는 과거의 보호자이자
+        상처의 원인이다. 누아에게 그는 애정과 트라우마, 회귀 본능이 동시에 얽힌 존재다.
+      </p>
+    
+      <p>
+        <a class="wiki-link" href="./ace.html">에이스</a>는 통제나 소유가 없는 자유로운 신뢰 관계에 가깝다.
+        누아에게 에이스는 동등하고 인간적인 애정을 알려주는 존재다.
       </p>
     </section>
   </main>
