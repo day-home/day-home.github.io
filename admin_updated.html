@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>GALLERY ADMIN</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 15% 12%, rgba(255, 190, 220, 0.45), transparent 28%),
+        radial-gradient(circle at 82% 16%, rgba(255, 226, 240, 0.95), transparent 32%),
+        radial-gradient(circle at 50% 100%, rgba(255, 210, 232, 0.62), transparent 38%),
+        #fff7fb;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #444;
+      padding: 24px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 480px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(255, 190, 220, 0.8);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 12px 30px rgba(210, 116, 160, 0.18);
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(255, 190, 220, 0.8);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 12px 30px rgba(210, 116, 160, 0.14);
+      margin-bottom: 24px;
+    }
+
+    h1,
+    h2 {
+      margin: 0 0 18px;
+      text-align: center;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 6px;
+      font-size: 0.9rem;
+      color: #8c5c75;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 1rem;
+      background: white;
+      font-family: inherit;
+    }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    button {
+      padding: 11px 14px;
+      border: none;
+      border-radius: 14px;
+      background: #ffb3d9;
+      color: white;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ff99cc;
+    }
+
+    .danger {
+      background: #999;
+    }
+
+    .danger:hover {
+      background: #777;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .status {
+      margin-top: 16px;
+      color: #8c5c75;
+      line-height: 1.6;
+      white-space: pre-line;
+      text-align: center;
+      font-size: 0.92rem;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .top-actions a,
+    .top-actions button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      min-width: 120px;
+    }
+
+    .link-btn {
+      padding: 11px 14px;
+      border-radius: 14px;
+      background: white;
+      color: #8c5c75;
+      border: 1px solid rgba(255, 190, 220, 0.8);
+    }
+
+    .upload-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .upload-actions button {
+      flex: 1;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 10px;
+      align-items: end;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .filter-row label {
+      margin-top: 0;
+    }
+
+    .filter-row > div {
+      flex: 1 1 220px;
+    }
+
+    .image-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+      user-select: none;
+    }
+
+    .image-card {
+      background: white;
+      border: 1px solid rgba(255, 190, 220, 0.8);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(210, 116, 160, 0.12);
+      cursor: grab;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .image-card.dragging {
+      opacity: 0.45;
+      transform: scale(0.98);
+    }
+
+    .image-card img {
+      display: block;
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #fff0f7;
+    }
+
+    .image-card-body {
+      padding: 12px;
+    }
+
+    .image-card input,
+    .image-card textarea,
+    .image-card select {
+      font-size: 0.9rem;
+      padding: 10px;
+    }
+
+    .image-card textarea {
+      min-height: 80px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .card-actions button {
+      flex: 1;
+      font-size: 0.85rem;
+      padding: 9px 8px;
+    }
+
+    .small {
+      margin-top: 8px;
+      color: #999;
+      font-size: 0.78rem;
+      word-break: break-all;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="box" id="loginBox">
+      <h1>ADMIN</h1>
+
+      <label for="email">관리자 이메일</label>
+      <input id="email" type="email" autocomplete="email">
+
+      <label for="password">비밀번호</label>
+      <input id="password" type="password" autocomplete="current-password">
+
+      <button id="loginBtn" style="width:100%; margin-top:16px;">로그인</button>
+
+      <div id="loginStatus" class="status"></div>
+    </div>
+
+    <div id="adminBox" class="hidden">
+      <div class="panel">
+        <h1>GALLERY ADMIN</h1>
+
+        <div class="top-actions">
+          <a class="link-btn" href="gallery.html">갤러리 보기</a>
+          <button id="refreshBtn" type="button">목록 새로고침</button>
+          <button id="logoutBtn" type="button" class="danger">로그아웃</button>
+        </div>
+
+        <div id="status" class="status"></div>
+      </div>
+
+      <div class="panel">
+        <h2>이미지 업로드</h2>
+
+        <label for="imageFile">올릴 이미지</label>
+        <input id="imageFile" type="file" accept="image/*" multiple>
+
+        <label for="sectionSelect">분류</label>
+        <select id="sectionSelect">
+          <option value="gallery">GALLERY</option>
+          <option value="sketchbook">SKETCHBOOK</option>
+        </select>
+
+        <label for="altText">짧은 제목 / 캡션</label>
+        <input id="altText" type="text" placeholder="예: 크로누아 · @아이디">
+
+        <label for="noteText">주석 / 부연설명</label>
+        <textarea id="noteText" placeholder="예: 트친분이 선물로 그려주신 그림.&#10;사진을 클릭했을 때만 보이게 하고 싶은 설명을 적어줘."></textarea>
+
+        <div class="upload-actions">
+          <button id="uploadBtn">이미지 업로드</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>등록된 이미지 목록</h2>
+
+        <div class="filter-row">
+          <div>
+            <label for="adminSectionFilter">관리할 분류</label>
+            <select id="adminSectionFilter">
+              <option value="gallery">GALLERY</option>
+              <option value="sketchbook">SKETCHBOOK</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="imageList" class="image-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL = 'https://dudbooumvtecogoixnxt.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_grHBsQLl5SyuMEjJfjJjIA_-7cNluPl';
+
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const loginBox = document.getElementById('loginBox');
+    const adminBox = document.getElementById('adminBox');
+    const loginStatus = document.getElementById('loginStatus');
+    const statusEl = document.getElementById('status');
+    const imageList = document.getElementById('imageList');
+    const adminSectionFilter = document.getElementById('adminSectionFilter');
+    const sectionSelect = document.getElementById('sectionSelect');
+
+    let draggedCard = null;
+    let orderChanged = false;
+
+    function setLoginStatus(message) {
+      loginStatus.textContent = message;
+    }
+
+    function setStatus(message) {
+      statusEl.textContent = message;
+    }
+
+    function showLoginBox() {
+      loginBox.classList.remove('hidden');
+      adminBox.classList.add('hidden');
+    }
+
+    function showAdminBox() {
+      loginBox.classList.add('hidden');
+      adminBox.classList.remove('hidden');
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function makeSafeFileName(fileName) {
+      return fileName
+        .normalize('NFC')
+        .replace(/[\\/:*?"<>|#%{}^~[\]`]/g, '_')
+        .replace(/\s+/g, '_');
+    }
+
+    async function checkSession() {
+      const { data } = await client.auth.getSession();
+
+      if (data.session) {
+        showAdminBox();
+        setStatus('로그인되어 있어.');
+        await loadAdminImages();
+      } else {
+        showLoginBox();
+      }
+    }
+
+    async function loadAdminImages() {
+      const section = adminSectionFilter.value;
+      imageList.innerHTML = '<p style="color:#8c5c75;">이미지 목록 불러오는 중...</p>';
+
+      const { data, error } = await client
+        .from('gallery_images')
+        .select('id, image_url, file_path, alt, note, section, sort_order, created_at, uploaded_by')
+        .eq('section', section)
+        .order('sort_order', { ascending: true })
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error(error);
+        imageList.innerHTML = '<p style="color:#8c5c75;">이미지 목록을 불러오지 못했어.</p>';
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        const label = section === 'sketchbook' ? '스케치북' : '갤러리';
+        imageList.innerHTML = `<p style="color:#8c5c75;">아직 ${label}에 등록된 이미지가 없어.</p>`;
+        return;
+      }
+
+      imageList.innerHTML = '';
+
+      data.forEach(image => {
+        const card = document.createElement('div');
+        card.className = 'image-card';
+        card.dataset.id = image.id;
+        card.draggable = true;
+
+        card.innerHTML = `
+          <img src="${image.image_url}" alt="${escapeHtml(image.alt || '갤러리 이미지')}">
+          <div class="image-card-body">
+            <label>분류</label>
+            <select data-section-input>
+              <option value="gallery" ${image.section === 'gallery' ? 'selected' : ''}>GALLERY</option>
+              <option value="sketchbook" ${image.section === 'sketchbook' ? 'selected' : ''}>SKETCHBOOK</option>
+            </select>
+
+            <label>짧은 제목 / 캡션</label>
+            <input type="text" value="${escapeHtml(image.alt || '')}" data-alt-input>
+
+            <label>주석 / 부연설명</label>
+            <textarea data-note-input>${escapeHtml(image.note || '')}</textarea>
+
+            <div class="card-actions">
+              <button type="button" data-save>수정</button>
+              <button type="button" class="danger" data-delete>삭제</button>
+            </div>
+
+            <div class="small">${escapeHtml(image.file_path || '')}</div>
+          </div>
+        `;
+
+        const sectionInput = card.querySelector('[data-section-input]');
+        const altInput = card.querySelector('[data-alt-input]');
+        const noteInput = card.querySelector('[data-note-input]');
+        const saveBtn = card.querySelector('[data-save]');
+        const deleteBtn = card.querySelector('[data-delete]');
+
+        saveBtn.addEventListener('click', async () => {
+          await updateImageInfo(
+            image.id,
+            altInput.value.trim(),
+            noteInput.value.trim(),
+            sectionInput.value
+          );
+        });
+
+        deleteBtn.addEventListener('click', async () => {
+          await deleteImage(image.id, image.file_path);
+        });
+
+        imageList.appendChild(card);
+      });
+
+      setupDragAndDrop();
+    }
+
+    async function updateImageInfo(id, newAlt, newNote, newSection) {
+      setStatus('수정 중...');
+
+      const { error } = await client
+        .from('gallery_images')
+        .update({
+          alt: newAlt,
+          note: newNote,
+          section: newSection
+        })
+        .eq('id', id);
+
+      if (error) {
+        console.error(error);
+        setStatus('수정 실패: ' + error.message);
+        return;
+      }
+
+      setStatus('수정 완료!');
+      await loadAdminImages();
+    }
+
+    async function deleteImage(id, filePath) {
+      const ok = confirm('정말 이 이미지를 삭제할까? 갤러리에서도 사라져.');
+
+      if (!ok) return;
+
+      setStatus('삭제 중...');
+
+      if (filePath) {
+        const { error: storageError } = await client
+          .storage
+          .from('gallery')
+          .remove([filePath]);
+
+        if (storageError) {
+          console.error(storageError);
+          setStatus('Storage 삭제 실패: ' + storageError.message);
+          return;
+        }
+      }
+
+      const { error: dbError } = await client
+        .from('gallery_images')
+        .delete()
+        .eq('id', id);
+
+      if (dbError) {
+        console.error(dbError);
+        setStatus('DB 삭제 실패: ' + dbError.message);
+        return;
+      }
+
+      setStatus('삭제 완료!');
+      await loadAdminImages();
+    }
+
+    function setupDragAndDrop() {
+      const cards = imageList.querySelectorAll('.image-card');
+
+      cards.forEach(card => {
+        card.addEventListener('dragstart', () => {
+          draggedCard = card;
+          orderChanged = false;
+          card.classList.add('dragging');
+        });
+
+        card.addEventListener('dragend', async () => {
+          card.classList.remove('dragging');
+
+          if (orderChanged) {
+            await saveImageOrder();
+          }
+
+          draggedCard = null;
+          orderChanged = false;
+        });
+
+        card.addEventListener('dragover', (e) => {
+          e.preventDefault();
+
+          if (!draggedCard || draggedCard === card) {
+            return;
+          }
+
+          const rect = card.getBoundingClientRect();
+          const shouldPlaceAfter = e.clientY > rect.top + rect.height / 2;
+
+          if (shouldPlaceAfter) {
+            card.after(draggedCard);
+          } else {
+            card.before(draggedCard);
+          }
+
+          orderChanged = true;
+        });
+      });
+    }
+
+    async function saveImageOrder() {
+      setStatus('순서 저장 중...');
+
+      const cards = Array.from(imageList.querySelectorAll('.image-card'));
+
+      const results = await Promise.all(
+        cards.map((card, index) => {
+          return client
+            .from('gallery_images')
+            .update({ sort_order: index + 1 })
+            .eq('id', Number(card.dataset.id));
+        })
+      );
+
+      const failed = results.find(result => result.error);
+
+      if (failed) {
+        console.error(failed.error);
+        setStatus('순서 저장 실패: ' + failed.error.message);
+        return;
+      }
+
+      setStatus('순서 저장 완료!');
+    }
+
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        setLoginStatus('이메일과 비밀번호를 입력해줘.');
+        return;
+      }
+
+      setLoginStatus('로그인 중...');
+
+      const { error } = await client.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) {
+        setLoginStatus('로그인 실패: ' + error.message);
+        return;
+      }
+
+      setLoginStatus('');
+      showAdminBox();
+      setStatus('로그인 성공!');
+      await loadAdminImages();
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await client.auth.signOut();
+      showLoginBox();
+      setStatus('');
+      setLoginStatus('로그아웃했어.');
+    });
+
+    document.getElementById('refreshBtn').addEventListener('click', async () => {
+      await loadAdminImages();
+      setStatus('목록 새로고침 완료!');
+    });
+
+    adminSectionFilter.addEventListener('change', async () => {
+      sectionSelect.value = adminSectionFilter.value;
+      await loadAdminImages();
+      setStatus('분류를 바꿨어.');
+    });
+
+    sectionSelect.addEventListener('change', () => {
+      adminSectionFilter.value = sectionSelect.value;
+    });
+
+    document.getElementById('uploadBtn').addEventListener('click', async () => {
+      const fileInput = document.getElementById('imageFile');
+      const altInput = document.getElementById('altText');
+      const noteInput = document.getElementById('noteText');
+      const files = Array.from(fileInput.files);
+
+      if (files.length === 0) {
+        setStatus('이미지를 먼저 선택해줘.');
+        return;
+      }
+
+      const { data: userData, error: userError } = await client.auth.getUser();
+
+      if (userError || !userData.user) {
+        setStatus('로그인이 필요해.');
+        return;
+      }
+
+      setStatus('업로드 중...');
+
+      let successCount = 0;
+      let failCount = 0;
+      const targetSection = sectionSelect.value;
+
+      for (const file of files) {
+        try {
+          if (!file.type.startsWith('image/')) {
+            failCount++;
+            continue;
+          }
+
+          const safeName = makeSafeFileName(file.name);
+          const uniqueName =
+            Date.now() +
+            '-' +
+            Math.random().toString(36).slice(2) +
+            '-' +
+            safeName;
+
+          const { error: uploadError } = await client
+            .storage
+            .from('gallery')
+            .upload(uniqueName, file, {
+              cacheControl: '3600',
+              upsert: false
+            });
+
+          if (uploadError) {
+            throw uploadError;
+          }
+
+          const { data: publicUrlData } = client
+            .storage
+            .from('gallery')
+            .getPublicUrl(uniqueName);
+
+          const imageUrl = publicUrlData.publicUrl;
+
+          const { error: insertError } = await client
+            .from('gallery_images')
+            .insert({
+              image_url: imageUrl,
+              file_path: uniqueName,
+              alt: altInput.value.trim() || file.name,
+              note: noteInput.value.trim(),
+              section: targetSection,
+              sort_order: 9999,
+              uploaded_by: userData.user.id
+            });
+
+          if (insertError) {
+            throw insertError;
+          }
+
+          successCount++;
+        } catch (error) {
+          console.error(error);
+          failCount++;
+        }
+      }
+
+      fileInput.value = '';
+      altInput.value = '';
+      noteInput.value = '';
+      adminSectionFilter.value = targetSection;
+
+      setStatus(`업로드 완료!\n성공: ${successCount}개\n실패: ${failCount}개`);
+
+      await loadAdminImages();
+    });
+
+    checkSession();
+  </script>
+</body>
+
+</html>
