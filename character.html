@@ -1,226 +1,235 @@
-<main class="character-page">
-  <section class="character-hero">
-    <p class="page-label">CHARACTER ARCHIVE</p>
-    <h1>Characters</h1>
-    <p>
-      세계관 속 주요 인물들의 간단한 소개입니다.
-      이름을 누르면 상세 설정 페이지로 이동합니다.
-    </p>
-  </section>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Characters</title>
 
-  <section class="character-grid">
+  <style>
+    .character-page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
 
-    <a class="character-card" href="./wiki/doflamingo.html">
-      <div class="character-img">
-        <img src="./img/doflamingo.png" alt="도플라밍고">
-      </div>
+    .character-hero {
+      margin-bottom: 42px;
+      text-align: center;
+    }
 
-      <div class="character-text">
-        <p class="character-role">PAST / OBSESSION</p>
-        <h2>도플라밍고</h2>
-        <p>
-          누아의 어린 시절을 보호한 과거의 보호자.
-          애정과 소유, 트라우마가 뒤섞인 관계의 시작점.
-        </p>
-        <span>상세 보기 →</span>
-      </div>
-    </a>
+    .page-label {
+      margin-bottom: 10px;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      color: #9b7b83;
+    }
 
-    <a class="character-card main-character" href="./wiki/nua.html">
-      <div class="character-img">
-        <img src="./img/nua.png" alt="아트리타스 누아">
-      </div>
+    .character-hero h1 {
+      margin: 0 0 14px;
+      font-size: 42px;
+      font-weight: 700;
+      color: #3b2c31;
+    }
 
-      <div class="character-text">
-        <p class="character-role">ORIGINAL CHARACTER</p>
-        <h2>아트리타스 누아</h2>
-        <p>
-          무해하게 웃지만, 감각과 애착으로 세상을 붙잡는 소녀.
-          자유로움을 사랑하면서도 버려짐에 대한 두려움을 품고 있다.
-        </p>
-        <span>상세 보기 →</span>
-      </div>
-    </a>
+    .character-hero p {
+      margin: 0 auto;
+      max-width: 520px;
+      line-height: 1.8;
+      color: #76666b;
+      font-size: 14px;
+    }
 
-    <a class="character-card" href="./wiki/crocodile.html">
-      <div class="character-img">
-        <img src="./img/crocodile.png" alt="크로커다일">
-      </div>
+    .character-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
 
-      <div class="character-text">
-        <p class="character-role">SHELTER / DRYNESS</p>
-        <h2>크로커다일</h2>
-        <p>
-          냉철하고 건조한 현실주의자.
-          누아에게는 보호자이자, 가장 편히 머무를 수 있는 안식처.
-        </p>
-        <span>상세 보기 →</span>
-      </div>
-    </a>
+    .character-card {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-height: 430px;
+      text-decoration: none;
+      color: inherit;
+      background: rgba(255, 252, 250, 0.9);
+      border: 1px solid rgba(145, 112, 120, 0.2);
+      border-radius: 22px;
+      box-shadow: 0 12px 30px rgba(90, 60, 70, 0.08);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
 
-    <a class="character-card" href="./wiki/ace.html">
-      <div class="character-img">
-        <img src="./img/ace.png" alt="에이스">
-      </div>
+    .character-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(90, 60, 70, 0.14);
+      border-color: rgba(145, 112, 120, 0.45);
+    }
 
-      <div class="character-text">
-        <p class="character-role">FREEDOM / TRUST</p>
-        <h2>에이스</h2>
-        <p>
-          통제도 소유도 없는 자유로운 신뢰 관계.
-          누아에게 동등하고 인간적인 애정을 알려주는 존재.
-        </p>
-        <span>상세 보기 →</span>
-      </div>
-    </a>
+    .character-img {
+      height: 230px;
+      background: #f1e8e3;
+      overflow: hidden;
+    }
 
-  </section>
-</main>
+    .character-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
+    .main-character {
+      border-color: rgba(152, 108, 122, 0.45);
+      background: linear-gradient(
+        180deg,
+        rgba(255, 250, 252, 0.95),
+        rgba(255, 252, 248, 0.95)
+      );
+    }
 
-.character-page {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 80px 24px;
-}
+    .character-text {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 22px 20px 20px;
+    }
 
-.character-hero {
-  margin-bottom: 42px;
-  text-align: center;
-}
+    .character-role {
+      margin: 0 0 8px;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      color: #a9828b;
+    }
 
-.page-label {
-  margin-bottom: 10px;
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  color: #9b7b83;
-}
+    .character-text h2 {
+      margin: 0 0 12px;
+      font-size: 21px;
+      color: #38292e;
+    }
 
-.character-hero h1 {
-  margin: 0 0 14px;
-  font-size: 42px;
-  font-weight: 700;
-  color: #3b2c31;
-}
+    .character-text p {
+      margin: 0;
+      line-height: 1.75;
+      font-size: 14px;
+      color: #6f6265;
+    }
 
-.character-hero p {
-  margin: 0 auto;
-  max-width: 520px;
-  line-height: 1.8;
-  color: #76666b;
-  font-size: 14px;
-}
+    .character-text span {
+      margin-top: auto;
+      padding-top: 20px;
+      font-size: 13px;
+      color: #8a4e60;
+      font-weight: 600;
+    }
 
-.character-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 22px;
-}
+    @media (max-width: 900px) {
+      .character-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
 
-.character-card {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-height: 430px;
-  text-decoration: none;
-  color: inherit;
-  background: rgba(255, 252, 250, 0.9);
-  border: 1px solid rgba(145, 112, 120, 0.2);
-  border-radius: 22px;
-  box-shadow: 0 12px 30px rgba(90, 60, 70, 0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
+    @media (max-width: 560px) {
+      .character-page {
+        padding: 54px 18px;
+      }
 
-.character-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 40px rgba(90, 60, 70, 0.14);
-  border-color: rgba(145, 112, 120, 0.45);
-}
+      .character-hero h1 {
+        font-size: 34px;
+      }
 
-.character-img {
-  height: 230px;
-  background: #f1e8e3;
-  overflow: hidden;
-}
+      .character-grid {
+        grid-template-columns: 1fr;
+      }
 
-.character-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+      .character-card {
+        min-height: auto;
+      }
 
-/* 누아 카드만 살짝 강조 */
-.main-character {
-  border-color: rgba(152, 108, 122, 0.45);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 250, 252, 0.95),
-    rgba(255, 252, 248, 0.95)
-  );
-}
+      .character-img {
+        height: 260px;
+      }
+    }
+  </style>
+</head>
 
-.character-text {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: 22px 20px 20px;
-}
+<body>
+  <main class="character-page">
+    <section class="character-hero">
+      <p class="page-label">CHARACTER ARCHIVE</p>
+      <h1>Characters</h1>
+      <p>
+        세계관 속 주요 인물들의 간단한 소개입니다.
+        이름을 누르면 상세 설정 페이지로 이동합니다.
+      </p>
+    </section>
 
-.character-role {
-  margin: 0 0 8px;
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  color: #a9828b;
-}
+    <section class="character-grid">
 
-.character-text h2 {
-  margin: 0 0 12px;
-  font-size: 21px;
-  color: #38292e;
-}
+      <a class="character-card" href="./wiki/doflamingo.html">
+        <div class="character-img">
+          <img src="./img/doflamingo.png" alt="도플라밍고">
+        </div>
 
-.character-text p {
-  margin: 0;
-  line-height: 1.75;
-  font-size: 14px;
-  color: #6f6265;
-}
+        <div class="character-text">
+          <p class="character-role">PAST / OBSESSION</p>
+          <h2>도플라밍고</h2>
+          <p>
+            누아의 어린 시절을 보호한 과거의 보호자.
+            애정과 소유, 트라우마가 뒤섞인 관계의 시작점.
+          </p>
+          <span>상세 보기 →</span>
+        </div>
+      </a>
 
-.character-text span {
-  margin-top: auto;
-  padding-top: 20px;
-  font-size: 13px;
-  color: #8a4e60;
-  font-weight: 600;
-}
+      <a class="character-card main-character" href="./wiki/nua.html">
+        <div class="character-img">
+          <img src="./img/nua.png" alt="아트리타스 누아">
+        </div>
 
-/* 태블릿 */
-@media (max-width: 900px) {
-  .character-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+        <div class="character-text">
+          <p class="character-role">ORIGINAL CHARACTER</p>
+          <h2>아트리타스 누아</h2>
+          <p>
+            무해하게 웃지만, 감각과 애착으로 세상을 붙잡는 소녀.
+            자유로움을 사랑하면서도 버려짐에 대한 두려움을 품고 있다.
+          </p>
+          <span>상세 보기 →</span>
+        </div>
+      </a>
 
-/* 모바일 */
-@media (max-width: 560px) {
-  .character-page {
-    padding: 54px 18px;
-  }
+      <a class="character-card" href="./wiki/crocodile.html">
+        <div class="character-img">
+          <img src="./img/crocodile.png" alt="크로커다일">
+        </div>
 
-  .character-hero h1 {
-    font-size: 34px;
-  }
+        <div class="character-text">
+          <p class="character-role">SHELTER / DRYNESS</p>
+          <h2>크로커다일</h2>
+          <p>
+            냉철하고 건조한 현실주의자.
+            누아에게는 보호자이자, 가장 편히 머무를 수 있는 안식처.
+          </p>
+          <span>상세 보기 →</span>
+        </div>
+      </a>
 
-  .character-grid {
-    grid-template-columns: 1fr;
-  }
+      <a class="character-card" href="./wiki/ace.html">
+        <div class="character-img">
+          <img src="./img/ace.png" alt="에이스">
+        </div>
 
-  .character-card {
-    min-height: auto;
-  }
+        <div class="character-text">
+          <p class="character-role">FREEDOM / TRUST</p>
+          <h2>에이스</h2>
+          <p>
+            통제도 소유도 없는 자유로운 신뢰 관계.
+            누아에게 동등하고 인간적인 애정을 알려주는 존재.
+          </p>
+          <span>상세 보기 →</span>
+        </div>
+      </a>
 
-  .character-img {
-    height: 260px;
-  }
-}
+    </section>
+  </main>
+</body>
+</html>
