@@ -211,15 +211,14 @@
     }
 
     .control-panel {
-      position: sticky;
-      top: 14px;
-      z-index: 50;
+      position: relative;
+      z-index: 1;
       width: fit-content;
       max-width: 100%;
       margin: 0 auto 28px;
       padding: 10px;
       border: 1px solid rgba(255, 190, 220, 0.75);
-      border-radius: 28px;
+      border-radius: 999px;
       background: rgba(255, 255, 255, 0.72);
       backdrop-filter: blur(14px);
       box-shadow: 0 12px 30px rgba(210, 116, 160, 0.14);
@@ -783,10 +782,10 @@ button:hover {
 button.active,
 .mode-btn.active,
 .section-btn.active {
-  background: var(--art-ink);
+  background: #8b4f62;
   color: #fffdfc;
-  border-color: var(--art-ink);
-  box-shadow: 0 10px 22px rgba(48, 43, 47, 0.16);
+  border-color: #8b4f62;
+  box-shadow: 0 10px 22px rgba(139, 79, 98, 0.22);
 }
 
 /* HOME */
