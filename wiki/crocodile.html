@@ -13,6 +13,20 @@
     rel="stylesheet">
 
   <style>
+    :root {
+      --green-dark: #041109;
+      --green-main: #0b2414;
+      --green-deep: #102f1c;
+      --purple-dark: #160b2b;
+      --purple-main: #5d357e;
+      --purple-soft: #caa7df;
+      --text-main: rgba(239, 232, 242, 0.88);
+      --text-soft: rgba(238, 224, 238, 0.74);
+      --border-main: rgba(136, 92, 160, 0.42);
+      --pink-main: #ffb3d9;
+      --pink-soft: #ffe1f1;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -24,28 +38,54 @@
     }
 
     body {
+      position: relative;
       min-height: 100vh;
       padding: 40px 20px;
+      overflow-x: hidden;
       background:
-        radial-gradient(circle at 14% 16%, rgba(226, 189, 143, 0.45), transparent 30%),
-        radial-gradient(circle at 86% 20%, rgba(255, 226, 240, 0.75), transparent 32%),
-        radial-gradient(circle at 50% 95%, rgba(188, 155, 119, 0.28), transparent 38%),
-        #fff8f1;
-      color: #3f3935;
+        radial-gradient(circle at 12% 10%, rgba(61, 25, 83, 0.58), transparent 32%),
+        radial-gradient(circle at 88% 18%, rgba(20, 75, 39, 0.72), transparent 36%),
+        radial-gradient(circle at 50% 95%, rgba(9, 33, 19, 0.95), transparent 42%),
+        linear-gradient(135deg, #041109 0%, #0b2414 38%, #160b2b 76%, #05040a 100%);
+      color: var(--text-main);
       font-family: 'Gowun Dodum', sans-serif;
     }
 
     body::before {
       content: "";
       position: fixed;
-      inset: 0;
+      inset: -35%;
+      z-index: 0;
       pointer-events: none;
-      background-image:
-        linear-gradient(rgba(164, 123, 83, 0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(164, 123, 83, 0.12) 1px, transparent 1px);
-      background-size: 42px 42px;
-      mask-image: radial-gradient(circle at center, black, transparent 78%);
-      opacity: 0.55;
+      background:
+        conic-gradient(
+          from 30deg at 28% 38%,
+          rgba(8, 36, 18, 0.95),
+          rgba(39, 18, 70, 0.58),
+          rgba(12, 72, 34, 0.64),
+          rgba(8, 7, 22, 0.82),
+          rgba(8, 36, 18, 0.95)
+        ),
+        radial-gradient(circle at 70% 30%, rgba(72, 30, 95, 0.36), transparent 34%),
+        radial-gradient(circle at 24% 74%, rgba(14, 75, 36, 0.46), transparent 38%);
+      filter: blur(30px);
+      opacity: 0.62;
+      mix-blend-mode: screen;
+      animation: crocodilePageInk 32s linear infinite;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(8, 28, 16, 0.22) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(45, 20, 76, 0.18) 1px, transparent 1px),
+        radial-gradient(circle at center, transparent 18%, rgba(0, 0, 0, 0.45) 100%);
+      background-size: 42px 42px, 42px 42px, auto;
+      opacity: 0.58;
     }
 
     .wiki-page {
@@ -54,36 +94,42 @@
       max-width: 920px;
       margin: 0 auto;
       padding: 34px;
-      border: 1px solid rgba(169, 125, 83, 0.45);
+      border: 1px solid rgba(99, 63, 132, 0.52);
       border-radius: 28px;
-      background: rgba(255, 255, 255, 0.78);
-      backdrop-filter: blur(12px);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(10, 26, 16, 0.9),
+          rgba(22, 13, 38, 0.84)
+        );
+      backdrop-filter: blur(14px);
       box-shadow:
-        0 18px 50px rgba(116, 82, 48, 0.15),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+        0 22px 58px rgba(0, 0, 0, 0.4),
+        inset 0 0 0 1px rgba(225, 205, 235, 0.07);
     }
 
     .back-link {
       display: inline-block;
       margin-bottom: 24px;
-      color: #8b6747;
+      color: #b58ad1;
       text-decoration: none;
       font-size: 14px;
     }
 
     .back-link:hover {
+      color: #f0c7e8;
       text-decoration: underline;
     }
 
     .wiki-header {
       margin-bottom: 30px;
       padding-bottom: 24px;
-      border-bottom: 1px dashed rgba(169, 125, 83, 0.55);
+      border-bottom: 1px dashed rgba(153, 103, 178, 0.42);
     }
 
     .wiki-label {
       margin-bottom: 10px;
-      color: #9d7350;
+      color: #b58ad1;
       font-size: 12px;
       letter-spacing: 0.18em;
       font-weight: bold;
@@ -91,7 +137,7 @@
 
     h1 {
       margin-bottom: 12px;
-      color: #2f2925;
+      color: #f1e8f5;
       font-family: 'Noto Serif KR', serif;
       font-size: 40px;
       font-weight: 500;
@@ -99,26 +145,36 @@
     }
 
     .subtitle {
-      color: #6b5b50;
+      color: var(--text-soft);
       line-height: 1.8;
     }
 
     .wiki-note {
       margin: 16px 0;
       padding: 14px 16px;
-      border-left: 4px solid #b28a64;
+      border-left: 4px solid #8b63b0;
       border-radius: 14px;
-      background: rgba(255, 244, 232, 0.75);
-      color: #6b5b50;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(54, 25, 84, 0.56),
+          rgba(11, 42, 25, 0.62)
+        );
+      color: rgba(242, 232, 244, 0.9);
       line-height: 1.8;
     }
 
     .info-box {
       margin: 28px 0;
       padding: 22px;
-      border: 1px solid rgba(169, 125, 83, 0.45);
+      border: 1px solid rgba(136, 92, 160, 0.46);
       border-radius: 22px;
-      background: rgba(255, 255, 255, 0.72);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(13, 39, 22, 0.68),
+          rgba(33, 18, 52, 0.6)
+        );
     }
 
     .profile-img {
@@ -128,9 +184,11 @@
       max-height: none;
       object-fit: contain;
       margin: 0 auto 20px;
-      border: 8px solid #fff;
+      border: 8px solid rgba(239, 232, 242, 0.92);
       border-radius: 22px;
-      box-shadow: 0 10px 24px rgba(116, 82, 48, 0.16);
+      box-shadow:
+        0 14px 32px rgba(0, 0, 0, 0.38),
+        0 0 30px rgba(90, 42, 128, 0.16);
     }
 
     .info-box dl {
@@ -145,22 +203,22 @@
     }
 
     .info-box dt {
-      color: #8b6747;
+      color: #b58ad1;
       font-weight: bold;
     }
 
     .info-box dd {
-      color: #4f4741;
+      color: rgba(239, 232, 242, 0.86);
     }
 
     .small-note {
-      color: #8d7a6c;
+      color: rgba(212, 190, 224, 0.8);
       font-size: 0.9em;
     }
 
     .pending {
-      color: #7a6557;
-      border-bottom: 1px dashed rgba(139, 103, 71, 0.75);
+      color: #d8b5ea;
+      border-bottom: 1px dashed rgba(216, 181, 234, 0.7);
       cursor: help;
     }
 
@@ -170,22 +228,22 @@
       gap: 8px;
       margin: 24px 0 8px;
       padding: 14px;
-      border: 1px solid rgba(169, 125, 83, 0.35);
+      border: 1px solid rgba(136, 92, 160, 0.38);
       border-radius: 18px;
-      background: rgba(255, 255, 255, 0.55);
+      background: rgba(10, 26, 16, 0.58);
     }
 
     .wiki-toc a {
       padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(178, 138, 100, 0.12);
-      color: #7a5538;
+      background: rgba(92, 54, 130, 0.32);
+      color: #e8c6ef;
       text-decoration: none;
       font-size: 13px;
     }
 
     .wiki-toc a:hover {
-      background: rgba(178, 138, 100, 0.22);
+      background: rgba(136, 92, 160, 0.48);
     }
 
     section {
@@ -195,8 +253,8 @@
     h2 {
       margin-bottom: 14px;
       padding-bottom: 8px;
-      border-bottom: 1px solid rgba(169, 125, 83, 0.42);
-      color: #3c3129;
+      border-bottom: 1px solid rgba(153, 103, 178, 0.42);
+      color: #eadff2;
       font-family: 'Noto Serif KR', serif;
       font-size: 25px;
       font-weight: 500;
@@ -204,7 +262,7 @@
 
     h3 {
       margin-bottom: 10px;
-      color: #7a5538;
+      color: #caa7df;
       font-size: 17px;
       font-weight: 600;
     }
@@ -212,7 +270,7 @@
     p {
       margin-bottom: 14px;
       line-height: 1.9;
-      color: #4f4741;
+      color: var(--text-main);
     }
 
     ul {
@@ -221,17 +279,17 @@
 
     li {
       line-height: 1.8;
-      color: #4f4741;
+      color: var(--text-main);
     }
 
     .wiki-link {
-      color: #8b6747;
+      color: #d8b5ea;
       text-decoration: none;
-      border-bottom: 1px dotted rgba(139, 103, 71, 0.7);
+      border-bottom: 1px dotted rgba(216, 181, 234, 0.7);
     }
 
     .wiki-link:hover {
-      background: rgba(178, 138, 100, 0.15);
+      background: rgba(216, 181, 234, 0.14);
     }
 
     .keyword-list,
@@ -243,11 +301,12 @@
     }
 
     .keyword-list span,
-    .tag-list span {
+    .tag-list span,
+    .fan-label {
       padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(178, 138, 100, 0.16);
-      color: #7a5538;
+      background: rgba(103, 55, 138, 0.34);
+      color: #e7c8ef;
       font-size: 13px;
     }
 
@@ -260,17 +319,38 @@
 
     .data-card {
       padding: 18px;
-      border: 1px solid rgba(169, 125, 83, 0.38);
+      border: 1px solid rgba(113, 86, 140, 0.4);
       border-radius: 18px;
-      background: rgba(255, 255, 255, 0.66);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(12, 42, 24, 0.66),
+          rgba(26, 15, 43, 0.58)
+        );
+    }
+
+    .data-card h3 {
+      color: #caa7df;
+    }
+
+    .data-card p,
+    .data-card li {
+      color: rgba(239, 232, 242, 0.84);
+      font-size: 14px;
+      line-height: 1.8;
     }
 
     .scene-box {
       margin-top: 18px;
       padding: 18px 20px;
       border-radius: 20px;
-      background: linear-gradient(135deg, rgba(255, 244, 232, 0.9), rgba(255, 255, 255, 0.75));
-      border: 1px dashed rgba(169, 125, 83, 0.55);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(15, 48, 28, 0.72),
+          rgba(40, 22, 65, 0.64)
+        );
+      border: 1px dashed rgba(132, 92, 160, 0.5);
     }
 
     .scene-box p:last-child {
@@ -280,21 +360,26 @@
     .line {
       display: block;
       margin: 8px 0;
-      color: #6b5b50;
+      color: rgba(239, 223, 244, 0.9);
       line-height: 1.8;
     }
 
     .wiki-details {
       margin-top: 18px;
-      border: 1px solid rgba(169, 125, 83, 0.38);
+      border: 1px solid rgba(136, 92, 160, 0.42);
       border-radius: 18px;
-      background: rgba(255, 255, 255, 0.63);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(13, 39, 22, 0.58),
+          rgba(31, 17, 50, 0.54)
+        );
       overflow: hidden;
     }
 
     .wiki-details summary {
       padding: 15px 18px;
-      color: #8b6747;
+      color: #d2a9e8;
       cursor: pointer;
       font-weight: bold;
     }
@@ -307,17 +392,220 @@
       display: inline-block;
       margin-left: 8px;
       padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(178, 138, 100, 0.14);
-      color: #8b6747;
       font-family: 'Gowun Dodum', sans-serif;
       font-size: 12px;
       vertical-align: middle;
     }
 
+    /* 누아 관계 섹션: 어두운 크로커다일 배경 위에 핑크빛이 스며드는 부분 */
+    .nua-relation {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      margin-top: 46px;
+      padding: 30px;
+      border: 1px solid rgba(255, 182, 222, 0.72);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 16% 8%, rgba(255, 205, 234, 0.62), transparent 34%),
+        radial-gradient(circle at 84% 18%, rgba(225, 174, 239, 0.36), transparent 30%),
+        radial-gradient(circle at 62% 88%, rgba(20, 80, 43, 0.48), transparent 42%),
+        linear-gradient(
+          135deg,
+          rgba(255, 242, 249, 0.9) 0%,
+          rgba(238, 220, 246, 0.76) 34%,
+          rgba(41, 77, 48, 0.68) 72%,
+          rgba(30, 17, 50, 0.74) 100%
+        );
+      box-shadow:
+        0 20px 54px rgba(255, 170, 216, 0.16),
+        0 0 60px rgba(255, 180, 225, 0.16),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+    }
+
+    .nua-relation::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      width: 760px;
+      height: 760px;
+      left: -260px;
+      top: -260px;
+      border-radius: 50%;
+      background:
+        conic-gradient(
+          from 15deg,
+          rgba(8, 40, 20, 0.72),
+          rgba(72, 32, 96, 0.45),
+          rgba(20, 92, 48, 0.5),
+          rgba(255, 204, 235, 0.26),
+          rgba(8, 40, 20, 0.72)
+        );
+      filter: blur(18px);
+      opacity: 0.78;
+      mix-blend-mode: multiply;
+      animation: relationGreenPurpleSwirl 24s linear infinite;
+    }
+
+    .nua-relation::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      width: 680px;
+      height: 680px;
+      right: -220px;
+      top: -170px;
+      border-radius: 47% 53% 45% 55%;
+      background:
+        radial-gradient(circle at 34% 30%, rgba(255, 238, 248, 0.88), transparent 22%),
+        radial-gradient(circle at 62% 68%, rgba(255, 175, 222, 0.58), transparent 28%),
+        conic-gradient(
+          from 120deg,
+          transparent 0deg,
+          rgba(255, 185, 225, 0.12) 34deg,
+          rgba(255, 190, 230, 0.66) 86deg,
+          rgba(222, 164, 240, 0.5) 132deg,
+          transparent 176deg,
+          rgba(255, 230, 244, 0.72) 235deg,
+          rgba(255, 180, 224, 0.22) 306deg,
+          transparent 360deg
+        );
+      filter: blur(20px);
+      opacity: 0.8;
+      mix-blend-mode: screen;
+      animation: relationPinkInk 15s ease-in-out infinite alternate;
+    }
+
+    .nua-relation > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .nua-relation h2 {
+      color: #3f2638;
+      border-bottom-color: rgba(196, 96, 154, 0.38);
+    }
+
+    .nua-relation p {
+      color: rgba(45, 35, 43, 0.9);
+    }
+
+    .nua-relation .wiki-link {
+      color: #9d3f76;
+      border-bottom-color: rgba(157, 63, 118, 0.65);
+    }
+
+    .nua-relation .wiki-link:hover {
+      background: rgba(255, 179, 217, 0.28);
+    }
+
+    .nua-relation .data-card {
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255, 250, 253, 0.7),
+          rgba(242, 218, 246, 0.48),
+          rgba(22, 72, 38, 0.22)
+        );
+      border-color: rgba(255, 179, 217, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .nua-relation .data-card h3 {
+      color: #8f3f70;
+    }
+
+    .nua-relation .data-card p {
+      color: rgba(48, 36, 45, 0.88);
+    }
+
+    .nua-relation .scene-box {
+      background:
+        radial-gradient(circle at 18% 0%, rgba(255, 191, 228, 0.48), transparent 36%),
+        linear-gradient(
+          135deg,
+          rgba(255, 248, 252, 0.64),
+          rgba(229, 204, 242, 0.46),
+          rgba(21, 74, 39, 0.3)
+        );
+      border-color: rgba(255, 179, 217, 0.62);
+      backdrop-filter: blur(10px);
+    }
+
+    .nua-relation .line {
+      color: rgba(62, 38, 57, 0.9);
+    }
+
+    .nua-relation .wiki-note {
+      border-left-color: #ff9fcb;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255, 235, 246, 0.66),
+          rgba(225, 199, 242, 0.38),
+          rgba(20, 70, 38, 0.28)
+        );
+      color: rgba(52, 39, 49, 0.92);
+      backdrop-filter: blur(10px);
+    }
+
+    .nua-relation .fan-label {
+      background: rgba(255, 179, 217, 0.42);
+      color: #8f3f70;
+    }
+
+    @keyframes crocodilePageInk {
+      0% {
+        transform: rotate(0deg) scale(1);
+      }
+
+      50% {
+        transform: rotate(180deg) scale(1.08);
+      }
+
+      100% {
+        transform: rotate(360deg) scale(1);
+      }
+    }
+
+    @keyframes relationGreenPurpleSwirl {
+      0% {
+        transform: rotate(0deg) scale(1);
+      }
+
+      50% {
+        transform: rotate(180deg) scale(1.08);
+      }
+
+      100% {
+        transform: rotate(360deg) scale(1);
+      }
+    }
+
+    @keyframes relationPinkInk {
+      0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 0.58;
+      }
+
+      45% {
+        transform: translate(-82px, 58px) rotate(95deg) scale(1.14);
+        opacity: 0.9;
+      }
+
+      100% {
+        transform: translate(-145px, 24px) rotate(165deg) scale(1.05);
+        opacity: 0.72;
+      }
+    }
+
     @media (max-width: 700px) {
       .data-grid {
         grid-template-columns: 1fr;
+      }
+
+      .nua-relation {
+        padding: 24px;
       }
     }
 
@@ -339,450 +627,19 @@
         grid-template-columns: 1fr;
         gap: 4px;
       }
+
+      .nua-relation {
+        padding: 22px;
+      }
     }
 
-    /* ================================
-   CROCODILE PAGE THEME
-   전체: 녹색 + 보라 + 검은 해적 분위기
-   누아 관계: 핑크빛이 스며드는 영역
-================================ */
-
-/* 페이지 전체 배경 */
-body {
-  background:
-    radial-gradient(circle at 12% 10%, rgba(61, 25, 83, 0.58), transparent 32%),
-    radial-gradient(circle at 88% 18%, rgba(20, 75, 39, 0.72), transparent 36%),
-    radial-gradient(circle at 50% 95%, rgba(9, 33, 19, 0.95), transparent 42%),
-    linear-gradient(135deg, #041109 0%, #0b2414 38%, #160b2b 76%, #05040a 100%);
-  color: #e8e0e8;
-}
-
-/* 전체 페이지에 흐르는 어두운 잉크/소용돌이 */
-body::before {
-  content: "";
-  position: fixed;
-  inset: -30%;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    conic-gradient(
-      from 30deg at 28% 38%,
-      rgba(8, 36, 18, 0.9),
-      rgba(39, 18, 70, 0.55),
-      rgba(12, 72, 34, 0.62),
-      rgba(8, 7, 22, 0.8),
-      rgba(8, 36, 18, 0.9)
-    ),
-    radial-gradient(circle at 70% 30%, rgba(72, 30, 95, 0.35), transparent 34%),
-    radial-gradient(circle at 24% 74%, rgba(14, 75, 36, 0.45), transparent 38%);
-  filter: blur(28px);
-  opacity: 0.58;
-  mix-blend-mode: screen;
-  animation: crocodilePageInk 28s linear infinite;
-}
-
-/* 검은 녹색 막 같은 그림자 */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(rgba(8, 28, 16, 0.22) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(45, 20, 76, 0.18) 1px, transparent 1px),
-    radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.35) 100%);
-  background-size: 42px 42px, 42px 42px, auto;
-  opacity: 0.55;
-}
-
-/* 본문 카드도 어둡게 */
-.wiki-page {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(10, 26, 16, 0.88),
-      rgba(22, 13, 38, 0.82)
-    );
-  border-color: rgba(99, 63, 132, 0.48);
-  box-shadow:
-    0 22px 58px rgba(0, 0, 0, 0.38),
-    inset 0 0 0 1px rgba(225, 205, 235, 0.07);
-  backdrop-filter: blur(14px);
-}
-
-/* 기본 텍스트 */
-p,
-li,
-.info-box dd {
-  color: rgba(239, 232, 242, 0.86);
-}
-
-h1 {
-  color: #f1e8f5;
-}
-
-h2 {
-  color: #eadff2;
-  border-bottom-color: rgba(153, 103, 178, 0.42);
-}
-
-h3,
-.data-card h3 {
-  color: #caa7df;
-}
-
-.subtitle {
-  color: rgba(238, 224, 238, 0.78);
-}
-
-.wiki-label,
-.info-box dt,
-.back-link {
-  color: #b58ad1;
-}
-
-.back-link:hover {
-  color: #f0c7e8;
-}
-
-/* 정보표 */
-.info-box {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(13, 39, 22, 0.66),
-      rgba(33, 18, 52, 0.58)
-    );
-  border-color: rgba(136, 92, 160, 0.46);
-}
-
-.profile-img {
-  border-color: rgba(239, 232, 242, 0.92);
-  box-shadow:
-    0 14px 32px rgba(0, 0, 0, 0.38),
-    0 0 30px rgba(90, 42, 128, 0.16);
-}
-
-.small-note {
-  color: rgba(212, 190, 224, 0.8);
-}
-
-/* 목차 */
-.wiki-toc {
-  background: rgba(10, 26, 16, 0.58);
-  border-color: rgba(136, 92, 160, 0.38);
-}
-
-.wiki-toc a {
-  background: rgba(92, 54, 130, 0.32);
-  color: #e8c6ef;
-}
-
-.wiki-toc a:hover {
-  background: rgba(136, 92, 160, 0.48);
-}
-
-/* 일반 카드 */
-.data-card {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(12, 42, 24, 0.66),
-      rgba(26, 15, 43, 0.58)
-    );
-  border-color: rgba(113, 86, 140, 0.4);
-}
-
-.data-card p,
-.data-card li {
-  color: rgba(239, 232, 242, 0.84);
-}
-
-/* 노트 박스 */
-.wiki-note {
-  border-left-color: #8b63b0;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(54, 25, 84, 0.56),
-      rgba(11, 42, 25, 0.62)
-    );
-  color: rgba(242, 232, 244, 0.88);
-}
-
-/* 장면 박스 */
-.scene-box {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(15, 48, 28, 0.7),
-      rgba(40, 22, 65, 0.62)
-    );
-  border-color: rgba(132, 92, 160, 0.5);
-}
-
-.line {
-  color: rgba(239, 223, 244, 0.9);
-}
-
-/* 접기 박스 */
-.wiki-details {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(13, 39, 22, 0.58),
-      rgba(31, 17, 50, 0.54)
-    );
-  border-color: rgba(136, 92, 160, 0.42);
-}
-
-.wiki-details summary {
-  color: #d2a9e8;
-}
-
-/* 링크 */
-.wiki-link {
-  color: #d8b5ea;
-  border-bottom-color: rgba(216, 181, 234, 0.7);
-}
-
-.wiki-link:hover {
-  background: rgba(216, 181, 234, 0.14);
-}
-
-/* 태그 */
-.keyword-list span,
-.tag-list span,
-.fan-label {
-  background: rgba(103, 55, 138, 0.34);
-  color: #e7c8ef;
-}
-
-/* ================================
-   NUA RELATION SECTION
-   어두운 크로커다일 배경 위에
-   누아 핑크가 밝게 스며드는 부분
-================================ */
-
-.nua-relation {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  margin-top: 46px;
-  padding: 30px;
-  border: 1px solid rgba(255, 182, 222, 0.72);
-  border-radius: 28px;
-  background:
-    radial-gradient(circle at 16% 8%, rgba(255, 205, 234, 0.58), transparent 34%),
-    radial-gradient(circle at 84% 18%, rgba(225, 174, 239, 0.36), transparent 30%),
-    radial-gradient(circle at 62% 88%, rgba(20, 80, 43, 0.48), transparent 42%),
-    linear-gradient(
-      135deg,
-      rgba(255, 242, 249, 0.88) 0%,
-      rgba(238, 220, 246, 0.72) 34%,
-      rgba(41, 77, 48, 0.68) 72%,
-      rgba(30, 17, 50, 0.72) 100%
-    );
-  box-shadow:
-    0 20px 54px rgba(255, 170, 216, 0.16),
-    0 0 60px rgba(255, 180, 225, 0.14),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
-}
-
-/* 관계 섹션 안의 초록+보라 소용돌이 */
-.nua-relation::before {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  width: 760px;
-  height: 760px;
-  left: -260px;
-  top: -260px;
-  border-radius: 50%;
-  background:
-    conic-gradient(
-      from 15deg,
-      rgba(8, 40, 20, 0.72),
-      rgba(72, 32, 96, 0.45),
-      rgba(20, 92, 48, 0.5),
-      rgba(255, 204, 235, 0.26),
-      rgba(8, 40, 20, 0.72)
-    );
-  filter: blur(18px);
-  opacity: 0.78;
-  mix-blend-mode: multiply;
-  animation: relationGreenPurpleSwirl 22s linear infinite;
-}
-
-/* 누아 핑크 잉크/연기 */
-.nua-relation::after {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  width: 680px;
-  height: 680px;
-  right: -220px;
-  top: -170px;
-  border-radius: 47% 53% 45% 55%;
-  background:
-    radial-gradient(circle at 34% 30%, rgba(255, 238, 248, 0.88), transparent 22%),
-    radial-gradient(circle at 62% 68%, rgba(255, 175, 222, 0.58), transparent 28%),
-    conic-gradient(
-      from 120deg,
-      transparent 0deg,
-      rgba(255, 185, 225, 0.12) 34deg,
-      rgba(255, 190, 230, 0.66) 86deg,
-      rgba(222, 164, 240, 0.5) 132deg,
-      transparent 176deg,
-      rgba(255, 230, 244, 0.72) 235deg,
-      rgba(255, 180, 224, 0.22) 306deg,
-      transparent 360deg
-    );
-  filter: blur(20px);
-  opacity: 0.78;
-  mix-blend-mode: screen;
-  animation: relationPinkInk 13s ease-in-out infinite alternate;
-}
-
-/* 관계 섹션 내용은 배경보다 위로 */
-.nua-relation > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* 관계 섹션 안에서는 글자색 살짝 어둡게/선명하게 */
-.nua-relation h2 {
-  color: #3f2638;
-  border-bottom-color: rgba(196, 96, 154, 0.38);
-}
-
-.nua-relation p {
-  color: rgba(45, 35, 43, 0.88);
-}
-
-.nua-relation .wiki-link {
-  color: #9d3f76;
-  border-bottom-color: rgba(157, 63, 118, 0.65);
-}
-
-.nua-relation .wiki-link:hover {
-  background: rgba(255, 179, 217, 0.28);
-}
-
-/* 관계 섹션 카드: 밝은 핑크빛 유리 */
-.nua-relation .data-card {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 250, 253, 0.68),
-      rgba(242, 218, 246, 0.44),
-      rgba(22, 72, 38, 0.22)
-    );
-  border-color: rgba(255, 179, 217, 0.5);
-  backdrop-filter: blur(10px);
-}
-
-.nua-relation .data-card h3 {
-  color: #8f3f70;
-}
-
-.nua-relation .data-card p {
-  color: rgba(48, 36, 45, 0.86);
-}
-
-/* 관계 섹션 대사 박스 */
-.nua-relation .scene-box {
-  background:
-    radial-gradient(circle at 18% 0%, rgba(255, 191, 228, 0.46), transparent 36%),
-    linear-gradient(
-      135deg,
-      rgba(255, 248, 252, 0.62),
-      rgba(229, 204, 242, 0.44),
-      rgba(21, 74, 39, 0.3)
-    );
-  border-color: rgba(255, 179, 217, 0.62);
-  backdrop-filter: blur(10px);
-}
-
-.nua-relation .line {
-  color: rgba(62, 38, 57, 0.9);
-}
-
-.nua-relation .wiki-note {
-  border-left-color: #ff9fcb;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 235, 246, 0.64),
-      rgba(225, 199, 242, 0.36),
-      rgba(20, 70, 38, 0.28)
-    );
-  color: rgba(52, 39, 49, 0.9);
-  backdrop-filter: blur(10px);
-}
-
-.nua-relation .fan-label {
-  background: rgba(255, 179, 217, 0.42);
-  color: #8f3f70;
-}
-
-/* 전체 페이지 어두운 잉크 움직임 */
-@keyframes crocodilePageInk {
-  0% {
-    transform: rotate(0deg) scale(1);
-  }
-
-  50% {
-    transform: rotate(180deg) scale(1.08);
-  }
-
-  100% {
-    transform: rotate(360deg) scale(1);
-  }
-}
-
-/* 관계 섹션 초록+보라 소용돌이 */
-@keyframes relationGreenPurpleSwirl {
-  0% {
-    transform: rotate(0deg) scale(1);
-  }
-
-  50% {
-    transform: rotate(180deg) scale(1.08);
-  }
-
-  100% {
-    transform: rotate(360deg) scale(1);
-  }
-}
-
-/* 누아 핑크가 스며드는 움직임 */
-@keyframes relationPinkInk {
-  0% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
-    opacity: 0.56;
-  }
-
-  45% {
-    transform: translate(-82px, 58px) rotate(95deg) scale(1.14);
-    opacity: 0.88;
-  }
-
-  100% {
-    transform: translate(-145px, 24px) rotate(165deg) scale(1.05);
-    opacity: 0.68;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body::before,
-  .nua-relation::before,
-  .nua-relation::after {
-    animation: none !important;
-  }
-}
-    
+    @media (prefers-reduced-motion: reduce) {
+      body::before,
+      .nua-relation::before,
+      .nua-relation::after {
+        animation: none !important;
+      }
+    }
   </style>
 </head>
 
@@ -1193,7 +1050,8 @@ h3,
           <h3>크로커다일 → 누아</h3>
           <p>
             누아를 붙잡고 싶어하면서도, 강제로 묶어두면 오히려 사라질 것처럼 느낀다.
-            그래서 직접적인 통제보다는 감시와 보호를 조용히 배치하는 방식에 가깝다.
+            그래서 강제로 붙잡기보다는, 정보망과 부하들을 이용해 그녀가 위험해지지 않도록
+            조용히 주변을 정리하는 방식에 가깝다.
           </p>
         </article>
       </div>
