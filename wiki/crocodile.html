@@ -340,6 +340,194 @@
         gap: 4px;
       }
     }
+
+    /* 누아 관계 섹션: 크로커다일 색 위로 누아 핑크가 번지는 효과 */
+    .nua-relation {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      margin-top: 42px;
+      padding: 28px;
+      border: 1px solid rgba(217, 154, 210, 0.45);
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(72, 30, 95, 0.55), transparent 34%),
+        radial-gradient(circle at 85% 12%, rgba(245, 176, 225, 0.22), transparent 30%),
+        radial-gradient(circle at 55% 92%, rgba(13, 47, 27, 0.95), transparent 42%),
+        linear-gradient(135deg, #07190e, #10351e 48%, #1b1230);
+      box-shadow:
+        0 18px 42px rgba(18, 34, 20, 0.32),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+    
+    /* 초록+보라의 어두운 소용돌이 */
+    .nua-relation::before {
+      content: "";
+      position: absolute;
+      z-index: -2;
+      width: 680px;
+      height: 680px;
+      left: -180px;
+      top: -210px;
+      border-radius: 50%;
+      background:
+        conic-gradient(
+          from 40deg,
+          rgba(9, 42, 22, 0.95),
+          rgba(58, 28, 93, 0.75),
+          rgba(12, 67, 35, 0.9),
+          rgba(10, 8, 28, 0.86),
+          rgba(9, 42, 22, 0.95)
+        );
+      filter: blur(18px);
+      opacity: 0.85;
+      animation: crocodileSwirl 18s linear infinite;
+    }
+    
+    /* 누아 핑크 잉크/연기 */
+    .nua-relation::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 560px;
+      height: 560px;
+      right: -170px;
+      top: -130px;
+      border-radius: 48% 52% 44% 56%;
+      background:
+        radial-gradient(circle at 30% 35%, rgba(255, 214, 238, 0.72), transparent 25%),
+        conic-gradient(
+          from 120deg,
+          transparent 0deg,
+          rgba(255, 181, 225, 0.04) 35deg,
+          rgba(255, 181, 225, 0.5) 78deg,
+          rgba(190, 123, 215, 0.34) 118deg,
+          transparent 165deg,
+          rgba(255, 218, 242, 0.48) 230deg,
+          rgba(255, 181, 225, 0.12) 285deg,
+          transparent 360deg
+        );
+      filter: blur(16px);
+      opacity: 0.72;
+      mix-blend-mode: screen;
+      animation: nuaPinkInk 11s ease-in-out infinite alternate;
+    }
+    
+    /* 섹션 안쪽 글자/카드가 배경 위에서 잘 보이게 */
+    .nua-relation h2 {
+      position: relative;
+      border-bottom-color: rgba(255, 190, 230, 0.42);
+      color: #f7e7f2;
+    }
+    
+    .nua-relation p {
+      position: relative;
+      color: rgba(255, 248, 252, 0.88);
+    }
+    
+    .nua-relation .wiki-link {
+      color: #ffd2eb;
+      border-bottom-color: rgba(255, 210, 235, 0.75);
+    }
+    
+    .nua-relation .wiki-link:hover {
+      background: rgba(255, 179, 217, 0.18);
+    }
+    
+    .nua-relation .data-card {
+      position: relative;
+      border-color: rgba(255, 190, 230, 0.28);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255, 244, 252, 0.15),
+          rgba(8, 27, 15, 0.52)
+        );
+      backdrop-filter: blur(8px);
+    }
+    
+    .nua-relation .data-card h3 {
+      color: #ffd2eb;
+    }
+    
+    .nua-relation .data-card p {
+      color: rgba(255, 248, 252, 0.84);
+    }
+    
+    .nua-relation .scene-box {
+      position: relative;
+      border-color: rgba(255, 179, 217, 0.55);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255, 179, 217, 0.26), transparent 38%),
+        linear-gradient(
+          135deg,
+          rgba(21, 48, 27, 0.72),
+          rgba(49, 23, 67, 0.62)
+        );
+      backdrop-filter: blur(8px);
+    }
+    
+    .nua-relation .line {
+      color: rgba(255, 235, 246, 0.92);
+    }
+    
+    .nua-relation .wiki-note {
+      position: relative;
+      border-left-color: #ffb3d9;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255, 179, 217, 0.18),
+          rgba(12, 42, 24, 0.58)
+        );
+      color: rgba(255, 248, 252, 0.9);
+    }
+    
+    .nua-relation .fan-label {
+      background: rgba(255, 179, 217, 0.2);
+      color: #ffd2eb;
+    }
+    
+    /* 어두운 초록+보라 소용돌이 회전 */
+    @keyframes crocodileSwirl {
+      0% {
+        transform: rotate(0deg) scale(1);
+      }
+    
+      50% {
+        transform: rotate(180deg) scale(1.08);
+      }
+    
+      100% {
+        transform: rotate(360deg) scale(1);
+      }
+    }
+    
+    /* 핑크 잉크가 천천히 번지는 움직임 */
+    @keyframes nuaPinkInk {
+      0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 0.46;
+      }
+    
+      45% {
+        transform: translate(-60px, 70px) rotate(90deg) scale(1.14);
+        opacity: 0.75;
+      }
+    
+      100% {
+        transform: translate(-120px, 34px) rotate(165deg) scale(1.05);
+        opacity: 0.62;
+      }
+    }
+    
+    /* 움직임 줄이기 설정 */
+    @media (prefers-reduced-motion: reduce) {
+      .nua-relation::before,
+      .nua-relation::after {
+        animation: none;
+      }
+    }
   </style>
 </head>
 
@@ -714,7 +902,7 @@
       </div>
     </section>
 
-    <section id="nua">
+    <section id="nua" class="nua-relation">
       <h2>누아와의 관계 <span class="fan-label">드림 설정</span></h2>
 
       <p>
