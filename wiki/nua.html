@@ -7,49 +7,14 @@
   <title>아트리타스 누아</title>
 
   <style>
-
-    .profile-img {
-      display: block;
-      width: min(100%, 520px);
-      height: auto;
-      max-height: none;
-      object-fit: contain;
-      margin: 0 auto 20px;
-      border: 8px solid #fff;
-      border-radius: 22px;
-      box-shadow: 0 10px 24px rgba(210, 116, 160, 0.16);
-    }
-    
-    .pending {
-      color: #8a6f78;
-      border-bottom: 1px dashed rgba(180, 107, 145, 0.7);
-      cursor: help;
-    }
-    
-    .small-note {
-      color: #9b7b83;
-      font-size: 0.9em;
-    }
-    
-    .keyword-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-    
-    .keyword-list span {
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(255, 179, 217, 0.22);
-      color: #9b5d7b;
-      font-size: 13px;
-    }
-    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -111,6 +76,18 @@
       line-height: 1.8;
     }
 
+    .profile-img {
+      display: block;
+      width: min(100%, 520px);
+      height: auto;
+      max-height: none;
+      object-fit: contain;
+      margin: 0 auto 20px;
+      border: 8px solid #fff;
+      border-radius: 22px;
+      box-shadow: 0 10px 24px rgba(210, 116, 160, 0.16);
+    }
+
     .info-box {
       margin: 28px 0;
       padding: 22px;
@@ -139,6 +116,17 @@
       color: #555;
     }
 
+    .pending {
+      color: #8a6f78;
+      border-bottom: 1px dashed rgba(180, 107, 145, 0.7);
+      cursor: help;
+    }
+
+    .small-note {
+      color: #9b7b83;
+      font-size: 0.9em;
+    }
+
     section {
       margin-top: 34px;
     }
@@ -158,6 +146,15 @@
       color: #555;
     }
 
+    ul {
+      padding-left: 18px;
+    }
+
+    li {
+      line-height: 1.8;
+      color: #555;
+    }
+
     .wiki-link {
       color: #b46b91;
       text-decoration: none;
@@ -168,7 +165,218 @@
       background: rgba(255, 179, 217, 0.22);
     }
 
+    .keyword-list,
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .keyword-list span,
+    .tag-list span {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 179, 217, 0.22);
+      color: #9b5d7b;
+      font-size: 13px;
+    }
+
+    .wiki-note {
+      margin: 16px 0;
+      padding: 14px 16px;
+      border-left: 4px solid #ffb3d9;
+      border-radius: 14px;
+      background: rgba(255, 240, 247, 0.75);
+      color: #7a5a68;
+      line-height: 1.8;
+    }
+
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .data-card {
+      padding: 18px;
+      border: 1px solid rgba(255, 190, 220, 0.8);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .data-card h3 {
+      margin-bottom: 10px;
+      color: #b46b91;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .data-card p,
+    .data-card li {
+      color: #555;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .data-card ul {
+      padding-left: 18px;
+    }
+
+    .food-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .food-item {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(255, 190, 220, 0.65);
+    }
+
+    .food-item strong {
+      color: #9b5d7b;
+    }
+
+    .scene-box {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255, 240, 247, 0.9), rgba(255, 255, 255, 0.75));
+      border: 1px dashed rgba(255, 159, 203, 0.75);
+    }
+
+    .scene-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .line {
+      display: block;
+      margin: 8px 0;
+      color: #7a5a68;
+      line-height: 1.8;
+    }
+
+    .wiki-details {
+      margin-top: 18px;
+      border: 1px solid rgba(255, 190, 220, 0.75);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.65);
+      overflow: hidden;
+    }
+
+    .wiki-details summary {
+      padding: 15px 18px;
+      color: #b46b91;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .wiki-details-content {
+      padding: 0 18px 18px;
+    }
+
+    .mini-pop {
+      position: relative;
+      display: inline-block;
+      margin-left: 6px;
+      line-height: 1;
+    }
+
+    .mini-pop summary {
+      display: inline-block;
+      padding: 2px 8px;
+      border: 1px solid rgba(180, 107, 145, 0.45);
+      border-radius: 999px;
+      background: rgba(255, 179, 217, 0.18);
+      color: #9b5d7b;
+      font-size: 12px;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .mini-pop summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .mini-pop[open] summary {
+      background: rgba(255, 179, 217, 0.34);
+    }
+
+    .mini-pop-content {
+      position: absolute;
+      z-index: 10;
+      top: calc(100% + 8px);
+      left: 0;
+      width: min(300px, 72vw);
+      padding: 12px 14px;
+      border: 1px solid rgba(255, 190, 220, 0.85);
+      border-radius: 14px;
+      background: rgba(255, 252, 254, 0.98);
+      box-shadow: 0 10px 24px rgba(210, 116, 160, 0.18);
+      color: #6f5662;
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .sub-section-title {
+      margin: 32px 0 14px;
+      padding-top: 20px;
+      border-top: 1px dashed rgba(255, 190, 220, 0.8);
+      color: #4b3a40;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .section-toggle {
+      margin-top: 34px;
+    }
+
+    .section-toggle > summary {
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 190, 220, 0.8);
+      color: #4b3a40;
+      font-size: 24px;
+      font-weight: 500;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .section-toggle > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .section-toggle > summary::after {
+      content: " 접기";
+      margin-left: 8px;
+      color: #b46b91;
+      font-size: 13px;
+      font-weight: normal;
+    }
+
+    .section-toggle:not([open]) > summary::after {
+      content: " 펼치기";
+    }
+
+    .section-toggle-content {
+      padding-top: 4px;
+    }
+
+    @media (max-width: 700px) {
+      .data-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 560px) {
+      body {
+        padding: 28px 14px;
+      }
+
       .wiki-page {
         padding: 24px;
       }
@@ -181,195 +389,17 @@
         grid-template-columns: 1fr;
         gap: 4px;
       }
-    }
 
-    .wiki-note {
-      margin: 16px 0;
-      padding: 14px 16px;
-      border-left: 4px solid #ffb3d9;
-      border-radius: 14px;
-      background: rgba(255, 240, 247, 0.75);
-      color: #7a5a68;
-      line-height: 1.8;
-    }
-    
-    .data-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      margin-top: 18px;
-    }
-    
-    .data-card {
-      padding: 18px;
-      border: 1px solid rgba(255, 190, 220, 0.8);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.7);
-    }
-    
-    .data-card h3 {
-      margin-bottom: 10px;
-      color: #b46b91;
-      font-size: 17px;
-      font-weight: 600;
-    }
-    
-    .data-card p,
-    .data-card li {
-      color: #555;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-    
-    .data-card ul {
-      padding-left: 18px;
-    }
-    
-    .food-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
-    
-    .food-item {
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.65);
-      border: 1px solid rgba(255, 190, 220, 0.65);
-    }
-    
-    .food-item strong {
-      color: #9b5d7b;
-    }
-    
-    .tag-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
-    }
-    
-    .tag-list span {
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(255, 179, 217, 0.22);
-      color: #9b5d7b;
-      font-size: 13px;
-    }
-    
-    .scene-box {
-      margin-top: 18px;
-      padding: 18px 20px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(255, 240, 247, 0.9), rgba(255, 255, 255, 0.75));
-      border: 1px dashed rgba(255, 159, 203, 0.75);
-    }
-    
-    .scene-box p:last-child {
-      margin-bottom: 0;
-    }
-    
-    .line {
-      display: block;
-      margin: 8px 0;
-      color: #7a5a68;
-      line-height: 1.8;
-    }
-    
-    .wiki-details {
-      margin-top: 18px;
-      border: 1px solid rgba(255, 190, 220, 0.75);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.65);
-      overflow: hidden;
-    }
-    
-    .wiki-details summary {
-      padding: 15px 18px;
-      color: #b46b91;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    
-    .wiki-details-content {
-      padding: 0 18px 18px;
-    }
-    
-    @media (max-width: 700px) {
-      .data-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    
-        .mini-pop {
-      position: relative;
-      display: inline-block;
-      margin-left: 6px;
-    }
-    
-    .mini-pop summary {
-      display: inline-block;
-      padding: 2px 8px;
-      border: 1px solid rgba(180, 107, 145, 0.45);
-      border-radius: 999px;
-      background: rgba(255, 179, 217, 0.18);
-      color: #9b5d7b;
-      font-size: 12px;
-      cursor: pointer;
-      list-style: none;
-    }
-    
-    .mini-pop summary::-webkit-details-marker {
-      display: none;
-    }
-    
-    .mini-pop[open] summary {
-      background: rgba(255, 179, 217, 0.34);
-    }
-    
-    .mini-pop-content {
-      position: absolute;
-      z-index: 10;
-      top: calc(100% + 8px);
-      left: 0;
-      width: min(280px, 72vw);
-      padding: 12px 14px;
-      border: 1px solid rgba(255, 190, 220, 0.85);
-      border-radius: 14px;
-      background: rgba(255, 252, 254, 0.96);
-      box-shadow: 0 10px 24px rgba(210, 116, 160, 0.18);
-      color: #6f5662;
-      font-size: 13px;
-      line-height: 1.75;
-    }
-    
-    @media (max-width: 560px) {
       .mini-pop {
         display: block;
         margin: 8px 0 0;
       }
-    
+
       .mini-pop-content {
         position: static;
         width: 100%;
         margin-top: 8px;
       }
-    }
-
-    .sub-section-title {
-      margin: 32px 0 14px;
-      padding-top: 20px;
-      border-top: 1px dashed rgba(255, 190, 220, 0.8);
-      color: #4b3a40;
-      font-size: 20px;
-      font-weight: 600;
-    }.sub-section-title {
-      margin: 32px 0 14px;
-      padding-top: 20px;
-      border-top: 1px dashed rgba(255, 190, 220, 0.8);
-      color: #4b3a40;
-      font-size: 20px;
-      font-weight: 600;
     }
   </style>
 </head>
@@ -386,88 +416,88 @@
       </p>
     </header>
 
-<aside class="info-box">
-  <img class="profile-img" src="../img/nua.png" alt="아트리타스 누아">
+    <aside class="info-box">
+      <img class="profile-img" src="../img/nua.png" alt="아트리타스 누아">
 
-  <dl>
-    <div>
-      <dt>이름</dt>
-      <dd>누아 <span class="small-note">(Nua)</span></dd>
-    </div>
+      <dl>
+        <div>
+          <dt>이름</dt>
+          <dd>누아 <span class="small-note">(Nua)</span></dd>
+        </div>
 
-    <div>
-      <dt>이명</dt>
-      <dd>미친개 / 광견 <span class="small-note">(狂犬)</span></dd>
-    </div>
+        <div>
+          <dt>이명</dt>
+          <dd>미친개 / 광견 <span class="small-note">(狂犬)</span></dd>
+        </div>
 
-    <div>
-      <dt>생일</dt>
-      <dd>2월 23일 <span class="small-note">/ 물고기자리</span></dd>
-    </div>
+        <div>
+          <dt>생일</dt>
+          <dd>2월 23일 <span class="small-note">/ 물고기자리</span></dd>
+        </div>
 
-    <div>
-      <dt>나이</dt>
-      <dd>
-        17세 <span class="small-note">2년 전</span>
-        →
-        19세 <span class="small-note">2년 후</span>
-      </dd>
-    </div>
+        <div>
+          <dt>나이</dt>
+          <dd>
+            17세 <span class="small-note">2년 전</span>
+            →
+            19세 <span class="small-note">2년 후</span>
+          </dd>
+        </div>
 
-    <div>
-      <dt>신장</dt>
-      <dd>165cm</dd>
-    </div>
+        <div>
+          <dt>신장</dt>
+          <dd>165cm</dd>
+        </div>
 
-    <div>
-      <dt>혈액형</dt>
-      <dd>F형 <span class="small-note">ABO식으로는 B형</span></dd>
-    </div>
+        <div>
+          <dt>혈액형</dt>
+          <dd>F형 <span class="small-note">ABO식으로는 B형</span></dd>
+        </div>
 
-    <div>
-      <dt>출신지</dt>
-      <dd>
-        <span class="pending" title="출생지는 아직 확정되지 않음">알 수 없음</span>
-        <span class="small-note">/ 드레스로자에서 성장</span>
-      </dd>
-    </div>
+        <div>
+          <dt>출신지</dt>
+          <dd>
+            <span class="pending" title="출생지는 아직 확정되지 않음">알 수 없음</span>
+            <span class="small-note">/ 드레스로자에서 성장</span>
+          </dd>
+        </div>
 
-    <div>
-      <dt>현상금</dt>
-      <dd>알 수 없음</dd>
-    </div>
+        <div>
+          <dt>현상금</dt>
+          <dd>알 수 없음</dd>
+        </div>
 
-    <div>
-      <dt>능력</dt>
-      <dd>
-        견문색 패기
-        <span class="small-note">도플라밍고 감지에 특화</span>
-      </dd>
-    </div>
+        <div>
+          <dt>능력</dt>
+          <dd>
+            견문색 패기
+            <span class="small-note">도플라밍고 감지에 특화</span>
+          </dd>
+        </div>
 
-    <div>
-      <dt>소속</dt>
-      <dd>前 돈키호테 패밀리 / 현재 없음</dd>
-    </div>
+        <div>
+          <dt>소속</dt>
+          <dd>前 돈키호테 패밀리 / 현재 없음</dd>
+        </div>
 
-    <div>
-      <dt>좋아하는 음식</dt>
-      <dd>고구마, 딸기, 케챱</dd>
-    </div>
+        <div>
+          <dt>좋아하는 음식</dt>
+          <dd>고구마, 딸기, 케챱</dd>
+        </div>
 
-    <div>
-      <dt>싫어하는 음식</dt>
-      <dd>커피, 생토마토, 딸기우유</dd>
-    </div>
+        <div>
+          <dt>싫어하는 음식</dt>
+          <dd>커피, 생토마토, 딸기우유</dd>
+        </div>
 
-    <div>
-      <dt>취미</dt>
-      <dd>
-        <span class="pending" title="아직 확정되지 않은 설정">갯벌 진흙 만지기?</span>
-      </dd>
-    </div>
-  </dl>
-</aside>
+        <div>
+          <dt>취미</dt>
+          <dd>
+            <span class="pending" title="아직 확정되지 않은 설정">갯벌 진흙 만지기?</span>
+          </dd>
+        </div>
+      </dl>
+    </aside>
 
     <section>
       <h2>개요</h2>
@@ -480,7 +510,7 @@
         타인의 시선에는 크게 관심이 없으나, 자신이 소중하게 여기는 존재의 상태에는
         집착적으로 가까운 관심을 보인다.
       </p>
-    
+
       <div class="keyword-list">
         <span>감각적</span>
         <span>즉흥적</span>
@@ -509,146 +539,147 @@
     </section>
 
     <section id="appearance">
-  <h2>외관</h2>
+      <h2>외관</h2>
 
-  <p>
-    누아는 짙은 갈색 곱슬머리와 밝은 피부를 가진 소녀다.
-    외형만 보면 무해하고 순해 보이며, 일상에서는 ‘미친개’라는 이명과 거의 연결되지 않는 인상을 준다.
-  </p>
+      <p>
+        누아는 짙은 갈색 곱슬머리와 밝은 피부를 가진 소녀다.
+        외형만 보면 무해하고 순해 보이며, 일상에서는 ‘미친개’라는 이명과 거의 연결되지 않는 인상을 준다.
+      </p>
 
-  <p>
-    평범한 얼굴이지만 단정하게 손질된 분위기와 투명한 인상 덕분에 깔끔하고 예쁘게 보이는 편이다.
-    본인은 스스로를 고상하고 강하다고 여기지만, 실제로는 무방비하고 감각적인 분위기가 더 강하게 드러난다.
-  </p>
+      <p>
+        평범한 얼굴이지만 단정하게 손질된 분위기와 투명한 인상 덕분에 깔끔하고 예쁘게 보이는 편이다.
+        본인은 스스로를 고상하고 강하다고 여기지만, 실제로는 무방비하고 감각적인 분위기가 더 강하게 드러난다.
+      </p>
 
-  <div class="data-grid">
-    <article class="data-card">
-      <h3>신체</h3>
-      <ul>
-        <li>165cm / 55kg</li>
-        <li>작지만 마르지 않은 탄탄한 체형</li>
-        <li>
-          약해보이지만 바닷사람이기에 기본적인 근력은 있음.
+      <div class="data-grid">
+        <article class="data-card">
+          <h3>신체</h3>
+          <ul>
+            <li>165cm / 55kg</li>
+            <li>작지만 마르지 않은 탄탄한 체형</li>
+            <li>
+              약해 보이지만 바닷사람이기에 기본적인 근력은 있음.
 
-          <details class="mini-pop">
-            <summary>기록</summary
-            <div class="mini-pop-content">
-              누아가 약해보이는 이유는 주위 인간이 탈인간 (신장, 근력, 무력) 이라 그렇다.
-              누아도 보호받기만 하는 약골은 아니다.
-            </div>    
-          </details>
-        </li>
-        <li>다만 크로커다일, 도플라밍고, 에이스 같은 인물들에겐 신체적으로 밀림</li>
-        <li>손은 여자 치고 큰 편이고, 손가락이 가늘며 길다</li>
-      </ul>
-    </article>
+              <details class="mini-pop">
+                <summary>기록</summary>
+                <div class="mini-pop-content">
+                  누아가 약해 보이는 이유는 주위 인간들이 탈인간급이라 그렇다.
+                  누아도 보호받기만 하는 약골은 아니다.
+                </div>
+              </details>
+            </li>
+            <li>다만 크로커다일, 도플라밍고, 에이스 같은 인물들에겐 신체적으로 밀림</li>
+            <li>손은 여자 치고 큰 편이고, 손가락이 가늘며 길다</li>
+          </ul>
+        </article>
 
-    <article class="data-card">
-      <h3>피부와 체질</h3>
-      <ul>
-        <li>따뜻한 계열의 밝은 백색 피부</li>
-        <li>햇빛에 닿으면 금세 따가움을 느낌</li>
-        <li>피부결은 매끈하고 부드러운 편</li>
-        <li>손발이 차갑다</li>
-        <li>따듯한걸 좋아하지만 여름은 안좋아한다</li>
-      </ul>
-    </article>
+        <article class="data-card">
+          <h3>피부와 체질</h3>
+          <ul>
+            <li>따뜻한 계열의 밝은 백색 피부</li>
+            <li>햇빛에 닿으면 금세 따가움을 느낌</li>
+            <li>피부결은 매끈하고 부드러운 편</li>
+            <li>손발이 차갑다</li>
+            <li>따뜻한 걸 좋아하지만 여름은 안 좋아한다</li>
+          </ul>
+        </article>
 
-    <article class="data-card">
-      <h3>머리카락</h3>
-      <ul>
-        <li>검정에 가까운 갈색</li>
-        <li>햇빛 아래에서는 브라운</li>
-        <li>엉덩이 바로 위까지 오는 긴 머리
-          
-          <details class="mini-pop">
-            <summary>기록</summary
-            <div class="mini-pop-content">
-              뭐든 쉽게 질리는 성격이기에, 가발을 쓰기도 한다.
-            </div>    
-          </details>
+        <article class="data-card">
+          <h3>머리카락</h3>
+          <ul>
+            <li>검정에 가까운 갈색</li>
+            <li>햇빛 아래에서는 브라운</li>
+            <li>
+              엉덩이 바로 위까지 오는 긴 머리
 
-          <details class="mini-pop">
-            <summary>기록</summary
-            <div class="mini-pop-content">
-              이런 애가 크로커다일한테 꾸준히 관심을 보이는게 기적이다.
-            </div>    
-          </details>
-          
-        </li>
-        <li>자연 곱슬이며 얇고 부드러움</li>
-        <li>잔머리가 부슬부슬하고 자연스럽게 퍼지는 느낌</li>
-      </ul>
-    </article>
+              <details class="mini-pop">
+                <summary>기록</summary>
+                <div class="mini-pop-content">
+                  뭐든 쉽게 질리는 성격이기에, 가발을 쓰기도 한다.
+                </div>
+              </details>
 
-    <article class="data-card">
-      <h3>얼굴과 인상</h3>
-      <ul>
-        <li>동글동글한 얼굴형</li>
-        <li>짧은 턱선과 볼살</li>
-        <li>무쌍이며 크지 않지만 동그랗게 뜨는 눈</li>
-        <li>평소에는 활기차고 귀여운 인상</li>
-        <li>멍할 때는 풀린 눈으로 맹해 보임</li>
-        <li>
-          입술 아래에 각도상 보이지 않는 흉터가 있음
-    
-          <details class="mini-pop">
-            <summary>기록</summary>
-            <div class="mini-pop-content">
-              어린 시절 패밀리와 놀러 나갔다가 장난치던 중 넘어져 생긴 상처.
-              생각보다 피가 많이 나 패밀리가 급히 도플라밍고에게 데려왔고,
-              도플라밍고가 실실 열매의 능력으로 꿰매 응급처치했다.
-              이때 뿐만 아니라, 다치면 항상 도플라밍고가 능력을 사용해 꿰매 주었기에, 누아는 평범한 바늘로 상처를 꿰매는 일을 조금 어색해한다.
-              바늘의 차가운 감각을 두려워하는것에 가깝지만 스스로 안무섭다고 믿는다.
-            </div>
-          </details>
-        </li>
-      </ul>
-    </article>
-  </div>
+              <details class="mini-pop">
+                <summary>기록</summary>
+                <div class="mini-pop-content">
+                  이런 애가 크로커다일에게 꾸준히 관심을 보이는 게 기적이다.
+                </div>
+              </details>
+            </li>
+            <li>자연 곱슬이며 얇고 부드러움</li>
+            <li>잔머리가 부슬부슬하고 자연스럽게 퍼지는 느낌</li>
+          </ul>
+        </article>
 
-  <div class="wiki-note">
-    외형만 보면 누구나 위험하지 않다고 생각할 정도로 순한 인상이다.
-    그러나 실제 성격은 본능적이고 즉흥적이며, 상황에 따라 귀여운 표정에서 날카로운 눈빛으로 갑자기 변한다.
-  </div>
-</section>
+        <article class="data-card">
+          <h3>얼굴과 인상</h3>
+          <ul>
+            <li>동글동글한 얼굴형</li>
+            <li>짧은 턱선과 볼살</li>
+            <li>무쌍이며 크지 않지만 동그랗게 뜨는 눈</li>
+            <li>평소에는 활기차고 귀여운 인상</li>
+            <li>멍할 때는 풀린 눈으로 맹해 보임</li>
+            <li>
+              입술 아래에 각도상 잘 보이지 않는 흉터가 있음
+
+              <details class="mini-pop">
+                <summary>기록</summary>
+                <div class="mini-pop-content">
+                  어린 시절 패밀리와 놀러 나갔다가 장난치던 중 넘어져 생긴 상처.
+                  생각보다 피가 많이 나 패밀리가 급히 도플라밍고에게 데려왔고,
+                  도플라밍고가 실실 열매의 능력으로 꿰매 응급처치했다.
+                  이때뿐만 아니라 다치면 항상 도플라밍고가 능력을 사용해 꿰매 주었기에,
+                  누아는 평범한 바늘로 상처를 꿰매는 일을 조금 어색해한다.
+                  바늘의 차가운 감각을 두려워하는 것에 가깝지만 스스로는 안 무섭다고 믿는다.
+                </div>
+              </details>
+            </li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="wiki-note">
+        외형만 보면 누구나 위험하지 않다고 생각할 정도로 순한 인상이다.
+        그러나 실제 성격은 본능적이고 즉흥적이며, 상황에 따라 귀여운 표정에서 날카로운 눈빛으로 갑자기 변한다.
+      </div>
+    </section>
 
     <section id="sense">
-  <h2>감각과 말</h2>
+      <h2>감각과 말</h2>
 
-  <p>
-    누아는 말을 미래를 위해 하지 않는다.
-    말을 기록이나 정보 전달의 수단으로 쓰기보다는, 지금 자신의 상태를 표현하기 위해 사용한다.
-  </p>
+      <p>
+        누아는 말을 미래를 위해 하지 않는다.
+        말을 기록이나 정보 전달의 수단으로 쓰기보다는, 지금 자신의 상태를 표현하기 위해 사용한다.
+      </p>
 
-  <p>
-    그래서 누아의 말은 계획이나 설명이라기보다 순간의 상태 보고에 가깝다.
-    생각을 정리해서 전달한다기보다는, 지금 느끼는 감각과 기분이 그대로 튀어나오는 식이다.
-  </p>
+      <p>
+        그래서 누아의 말은 계획이나 설명이라기보다 순간의 상태 보고에 가깝다.
+        생각을 정리해서 전달한다기보다는, 지금 느끼는 감각과 기분이 그대로 튀어나오는 식이다.
+      </p>
 
-  <div class="wiki-note">
-    누아의 말은 “앞으로 어떻게 할지”보다 “지금 내가 어떤지”에 가깝다.
-  </div>
+      <div class="wiki-note">
+        누아의 말은 “앞으로 어떻게 할지”보다 “지금 내가 어떤지”에 가깝다.
+      </div>
 
-  <p>
-    청각, 후각, 촉각 모두 예민하지만 그 예민함은 분석보다 수용에 가깝다.
-    의미 없는 자극에는 쉽게 피로해하고, 맥락과 감정이 담긴 감각에는 깊이 잠긴다.
-  </p>
+      <p>
+        청각, 후각, 촉각 모두 예민하지만 그 예민함은 분석보다 수용에 가깝다.
+        의미 없는 자극에는 쉽게 피로해하고, 맥락과 감정이 담긴 감각에는 깊이 잠긴다.
+      </p>
 
-  <p>
-    자기 몸에는 둔한 편이지만, 타인과의 접촉에는 유독 민감하다.
-    특히 가까운 사람의 손길이나 기척에는 즉각적으로 반응한다.
-  </p>
-</section>
+      <p>
+        자기 몸에는 둔한 편이지만, 타인과의 접촉에는 유독 민감하다.
+        특히 가까운 사람의 손길이나 기척에는 즉각적으로 반응한다.
+      </p>
+    </section>
 
     <section id="places">
       <h2>자주 놀러다니는 곳</h2>
-    
+
       <p>
         누아는 가만히 머무르기보다, 마음이 끌리는 곳으로 혼자 훌쩍 나가버리는 일이 잦다.
         목적지를 정하고 움직인다기보다는 냄새, 소리, 분위기, 촉감 같은 감각에 이끌려 돌아다닌다.
       </p>
-    
+
       <div class="data-grid">
         <article class="data-card">
           <h3>항구 마을 / 작은 바닷가 마을</h3>
@@ -657,7 +688,7 @@
             모래에 발을 파묻고 앉아 멍하니 있거나, 상인과 아이들이 말을 걸면 금세 어울린다.
           </p>
         </article>
-    
+
         <article class="data-card">
           <h3>시장 / 축제 열리는 마을</h3>
           <p>
@@ -665,7 +696,7 @@
             혼자 사라졌다가 이상한 장신구나 마스크를 쓰고 돌아오는 경우가 있다.
           </p>
         </article>
-    
+
         <article class="data-card">
           <h3>과수원 / 꽃밭 / 풀밭</h3>
           <p>
@@ -673,7 +704,7 @@
             손끝으로 풀이나 꽃잎을 만지며 걷다가, 그대로 누워 잠들기도 한다.
           </p>
         </article>
-    
+
         <article class="data-card">
           <h3>음악이 흐르는 광장</h3>
           <p>
@@ -681,7 +712,7 @@
             연주하는 사람이 있으면 말없이 다가가 옆에 앉거나, 아이들과 손잡고 춤추기도 한다.
           </p>
         </article>
-    
+
         <article class="data-card">
           <h3>지붕 위 / 절벽 위</h3>
           <p>
@@ -689,7 +720,7 @@
             남들이 잘 가지 않는 곳에도 혼자 휙 올라가며, 무서운 줄 모르는 편이다.
           </p>
         </article>
-    
+
         <article class="data-card">
           <h3>길 위에서</h3>
           <p>
@@ -698,7 +729,7 @@
           </p>
         </article>
       </div>
-    
+
       <div class="scene-box">
         <p>
           크로커다일은 누아가 혼자 돌아다니는 걸 직접 막기보다는,
@@ -709,234 +740,228 @@
     </section>
 
     <section id="food">
-      <h2>식습관</h2>
-    
-      <p>
-        누아는 맛보다 식감과 감각을 중시하는 식사자다.
-        먹는 것 자체를 엄청 즐기는 미식가라기보다는, 배고픈 상태를 싫어해서 제때 챙겨 먹는 쪽에 가깝다.
-      </p>
-    
-      <p>
-        좋고 싫음이 확실하지만, 그 기준은 음식의 종류보다 형태와 질감, 그날의 기분에 더 크게 좌우된다.
-        딸기는 좋아하지만 딸기우유는 싫어하고, 생토마토는 싫어하지만 케챱은 좋아하는 식이다.
+      <details class="section-toggle" open>
+        <summary>식습관</summary>
 
-        <details class="mini-pop">
-            <summary>기록</summary
+        <div class="section-toggle-content">
+          <p>
+            누아는 맛보다 식감과 감각을 중시하는 식사자다.
+            먹는 것 자체를 엄청 즐기는 미식가라기보다는, 배고픈 상태를 싫어해서 제때 챙겨 먹는 쪽에 가깝다.
+          </p>
+
+          <p>
+            좋고 싫음이 확실하지만, 그 기준은 음식의 종류보다 형태와 질감, 그날의 기분에 더 크게 좌우된다.
+            딸기는 좋아하지만 딸기우유는 싫어하고, 생토마토는 싫어하지만 케챱은 좋아하는 식이다.
+          </p>
+
+          <details class="mini-pop">
+            <summary>기록</summary>
             <div class="mini-pop-content">
               토마토를 좋아하고 케챱을 싫어하는 크로커다일과 반대다.
-            </div>    
+            </div>
           </details>
-      </p>
-    
-      <div class="tag-list">
-        <span>식감 최우선</span>
-        <span>한입 크기 선호</span>
-        <span>기분 따라 달라짐</span>
-        <span>포슬포슬함 선호</span>
-        <span>물컹한 식감 불호</span>
-      </div>
-    
-      <div class="food-list">
-        <div class="food-item">
-          <strong>고구마</strong>
-          <p>
-            절대적 최애. 앉은 자리에서 여러 개 먹을 수 있지만,
-            먹고 나서 칼로리를 신경 쓰며 살짝 우울해하기도 한다.
-          </p>
-        </div>
-    
-        <div class="food-item">
-          <strong>딸기</strong>
-          <p>
-            생딸기나 딸기 디저트, 딸기 파르페를 좋아한다.
-            다만 딸기우유는 좋아하지 않는다. 단 우유 맛과 인공적인 단맛이 강하게 느껴지는 것을 싫어한다.
-          </p>
-        </div>
-    
-        <div class="food-item">
-          <strong>초콜릿</strong>
-          <p>
-            초콜릿을 좋아한다. 과자보다는 초콜릿 자체에 가까운 것을 더 선호한다.
-          </p>
-        </div>
-    
-        <div class="food-item">
-          <strong>그릭요거트</strong>
-          <p>
-            그릭요거트에 과일을 곁들여 먹는 것을 좋아한다.
-            단독으로 먹는 것보다 과일과 함께 먹을 때 반응이 좋다.
-          </p>
-        </div>
-    
-        <div class="food-item">
-          <strong>초밥</strong>
-          <p>
-            초밥은 좋아하는 편이다.
-            다만 회 자체가 중심이 되는 음식은 그날 기분이나 상태에 따라 반응이 다를 수 있다.
-          </p>
-        </div>
-    
-        <div class="food-item">
-          <strong>야채</strong>
-          <p>
-            의외로 야채를 잘 먹는다.
-            편식하는 이미지와 달리 담백하거나 아삭한 야채류는 꽤 잘 받아들이는 편이다.
-          </p>
-        </div>
-      </div>
-    
-      <details class="wiki-details">
-        <summary>조건부로 먹는 음식</summary>
-        <div class="wiki-details-content">
-          <p>
-            <strong>토마토</strong>는 생으로는 싫어하지만, 케챱이나 소스 형태는 괜찮다.
-          </p>
-          <p>
-            <strong>옥수수</strong>는 알갱이 형태를 싫어하지만, 팝콘은 괜찮다.
-          </p>
-          <p>
-            <strong>콩</strong>은 식감 때문에 싫어한다. 다만 형태가 완전히 달라지면 경우에 따라 먹을 수 있다.
-          </p>
-          <p>
-            <strong>해산물</strong>은 바닷사람이라 못 먹는 것은 아니지만, 그닥 좋아하지는 않는다.
-            바닷사람인 만큼 익숙해서 먹긴 먹지만 즐겨 찾는 음식은 아니다.
-          </p>
-          <p>
-            <strong>뼈 많은 생선</strong>은 맛보다 뼈를 바르는 일이 귀찮아서 싫어한다.
-            남이 뼈를 발라주면 의외로 얌전히 잘 먹는다.
-          </p>
-        </div>
-      </details>
-    
-      <details class="wiki-details">
-        <summary>싫어하거나 꺼리는 음식</summary>
-        <div class="wiki-details-content">
-          <p>
-            커피, 딸기우유, 생토마토, 페페론치노, 매운 음식, 푸딩, 젤리, 마시멜로우,
-            녹은 아이스크림, 콩, 질긴 고기, 튀김류, 뼈 많은 생선을 꺼린다.
-          </p>
-          <p>
-            커피는 쓴맛도 싫고, 마신 뒤 체력이 급격히 떨어지는 느낌이 있어 피한다.
-          </p>
-          <p>
-            녹은 아이스크림에 대해서는 “그건 설탕물이지 아이스크림이 아냐.”라고 말한다.
-          </p>
-        </div>
-      </details>
-    
-      <details class="wiki-details">
-        <summary>식감 취향</summary>
-        <div class="wiki-details-content">
-          <p>
-            좋아하는 식감은 포슬포슬함, 아삭함, 쫀득함, 부드럽고 고소한 느낌이다.
-            특히 포슬포슬한 감각에 약하다.
-          </p>
-          <p>
-            싫어하는 식감은 물컹함, 흐물거림, 미끈거림, 질김, 끈적임, 으스러짐, 질척함이다.
-            식감이 싫으면 맛이 괜찮아도 잘 먹지 않는다.
-          </p>
-        </div>
-      </details>
-    
-      <details class="wiki-details">
-        <summary>음료 취향</summary>
-        <div class="wiki-details-content">
-          <p>
-            물, 탄산수, 과일주스를 자주 마신다.
-            탄산음료를 아예 못 마시는 것은 아니지만, 탄산음료보다는 탄산수를 더 선호한다.
-          </p>
-          <p>
-            커피와 딸기우유처럼 단맛 강한 우유류는 피한다.
-          </p>
-        </div>
-      </details>
-    
-      <details class="wiki-details">
-        <summary>아침 식사</summary>
-        <div class="wiki-details-content">
-          <p>
-            기본적으로 아침은 가볍게 먹는 편이다.
-            배가 너무 부르면 몸이 둔해지는 느낌을 싫어한다.
-          </p>
-          <p>
-            자주 먹는 쪽은 과일, 그릭요거트와 과일, 물, 탄산수 같은 가벼운 조합이다.
-          </p>
-          <p>
-            다만 어디까지나 기본 성향일 뿐, 기분에 따라 완전히 달라진다.
-            어떤 날은 아침부터 갑자기 고기를 달라고 할 수도 있다.
-          </p>
-          <span class="line">“아침에 배부르면 둔해져서 싫어…”</span>
-          <span class="line">“오늘은 고기 먹고 싶어.”</span>
-        </div>
-      </details>
-    
-      <details class="wiki-details">
-        <summary>요리 실력</summary>
-        <div class="wiki-details-content">
-          <p>
-            누아는 의외로 요리를 잘한다.
-            겉보기에는 요리 못할 것 같은데, 막상 하면 꽤 제대로 만든다.
-          </p>
-          <p>
-            특히 베이킹에 능하다.
-            손끝 감각이 좋아서 디저트류를 만들 때 결과물이 안정적인 편이다.
-          </p>
-          <p>
-            예를 들어 알리오올리오를 만들면 맛은 있는데, 마늘이 살짝 타는 식이다.
-            못 만드는 것은 아니지만 누아답게 어딘가 하나씩 삐끗하는 부분이 있다.
-          </p>
-        </div>
-      </details>
 
-      <h3 class="sub-section-title">음식 관련 일화</h3>
+          <div class="tag-list">
+            <span>식감 최우선</span>
+            <span>한입 크기 선호</span>
+            <span>기분 따라 달라짐</span>
+            <span>포슬포슬함 선호</span>
+            <span>물컹한 식감 불호</span>
+          </div>
 
-      <div class="scene-box">
-        <p>
-          누아에게 고구마는 거의 절대적인 음식이다.
-          변덕스럽고 감각에 예민한 누아가 안정적으로 좋아하는 몇 안 되는 음식 중 하나다.
-        </p>
-      
-        <span class="line">“고구마는 착해. 나 안 배신해. 늘 맛있어.”</span>
-        <span class="line">“고구마는 나를 배신하지 않아. 항상 내 편이야.”</span>
-        <span class="line">“딸기랑 고구마는 가족이지.”</span>
-      </div>
-      
-      <div class="scene-box">
-        <p>
-          크로커다일은 누아가 자주 찾는 음식이나 필요한 것들을 은근히 기억해둔다.
-          대놓고 챙긴다는 티를 내지는 않고, 필요한 것들을 대충 적어 부하에게 시키는 정도다.
-        </p>
-      
-        <p>
-          부하들은 묻지 않고 그대로 처리하지만, 속으로는 조금 의아해한다.
-          왜 이런 것까지 사무실에 들여놓는지 알 수 없기 때문이다.
-        </p>
-      
-        <span class="line">“서랍 왼쪽.”</span>
-      </div>
-      
-      <div class="scene-box">
-        <p>
-          누아는 매운 음식에 약하다.
-          특히 페페론치노를 잘못 먹고 울었던 적이 있다.
-        </p>
-      
-        <span class="line">“크, 크로키… 물…!”</span>
-        <span class="line">“그거 매운 거야? 나 속이지 마.”</span>
-      
-        <p>
-          2년 후 시점에는 매운맛에 대한 내성이 조금 늘어난다.
-          여전히 매운 음식에 약하지만, 예전처럼 바로 무너지는 정도는 아니다.
-        </p>
-      
-        <span class="line">“나도 이제 괜찮아.”</span>
-        <span class="line">“……조금 괜찮다는 뜻이었어.”</span>
-      </div>
-      
-      <div class="wiki-note">
-        누아는 좋고 싫음이 분명하지만, 그 기준이 기분 따라 제멋대로 움직인다.
-        음식 자체보다 형태, 질감, 먹기 귀찮은 정도, 누가 줬는지가 더 크게 작용한다.
-      </div>
+          <div class="food-list">
+            <div class="food-item">
+              <strong>고구마</strong>
+              <p>
+                절대적 최애. 앉은 자리에서 여러 개 먹을 수 있지만,
+                먹고 나서 칼로리를 신경 쓰며 살짝 우울해하기도 한다.
+              </p>
+            </div>
+
+            <div class="food-item">
+              <strong>딸기</strong>
+              <p>
+                생딸기나 딸기 디저트, 딸기 파르페를 좋아한다.
+                다만 딸기우유는 좋아하지 않는다. 단 우유 맛과 인공적인 단맛이 강하게 느껴지는 것을 싫어한다.
+              </p>
+            </div>
+          </div>
+
+          <details class="wiki-details">
+            <summary>그 외 좋아하는 음식</summary>
+            <div class="wiki-details-content">
+              <p>
+                <strong>초콜릿</strong>을 좋아한다. 과자보다는 초콜릿 자체에 가까운 것을 더 선호한다.
+              </p>
+              <p>
+                <strong>그릭요거트</strong>는 과일을 곁들여 먹는 것을 좋아한다.
+                단독으로 먹는 것보다 과일과 함께 먹을 때 반응이 좋다.
+              </p>
+              <p>
+                <strong>초밥</strong>은 좋아하는 편이다.
+                다만 회 자체가 중심이 되는 음식은 그날 기분이나 상태에 따라 반응이 다를 수 있다.
+              </p>
+              <p>
+                <strong>야채</strong>는 의외로 잘 먹는다.
+                편식하는 이미지와 달리 담백하거나 아삭한 야채류는 꽤 잘 받아들이는 편이다.
+              </p>
+            </div>
+          </details>
+
+          <details class="wiki-details">
+            <summary>조건부로 먹는 음식</summary>
+            <div class="wiki-details-content">
+              <p>
+                <strong>토마토</strong>는 생으로는 싫어하지만, 케챱이나 소스 형태는 괜찮다.
+              </p>
+              <p>
+                <strong>옥수수</strong>는 알갱이 형태를 싫어하지만, 팝콘은 괜찮다.
+              </p>
+              <p>
+                <strong>콩</strong>은 식감 때문에 싫어한다. 다만 형태가 완전히 달라지면 경우에 따라 먹을 수 있다.
+              </p>
+              <p>
+                <strong>해산물</strong>은 바닷사람이라 못 먹는 것은 아니지만, 그닥 좋아하지는 않는다.
+                바닷사람인 만큼 익숙해서 먹긴 먹지만 즐겨 찾는 음식은 아니다.
+              </p>
+              <p>
+                <strong>뼈 많은 생선</strong>은 맛보다 뼈를 바르는 일이 귀찮아서 싫어한다.
+                남이 뼈를 발라주면 의외로 얌전히 잘 먹는다.
+              </p>
+            </div>
+          </details>
+
+          <details class="wiki-details">
+            <summary>싫어하거나 꺼리는 음식</summary>
+            <div class="wiki-details-content">
+              <p>
+                커피, 딸기우유, 생토마토, 페페론치노, 매운 음식, 푸딩, 젤리, 마시멜로우,
+                녹은 아이스크림, 콩, 질긴 고기, 튀김류, 뼈 많은 생선을 꺼린다.
+              </p>
+              <p>
+                커피는 쓴맛도 싫고, 마신 뒤 체력이 급격히 떨어지는 느낌이 있어 피한다.
+              </p>
+              <p>
+                녹은 아이스크림에 대해서는 “그건 설탕물이지 아이스크림이 아냐.”라고 말한다.
+              </p>
+            </div>
+          </details>
+
+          <details class="wiki-details">
+            <summary>식감 취향</summary>
+            <div class="wiki-details-content">
+              <p>
+                좋아하는 식감은 포슬포슬함, 아삭함, 쫀득함, 부드럽고 고소한 느낌이다.
+                특히 포슬포슬한 감각에 약하다.
+              </p>
+              <p>
+                싫어하는 식감은 물컹함, 흐물거림, 미끈거림, 질김, 끈적임, 으스러짐, 질척함이다.
+                식감이 싫으면 맛이 괜찮아도 잘 먹지 않는다.
+              </p>
+            </div>
+          </details>
+
+          <details class="wiki-details">
+            <summary>음료 취향</summary>
+            <div class="wiki-details-content">
+              <p>
+                물, 탄산수, 과일주스를 자주 마신다.
+                탄산음료를 아예 못 마시는 것은 아니지만, 탄산음료보다는 탄산수를 더 선호한다.
+              </p>
+              <p>
+                커피와 딸기우유처럼 단맛 강한 우유류는 피한다.
+              </p>
+            </div>
+          </details>
+
+          <details class="wiki-details">
+            <summary>아침 식사</summary>
+            <div class="wiki-details-content">
+              <p>
+                기본적으로 아침은 가볍게 먹는 편이다.
+                배가 너무 부르면 몸이 둔해지는 느낌을 싫어한다.
+              </p>
+              <p>
+                자주 먹는 쪽은 과일, 그릭요거트와 과일, 물, 탄산수 같은 가벼운 조합이다.
+              </p>
+              <p>
+                다만 어디까지나 기본 성향일 뿐, 기분에 따라 완전히 달라진다.
+                어떤 날은 아침부터 갑자기 고기를 달라고 할 수도 있다.
+              </p>
+              <span class="line">“아침에 배부르면 둔해져서 싫어…”</span>
+              <span class="line">“오늘은 고기 먹고 싶어.”</span>
+            </div>
+          </details>
+
+          <details class="wiki-details">
+            <summary>요리 실력</summary>
+            <div class="wiki-details-content">
+              <p>
+                누아는 의외로 요리를 잘한다.
+                겉보기에는 요리 못할 것 같은데, 막상 하면 꽤 제대로 만든다.
+              </p>
+              <p>
+                특히 베이킹에 능하다.
+                손끝 감각이 좋아서 디저트류를 만들 때 결과물이 안정적인 편이다.
+              </p>
+              <p>
+                예를 들어 알리오올리오를 만들면 맛은 있는데, 마늘이 살짝 타는 식이다.
+                못 만드는 것은 아니지만 누아답게 어딘가 하나씩 삐끗하는 부분이 있다.
+              </p>
+            </div>
+          </details>
+
+          <h3 class="sub-section-title">음식 관련 일화</h3>
+
+          <div class="scene-box">
+            <p>
+              누아에게 고구마는 거의 절대적인 음식이다.
+              변덕스럽고 감각에 예민한 누아가 안정적으로 좋아하는 몇 안 되는 음식 중 하나다.
+            </p>
+
+            <span class="line">“고구마는 착해. 나 안 배신해. 늘 맛있어.”</span>
+            <span class="line">“고구마는 나를 배신하지 않아. 항상 내 편이야.”</span>
+            <span class="line">“딸기랑 고구마는 가족이지.”</span>
+          </div>
+
+          <div class="scene-box">
+            <p>
+              크로커다일은 누아가 자주 찾는 음식이나 필요한 것들을 은근히 기억해둔다.
+              대놓고 챙긴다는 티를 내지는 않고, 필요한 것들을 대충 적어 부하에게 시키는 정도다.
+            </p>
+
+            <p>
+              부하들은 묻지 않고 그대로 처리하지만, 속으로는 조금 의아해한다.
+              왜 이런 것까지 사무실에 들여놓는지 알 수 없기 때문이다.
+            </p>
+
+            <span class="line">“서랍 왼쪽.”</span>
+          </div>
+
+          <div class="scene-box">
+            <p>
+              누아는 매운 음식에 약하다.
+              특히 페페론치노를 잘못 먹고 울었던 적이 있다.
+            </p>
+
+            <span class="line">“크, 크로키… 물…!”</span>
+            <span class="line">“그거 매운 거야? 나 속이지 마.”</span>
+
+            <p>
+              2년 후 시점에는 매운맛에 대한 내성이 조금 늘어난다.
+              여전히 매운 음식에 약하지만, 예전처럼 바로 무너지는 정도는 아니다.
+            </p>
+
+            <span class="line">“나도 이제 괜찮아.”</span>
+            <span class="line">“……조금 괜찮다는 뜻이었어.”</span>
+          </div>
+
+          <div class="wiki-note">
+            누아는 좋고 싫음이 분명하지만, 그 기준이 기분 따라 제멋대로 움직인다.
+            음식 자체보다 형태, 질감, 먹기 귀찮은 정도, 누가 줬는지가 더 크게 작용한다.
+          </div>
+        </div>
+      </details>
     </section>
 
     <section>
@@ -961,39 +986,40 @@
 
     <section id="values">
       <h2>가치관</h2>
-    
+
       <p>
         누아에게 세상이나 대의는 그다지 와닿는 개념이 아니다.
         사람들이 죽어도 자신과 상관없다고 느낄 수 있고,
         세상이 멸망한다고 해도 그것 자체만으로 움직이지는 않는다.
       </p>
-    
+
       <p>
         그러나 누군가에게 세상보다 중요한 것은 거대한 대의가 아니라,
         곁에 있는 한 줌의 사람들이다.
         세상이 멸망하면 그 사람들이 죽고, 사라진다.
         누아가 무언가를 지키려 한다면 이유는 바로 그쪽에 가깝다.
       </p>
-    
+
       <div class="wiki-note">
         누아에게 중요한 것은 세계 전체가 아니라, 세계보다 더 소중한 몇몇 사람들이다.
         그들이 사라지는 것을 보지 못한다는 것만이 세상을 연명시킬 이유가 된다.
       </div>
     </section>
-    
+
     <section>
       <h2>초회복 실험</h2>
       <p>
         누아는 도플라밍고가 불로불사 연구에 착수하기 전,
         인간의 회복 능력 강화를 목적으로 진행한 초회복 실험의 피실험체였다.
-
-        <details class="mini-pop">
-            <summary>기록</summary
-            <div class="mini-pop-content">
-              도플라밍고가 누아를 이유없이 데려와 키운건 아니였던 셈.
-            </div>    
-          </details>
       </p>
+
+      <details class="mini-pop">
+        <summary>기록</summary>
+        <div class="mini-pop-content">
+          도플라밍고가 누아를 이유 없이 데려와 키운 건 아니었던 셈.
+        </div>
+      </details>
+
       <p>
         실험은 완전한 회복 능력을 만드는 데에는 실패했지만,
         누아의 피부 조직은 흉터 없이 재생되는 체질로 변했다.
@@ -1007,19 +1033,19 @@
 
     <section>
       <h2>관계</h2>
-    
+
       <p>
         <a class="wiki-link" href="./crocodile.html">크로커다일</a>은 누아에게
         보호자이자 가장 편히 머무를 수 있는 안식처에 가깝다.
         누아는 그가 자신을 어떻게 생각하는지보다,
         자신이 그를 좋아한다는 사실을 더 중요하게 여긴다.
       </p>
-    
+
       <p>
         <a class="wiki-link" href="./doflamingo.html">도플라밍고</a>는 과거의 보호자이자
         상처의 원인이다. 누아에게 그는 애정과 트라우마, 회귀 본능이 동시에 얽힌 존재다.
       </p>
-    
+
       <p>
         <a class="wiki-link" href="./ace.html">에이스</a>는 통제나 소유가 없는 자유로운 신뢰 관계에 가깝다.
         누아에게 에이스는 동등하고 인간적인 애정을 알려주는 존재다.
