@@ -341,193 +341,448 @@
       }
     }
 
-    /* 누아 관계 섹션: 크로커다일 색 위로 누아 핑크가 번지는 효과 */
-    .nua-relation {
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
-      margin-top: 42px;
-      padding: 28px;
-      border: 1px solid rgba(217, 154, 210, 0.45);
-      border-radius: 26px;
-      background:
-        radial-gradient(circle at 18% 20%, rgba(72, 30, 95, 0.55), transparent 34%),
-        radial-gradient(circle at 85% 12%, rgba(245, 176, 225, 0.22), transparent 30%),
-        radial-gradient(circle at 55% 92%, rgba(13, 47, 27, 0.95), transparent 42%),
-        linear-gradient(135deg, #07190e, #10351e 48%, #1b1230);
-      box-shadow:
-        0 18px 42px rgba(18, 34, 20, 0.32),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-    }
+    /* ================================
+   CROCODILE PAGE THEME
+   전체: 녹색 + 보라 + 검은 해적 분위기
+   누아 관계: 핑크빛이 스며드는 영역
+================================ */
+
+/* 페이지 전체 배경 */
+body {
+  background:
+    radial-gradient(circle at 12% 10%, rgba(61, 25, 83, 0.58), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(20, 75, 39, 0.72), transparent 36%),
+    radial-gradient(circle at 50% 95%, rgba(9, 33, 19, 0.95), transparent 42%),
+    linear-gradient(135deg, #041109 0%, #0b2414 38%, #160b2b 76%, #05040a 100%);
+  color: #e8e0e8;
+}
+
+/* 전체 페이지에 흐르는 어두운 잉크/소용돌이 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -30%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    conic-gradient(
+      from 30deg at 28% 38%,
+      rgba(8, 36, 18, 0.9),
+      rgba(39, 18, 70, 0.55),
+      rgba(12, 72, 34, 0.62),
+      rgba(8, 7, 22, 0.8),
+      rgba(8, 36, 18, 0.9)
+    ),
+    radial-gradient(circle at 70% 30%, rgba(72, 30, 95, 0.35), transparent 34%),
+    radial-gradient(circle at 24% 74%, rgba(14, 75, 36, 0.45), transparent 38%);
+  filter: blur(28px);
+  opacity: 0.58;
+  mix-blend-mode: screen;
+  animation: crocodilePageInk 28s linear infinite;
+}
+
+/* 검은 녹색 막 같은 그림자 */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(8, 28, 16, 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45, 20, 76, 0.18) 1px, transparent 1px),
+    radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.35) 100%);
+  background-size: 42px 42px, 42px 42px, auto;
+  opacity: 0.55;
+}
+
+/* 본문 카드도 어둡게 */
+.wiki-page {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(10, 26, 16, 0.88),
+      rgba(22, 13, 38, 0.82)
+    );
+  border-color: rgba(99, 63, 132, 0.48);
+  box-shadow:
+    0 22px 58px rgba(0, 0, 0, 0.38),
+    inset 0 0 0 1px rgba(225, 205, 235, 0.07);
+  backdrop-filter: blur(14px);
+}
+
+/* 기본 텍스트 */
+p,
+li,
+.info-box dd {
+  color: rgba(239, 232, 242, 0.86);
+}
+
+h1 {
+  color: #f1e8f5;
+}
+
+h2 {
+  color: #eadff2;
+  border-bottom-color: rgba(153, 103, 178, 0.42);
+}
+
+h3,
+.data-card h3 {
+  color: #caa7df;
+}
+
+.subtitle {
+  color: rgba(238, 224, 238, 0.78);
+}
+
+.wiki-label,
+.info-box dt,
+.back-link {
+  color: #b58ad1;
+}
+
+.back-link:hover {
+  color: #f0c7e8;
+}
+
+/* 정보표 */
+.info-box {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(13, 39, 22, 0.66),
+      rgba(33, 18, 52, 0.58)
+    );
+  border-color: rgba(136, 92, 160, 0.46);
+}
+
+.profile-img {
+  border-color: rgba(239, 232, 242, 0.92);
+  box-shadow:
+    0 14px 32px rgba(0, 0, 0, 0.38),
+    0 0 30px rgba(90, 42, 128, 0.16);
+}
+
+.small-note {
+  color: rgba(212, 190, 224, 0.8);
+}
+
+/* 목차 */
+.wiki-toc {
+  background: rgba(10, 26, 16, 0.58);
+  border-color: rgba(136, 92, 160, 0.38);
+}
+
+.wiki-toc a {
+  background: rgba(92, 54, 130, 0.32);
+  color: #e8c6ef;
+}
+
+.wiki-toc a:hover {
+  background: rgba(136, 92, 160, 0.48);
+}
+
+/* 일반 카드 */
+.data-card {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(12, 42, 24, 0.66),
+      rgba(26, 15, 43, 0.58)
+    );
+  border-color: rgba(113, 86, 140, 0.4);
+}
+
+.data-card p,
+.data-card li {
+  color: rgba(239, 232, 242, 0.84);
+}
+
+/* 노트 박스 */
+.wiki-note {
+  border-left-color: #8b63b0;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(54, 25, 84, 0.56),
+      rgba(11, 42, 25, 0.62)
+    );
+  color: rgba(242, 232, 244, 0.88);
+}
+
+/* 장면 박스 */
+.scene-box {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15, 48, 28, 0.7),
+      rgba(40, 22, 65, 0.62)
+    );
+  border-color: rgba(132, 92, 160, 0.5);
+}
+
+.line {
+  color: rgba(239, 223, 244, 0.9);
+}
+
+/* 접기 박스 */
+.wiki-details {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(13, 39, 22, 0.58),
+      rgba(31, 17, 50, 0.54)
+    );
+  border-color: rgba(136, 92, 160, 0.42);
+}
+
+.wiki-details summary {
+  color: #d2a9e8;
+}
+
+/* 링크 */
+.wiki-link {
+  color: #d8b5ea;
+  border-bottom-color: rgba(216, 181, 234, 0.7);
+}
+
+.wiki-link:hover {
+  background: rgba(216, 181, 234, 0.14);
+}
+
+/* 태그 */
+.keyword-list span,
+.tag-list span,
+.fan-label {
+  background: rgba(103, 55, 138, 0.34);
+  color: #e7c8ef;
+}
+
+/* ================================
+   NUA RELATION SECTION
+   어두운 크로커다일 배경 위에
+   누아 핑크가 밝게 스며드는 부분
+================================ */
+
+.nua-relation {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: 46px;
+  padding: 30px;
+  border: 1px solid rgba(255, 182, 222, 0.72);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 16% 8%, rgba(255, 205, 234, 0.58), transparent 34%),
+    radial-gradient(circle at 84% 18%, rgba(225, 174, 239, 0.36), transparent 30%),
+    radial-gradient(circle at 62% 88%, rgba(20, 80, 43, 0.48), transparent 42%),
+    linear-gradient(
+      135deg,
+      rgba(255, 242, 249, 0.88) 0%,
+      rgba(238, 220, 246, 0.72) 34%,
+      rgba(41, 77, 48, 0.68) 72%,
+      rgba(30, 17, 50, 0.72) 100%
+    );
+  box-shadow:
+    0 20px 54px rgba(255, 170, 216, 0.16),
+    0 0 60px rgba(255, 180, 225, 0.14),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+/* 관계 섹션 안의 초록+보라 소용돌이 */
+.nua-relation::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: 760px;
+  height: 760px;
+  left: -260px;
+  top: -260px;
+  border-radius: 50%;
+  background:
+    conic-gradient(
+      from 15deg,
+      rgba(8, 40, 20, 0.72),
+      rgba(72, 32, 96, 0.45),
+      rgba(20, 92, 48, 0.5),
+      rgba(255, 204, 235, 0.26),
+      rgba(8, 40, 20, 0.72)
+    );
+  filter: blur(18px);
+  opacity: 0.78;
+  mix-blend-mode: multiply;
+  animation: relationGreenPurpleSwirl 22s linear infinite;
+}
+
+/* 누아 핑크 잉크/연기 */
+.nua-relation::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: 680px;
+  height: 680px;
+  right: -220px;
+  top: -170px;
+  border-radius: 47% 53% 45% 55%;
+  background:
+    radial-gradient(circle at 34% 30%, rgba(255, 238, 248, 0.88), transparent 22%),
+    radial-gradient(circle at 62% 68%, rgba(255, 175, 222, 0.58), transparent 28%),
+    conic-gradient(
+      from 120deg,
+      transparent 0deg,
+      rgba(255, 185, 225, 0.12) 34deg,
+      rgba(255, 190, 230, 0.66) 86deg,
+      rgba(222, 164, 240, 0.5) 132deg,
+      transparent 176deg,
+      rgba(255, 230, 244, 0.72) 235deg,
+      rgba(255, 180, 224, 0.22) 306deg,
+      transparent 360deg
+    );
+  filter: blur(20px);
+  opacity: 0.78;
+  mix-blend-mode: screen;
+  animation: relationPinkInk 13s ease-in-out infinite alternate;
+}
+
+/* 관계 섹션 내용은 배경보다 위로 */
+.nua-relation > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 관계 섹션 안에서는 글자색 살짝 어둡게/선명하게 */
+.nua-relation h2 {
+  color: #3f2638;
+  border-bottom-color: rgba(196, 96, 154, 0.38);
+}
+
+.nua-relation p {
+  color: rgba(45, 35, 43, 0.88);
+}
+
+.nua-relation .wiki-link {
+  color: #9d3f76;
+  border-bottom-color: rgba(157, 63, 118, 0.65);
+}
+
+.nua-relation .wiki-link:hover {
+  background: rgba(255, 179, 217, 0.28);
+}
+
+/* 관계 섹션 카드: 밝은 핑크빛 유리 */
+.nua-relation .data-card {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 250, 253, 0.68),
+      rgba(242, 218, 246, 0.44),
+      rgba(22, 72, 38, 0.22)
+    );
+  border-color: rgba(255, 179, 217, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.nua-relation .data-card h3 {
+  color: #8f3f70;
+}
+
+.nua-relation .data-card p {
+  color: rgba(48, 36, 45, 0.86);
+}
+
+/* 관계 섹션 대사 박스 */
+.nua-relation .scene-box {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 191, 228, 0.46), transparent 36%),
+    linear-gradient(
+      135deg,
+      rgba(255, 248, 252, 0.62),
+      rgba(229, 204, 242, 0.44),
+      rgba(21, 74, 39, 0.3)
+    );
+  border-color: rgba(255, 179, 217, 0.62);
+  backdrop-filter: blur(10px);
+}
+
+.nua-relation .line {
+  color: rgba(62, 38, 57, 0.9);
+}
+
+.nua-relation .wiki-note {
+  border-left-color: #ff9fcb;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 235, 246, 0.64),
+      rgba(225, 199, 242, 0.36),
+      rgba(20, 70, 38, 0.28)
+    );
+  color: rgba(52, 39, 49, 0.9);
+  backdrop-filter: blur(10px);
+}
+
+.nua-relation .fan-label {
+  background: rgba(255, 179, 217, 0.42);
+  color: #8f3f70;
+}
+
+/* 전체 페이지 어두운 잉크 움직임 */
+@keyframes crocodilePageInk {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(180deg) scale(1.08);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+/* 관계 섹션 초록+보라 소용돌이 */
+@keyframes relationGreenPurpleSwirl {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(180deg) scale(1.08);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+/* 누아 핑크가 스며드는 움직임 */
+@keyframes relationPinkInk {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0.56;
+  }
+
+  45% {
+    transform: translate(-82px, 58px) rotate(95deg) scale(1.14);
+    opacity: 0.88;
+  }
+
+  100% {
+    transform: translate(-145px, 24px) rotate(165deg) scale(1.05);
+    opacity: 0.68;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  .nua-relation::before,
+  .nua-relation::after {
+    animation: none !important;
+  }
+}
     
-    /* 초록+보라의 어두운 소용돌이 */
-    .nua-relation::before {
-      content: "";
-      position: absolute;
-      z-index: -2;
-      width: 680px;
-      height: 680px;
-      left: -180px;
-      top: -210px;
-      border-radius: 50%;
-      background:
-        conic-gradient(
-          from 40deg,
-          rgba(9, 42, 22, 0.95),
-          rgba(58, 28, 93, 0.75),
-          rgba(12, 67, 35, 0.9),
-          rgba(10, 8, 28, 0.86),
-          rgba(9, 42, 22, 0.95)
-        );
-      filter: blur(18px);
-      opacity: 0.85;
-      animation: crocodileSwirl 18s linear infinite;
-    }
-    
-    /* 누아 핑크 잉크/연기 */
-    .nua-relation::after {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      width: 560px;
-      height: 560px;
-      right: -170px;
-      top: -130px;
-      border-radius: 48% 52% 44% 56%;
-      background:
-        radial-gradient(circle at 30% 35%, rgba(255, 214, 238, 0.72), transparent 25%),
-        conic-gradient(
-          from 120deg,
-          transparent 0deg,
-          rgba(255, 181, 225, 0.04) 35deg,
-          rgba(255, 181, 225, 0.5) 78deg,
-          rgba(190, 123, 215, 0.34) 118deg,
-          transparent 165deg,
-          rgba(255, 218, 242, 0.48) 230deg,
-          rgba(255, 181, 225, 0.12) 285deg,
-          transparent 360deg
-        );
-      filter: blur(16px);
-      opacity: 0.72;
-      mix-blend-mode: screen;
-      animation: nuaPinkInk 11s ease-in-out infinite alternate;
-    }
-    
-    /* 섹션 안쪽 글자/카드가 배경 위에서 잘 보이게 */
-    .nua-relation h2 {
-      position: relative;
-      border-bottom-color: rgba(255, 190, 230, 0.42);
-      color: #f7e7f2;
-    }
-    
-    .nua-relation p {
-      position: relative;
-      color: rgba(255, 248, 252, 0.88);
-    }
-    
-    .nua-relation .wiki-link {
-      color: #ffd2eb;
-      border-bottom-color: rgba(255, 210, 235, 0.75);
-    }
-    
-    .nua-relation .wiki-link:hover {
-      background: rgba(255, 179, 217, 0.18);
-    }
-    
-    .nua-relation .data-card {
-      position: relative;
-      border-color: rgba(255, 190, 230, 0.28);
-      background:
-        linear-gradient(
-          135deg,
-          rgba(255, 244, 252, 0.15),
-          rgba(8, 27, 15, 0.52)
-        );
-      backdrop-filter: blur(8px);
-    }
-    
-    .nua-relation .data-card h3 {
-      color: #ffd2eb;
-    }
-    
-    .nua-relation .data-card p {
-      color: rgba(255, 248, 252, 0.84);
-    }
-    
-    .nua-relation .scene-box {
-      position: relative;
-      border-color: rgba(255, 179, 217, 0.55);
-      background:
-        radial-gradient(circle at 20% 0%, rgba(255, 179, 217, 0.26), transparent 38%),
-        linear-gradient(
-          135deg,
-          rgba(21, 48, 27, 0.72),
-          rgba(49, 23, 67, 0.62)
-        );
-      backdrop-filter: blur(8px);
-    }
-    
-    .nua-relation .line {
-      color: rgba(255, 235, 246, 0.92);
-    }
-    
-    .nua-relation .wiki-note {
-      position: relative;
-      border-left-color: #ffb3d9;
-      background:
-        linear-gradient(
-          135deg,
-          rgba(255, 179, 217, 0.18),
-          rgba(12, 42, 24, 0.58)
-        );
-      color: rgba(255, 248, 252, 0.9);
-    }
-    
-    .nua-relation .fan-label {
-      background: rgba(255, 179, 217, 0.2);
-      color: #ffd2eb;
-    }
-    
-    /* 어두운 초록+보라 소용돌이 회전 */
-    @keyframes crocodileSwirl {
-      0% {
-        transform: rotate(0deg) scale(1);
-      }
-    
-      50% {
-        transform: rotate(180deg) scale(1.08);
-      }
-    
-      100% {
-        transform: rotate(360deg) scale(1);
-      }
-    }
-    
-    /* 핑크 잉크가 천천히 번지는 움직임 */
-    @keyframes nuaPinkInk {
-      0% {
-        transform: translate(0, 0) rotate(0deg) scale(1);
-        opacity: 0.46;
-      }
-    
-      45% {
-        transform: translate(-60px, 70px) rotate(90deg) scale(1.14);
-        opacity: 0.75;
-      }
-    
-      100% {
-        transform: translate(-120px, 34px) rotate(165deg) scale(1.05);
-        opacity: 0.62;
-      }
-    }
-    
-    /* 움직임 줄이기 설정 */
-    @media (prefers-reduced-motion: reduce) {
-      .nua-relation::before,
-      .nua-relation::after {
-        animation: none;
-      }
-    }
   </style>
 </head>
 
