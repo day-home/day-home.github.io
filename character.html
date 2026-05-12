@@ -128,6 +128,47 @@
       }
     }
 
+    .home-link {
+      position: fixed;
+      top: 22px;
+      left: 22px;
+      z-index: 20;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 15px;
+      border: 1px solid rgba(255, 190, 220, 0.85);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(10px);
+      color: #b46b91;
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      box-shadow: 0 8px 22px rgba(210, 116, 160, 0.14);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    
+    .home-link:hover {
+      transform: translateY(-3px);
+      border-color: #ff9fcb;
+      box-shadow: 0 12px 28px rgba(210, 116, 160, 0.2);
+    }
+    
+    .home-link:focus-visible {
+      outline: 2px solid #ff7eb6;
+      outline-offset: 3px;
+    }
+    
+    @media (max-width: 560px) {
+      .home-link {
+        top: 14px;
+        left: 14px;
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+    }
+
     @media (max-width: 560px) {
       .character-page {
         padding: 54px 18px;
@@ -153,6 +194,8 @@
 </head>
 
 <body>
+  <a class="home-link" href="./index.html">← HOME</a>
+  
   <main class="character-page">
     <section class="character-hero">
       <p class="page-label">CHARACTER ARCHIVE</p>
