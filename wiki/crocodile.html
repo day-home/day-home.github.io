@@ -4,14 +4,772 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>크로커다일</title>
+  <title>Sir. 크로커다일</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Serif+KR:wght@300;500;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 40px 20px;
+      background:
+        radial-gradient(circle at 14% 16%, rgba(226, 189, 143, 0.45), transparent 30%),
+        radial-gradient(circle at 86% 20%, rgba(255, 226, 240, 0.75), transparent 32%),
+        radial-gradient(circle at 50% 95%, rgba(188, 155, 119, 0.28), transparent 38%),
+        #fff8f1;
+      color: #3f3935;
+      font-family: 'Gowun Dodum', sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(164, 123, 83, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(164, 123, 83, 0.12) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(circle at center, black, transparent 78%);
+      opacity: 0.55;
+    }
+
+    .wiki-page {
+      position: relative;
+      z-index: 1;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 34px;
+      border: 1px solid rgba(169, 125, 83, 0.45);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(12px);
+      box-shadow:
+        0 18px 50px rgba(116, 82, 48, 0.15),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: #8b6747;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .wiki-header {
+      margin-bottom: 30px;
+      padding-bottom: 24px;
+      border-bottom: 1px dashed rgba(169, 125, 83, 0.55);
+    }
+
+    .wiki-label {
+      margin-bottom: 10px;
+      color: #9d7350;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      font-weight: bold;
+    }
+
+    h1 {
+      margin-bottom: 12px;
+      color: #2f2925;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 40px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    .subtitle {
+      color: #6b5b50;
+      line-height: 1.8;
+    }
+
+    .wiki-note {
+      margin: 16px 0;
+      padding: 14px 16px;
+      border-left: 4px solid #b28a64;
+      border-radius: 14px;
+      background: rgba(255, 244, 232, 0.75);
+      color: #6b5b50;
+      line-height: 1.8;
+    }
+
+    .info-box {
+      margin: 28px 0;
+      padding: 22px;
+      border: 1px solid rgba(169, 125, 83, 0.45);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .profile-img {
+      display: block;
+      width: min(100%, 520px);
+      height: auto;
+      max-height: none;
+      object-fit: contain;
+      margin: 0 auto 20px;
+      border: 8px solid #fff;
+      border-radius: 22px;
+      box-shadow: 0 10px 24px rgba(116, 82, 48, 0.16);
+    }
+
+    .info-box dl {
+      display: grid;
+      gap: 12px;
+    }
+
+    .info-box div {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 14px;
+    }
+
+    .info-box dt {
+      color: #8b6747;
+      font-weight: bold;
+    }
+
+    .info-box dd {
+      color: #4f4741;
+    }
+
+    .small-note {
+      color: #8d7a6c;
+      font-size: 0.9em;
+    }
+
+    .pending {
+      color: #7a6557;
+      border-bottom: 1px dashed rgba(139, 103, 71, 0.75);
+      cursor: help;
+    }
+
+    .wiki-toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 24px 0 8px;
+      padding: 14px;
+      border: 1px solid rgba(169, 125, 83, 0.35);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.55);
+    }
+
+    .wiki-toc a {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(178, 138, 100, 0.12);
+      color: #7a5538;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .wiki-toc a:hover {
+      background: rgba(178, 138, 100, 0.22);
+    }
+
+    section {
+      margin-top: 36px;
+    }
+
+    h2 {
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(169, 125, 83, 0.42);
+      color: #3c3129;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 25px;
+      font-weight: 500;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      color: #7a5538;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: 14px;
+      line-height: 1.9;
+      color: #4f4741;
+    }
+
+    ul {
+      padding-left: 18px;
+    }
+
+    li {
+      line-height: 1.8;
+      color: #4f4741;
+    }
+
+    .wiki-link {
+      color: #8b6747;
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(139, 103, 71, 0.7);
+    }
+
+    .wiki-link:hover {
+      background: rgba(178, 138, 100, 0.15);
+    }
+
+    .keyword-list,
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .keyword-list span,
+    .tag-list span {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(178, 138, 100, 0.16);
+      color: #7a5538;
+      font-size: 13px;
+    }
+
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .data-card {
+      padding: 18px;
+      border: 1px solid rgba(169, 125, 83, 0.38);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.66);
+    }
+
+    .scene-box {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255, 244, 232, 0.9), rgba(255, 255, 255, 0.75));
+      border: 1px dashed rgba(169, 125, 83, 0.55);
+    }
+
+    .scene-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .line {
+      display: block;
+      margin: 8px 0;
+      color: #6b5b50;
+      line-height: 1.8;
+    }
+
+    .wiki-details {
+      margin-top: 18px;
+      border: 1px solid rgba(169, 125, 83, 0.38);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.63);
+      overflow: hidden;
+    }
+
+    .wiki-details summary {
+      padding: 15px 18px;
+      color: #8b6747;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .wiki-details-content {
+      padding: 0 18px 18px;
+    }
+
+    .fan-label {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(178, 138, 100, 0.14);
+      color: #8b6747;
+      font-family: 'Gowun Dodum', sans-serif;
+      font-size: 12px;
+      vertical-align: middle;
+    }
+
+    @media (max-width: 700px) {
+      .data-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        padding: 28px 14px;
+      }
+
+      .wiki-page {
+        padding: 24px;
+        border-radius: 24px;
+      }
+
+      h1 {
+        font-size: 31px;
+      }
+
+      .info-box div {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <main>
-    <a href="../character.html">← 캐릭터 목록으로 돌아가기</a>
-    <h1>크로커다일</h1>
-    <p>누아에게 보호자이자 안식처가 되는 인물.</p>
+  <main class="wiki-page">
+    <a class="back-link" href="../character.html">← 캐릭터 목록으로 돌아가기</a>
+
+    <header class="wiki-header">
+      <p class="wiki-label">CANON CHARACTER / DREAM ARCHIVE</p>
+      <h1>Sir. 크로커다일</h1>
+      <p class="subtitle">
+        냉철한 현실주의자이자 철저한 책략가. 타인을 쉽게 믿지 않고 감정에 휘둘리는 것을 경계하지만,
+        누아 앞에서는 예상보다 긴 인내심과 묘한 보호 본능을 드러낸다.
+      </p>
+    </header>
+
+    <div class="wiki-note">
+      점선 밑줄이 표시된 항목은 원작 설정이 아닌 드림홈 내부 설정입니다.
+    </div>
+
+    <aside class="info-box">
+      <img class="profile-img" src="../img/crocodile.png" alt="Sir. 크로커다일">
+
+      <dl>
+        <div>
+          <dt>이름</dt>
+          <dd>크로커다일</dd>
+        </div>
+
+        <div>
+          <dt>이명</dt>
+          <dd>Sir. 크로커다일</dd>
+        </div>
+
+        <div>
+          <dt>생일</dt>
+          <dd>9월 5일 <span class="small-note">/ 처녀자리</span></dd>
+        </div>
+
+        <div>
+          <dt>나이</dt>
+          <dd>
+            44세 <span class="small-note">2년 전</span>
+            →
+            46세 <span class="small-note">2년 후</span>
+          </dd>
+        </div>
+
+        <div>
+          <dt>신장</dt>
+          <dd>253cm</dd>
+        </div>
+
+        <div>
+          <dt>혈액형</dt>
+          <dd>S형 <span class="small-note">ABO식으로는 O형</span></dd>
+        </div>
+
+        <div>
+          <dt>능력</dt>
+          <dd>모래모래 열매, 무장색 패기, 견문색 패기</dd>
+        </div>
+
+        <div>
+          <dt>소속</dt>
+          <dd>前 왕의 부하 칠무해 / 前 비밀 지하 조직 수장</dd>
+        </div>
+
+        <div>
+          <dt>좋아하는 음식</dt>
+          <dd>악어고기, 토마토</dd>
+        </div>
+
+        <div>
+          <dt>싫어하는 음식</dt>
+          <dd>케챱</dd>
+        </div>
+
+        <div>
+          <dt>취미</dt>
+          <dd>버섯채집</dd>
+        </div>
+      </dl>
+    </aside>
+
+    <nav class="wiki-toc" aria-label="문서 목차">
+      <a href="#overview">개요</a>
+      <a href="#appearance">외관</a>
+      <a href="#ability">능력</a>
+      <a href="#personality">성격</a>
+      <a href="#scent">체향</a>
+      <a href="#nua">누아와의 관계</a>
+    </nav>
+
+    <section id="overview">
+      <h2>개요</h2>
+
+      <p>
+        크로커다일은 자연계 악마의 열매인 모래모래 열매의 능력자이자,
+        오랜 경험과 치밀한 책략을 무기로 삼는 대해적이다.
+        단순히 강한 전투력만으로 상대를 압도하는 타입이 아니라,
+        상대의 약점과 상황 전체를 계산해 전장을 설계하는 지장형 인물에 가깝다.
+      </p>
+
+      <p>
+        냉정하고 건조한 현실주의자의 태도를 보이며,
+        이상이나 정의를 앞세우는 이들을 신랄하게 조롱한다.
+        그러나 그 이면에는 한때 스스로도 거대한 이상을 품었던 모순이 남아 있다.
+      </p>
+
+      <div class="keyword-list">
+        <span>냉철함</span>
+        <span>현실주의</span>
+        <span>책략가</span>
+        <span>인간 불신</span>
+        <span>건조함</span>
+        <span>감춰진 이상주의</span>
+      </div>
+    </section>
+
+    <section id="appearance">
+      <h2>외관</h2>
+
+      <p>
+        흑발과 자안, 올백머리라는 비교적 단정한 스타일을 하고 있지만,
+        얼굴 중앙을 가로지르는 긴 흉터와 잘린 왼손을 대신하는 큼지막한 금색 갈고리가 강한 인상을 남긴다.
+      </p>
+
+      <p>
+        갈고리의 겉을 벗기면 전갈의 독이 흘러 떨어지는 독 갈고리가 드러나며,
+        더 깊숙한 안쪽에는 단도가 내장되어 있다.
+        외관상 장식처럼 보이는 부분조차 실제로는 무기가 되는 구조다.
+      </p>
+
+      <div class="data-grid">
+        <article class="data-card">
+          <h3>인상</h3>
+          <ul>
+            <li>흑발, 자안, 올백머리</li>
+            <li>얼굴 중앙의 긴 흉터</li>
+            <li>차갑고 위압적인 분위기</li>
+            <li>단정하지만 쉽게 다가가기 어려운 인상</li>
+          </ul>
+        </article>
+
+        <article class="data-card">
+          <h3>갈고리</h3>
+          <ul>
+            <li>잘린 왼손을 대신하는 금색 갈고리</li>
+            <li>겉을 벗기면 독 갈고리가 드러남</li>
+            <li>안쪽에는 단도가 내장되어 있음</li>
+            <li>상징이자 실전용 무기</li>
+          </ul>
+        </article>
+
+        <article class="data-card">
+          <h3>복장</h3>
+          <ul>
+            <li>고풍스러운 정장</li>
+            <li>중후한 털코트</li>
+            <li>감옥에서 나온 직후에도 옷차림을 갖출 정도의 고집</li>
+            <li>체면과 격식을 중시하는 분위기</li>
+          </ul>
+        </article>
+
+        <article class="data-card">
+          <h3>장신구와 습관</h3>
+          <ul>
+            <li>오른손 약지를 제외한 네 손가락에 반지</li>
+            <li>귀고리는 오른쪽에만 착용</li>
+            <li>고급 시가를 자주 물고 있음</li>
+            <li>웃음소리는 “크하하하”</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="ability">
+      <h2>능력</h2>
+
+      <p>
+        크로커다일은 자연계 열매인 모래모래 열매의 능력자다.
+        자신의 몸을 모래로 바꾸고, 몸에서 나오는 모래를 자유자재로 조종한다.
+        무장색 패기가 실리지 않은 공격은 대부분 흘려보낼 수 있으며,
+        모래라는 질량이 있는 물질을 다루기 때문에 물리적인 공격력도 높다.
+      </p>
+
+      <div class="data-grid">
+        <article class="data-card">
+          <h3>모래 조작</h3>
+          <p>
+            거대한 모래 칼날을 만들거나, 주변의 모래를 조종해 유사 구덩이를 만들어 적을 묻어버릴 수 있다.
+            모래 폭풍을 일으켜 넓은 범위를 장악하는 것도 가능하다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>신체 변형</h3>
+          <p>
+            신체 일부를 모래로 바꾸어 무기처럼 사용할 수 있다.
+            팔을 칼날이나 대보검처럼 변형해 공격하는 식이다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>건조</h3>
+          <p>
+            모래모래 열매의 또 다른 특징은 수분 흡수다.
+            닿은 대상의 수분을 빼앗아 말려버릴 수 있으며, 이 능력은 전투에서 매우 치명적으로 작용한다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>약점</h3>
+          <p>
+            액체와 습기에 취약하다.
+            모래가 젖으면 알갱이가 뭉쳐 원소화가 어려워지며,
+            습도가 높은 환경에서는 능력 운용에 큰 제약을 받는다.
+          </p>
+        </article>
+      </div>
+
+      <div class="wiki-note">
+        크로커다일의 전투 방식은 힘으로 밀어붙이는 것보다,
+        능력을 극한까지 응용하고 상대의 약점을 분석해 공략하는 쪽에 가깝다.
+      </div>
+    </section>
+
+    <section id="personality">
+      <h2>성격</h2>
+
+      <p>
+        크로커다일은 대해적으로서의 프라이드가 매우 강하다.
+        자신에게 덤벼드는 풋내기 해적들을 가볍게 여기며,
+        해적으로서의 격과 경험 차이를 분명하게 드러낸다.
+      </p>
+
+      <p>
+        그러나 그 프라이드가 단순한 자만으로 이어지지는 않는다.
+        그는 작전이 실패할 가능성까지 계산해 몇 겹의 대응책을 마련하는 인물이며,
+        상대가 희망을 품고 발버둥치는 모습을 지켜보다가 마지막 순간 그 희망을 끊어내는 악의 카리스마를 지닌다.
+      </p>
+
+      <div class="data-grid">
+        <article class="data-card">
+          <h3>현실주의자</h3>
+          <p>
+            실력 없이 정의나 이상을 말하는 자들을 냉소적으로 바라본다.
+            세상 물정을 모르는 소리라며 이상주의를 조롱하는 태도가 강하다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>감춰진 이상주의</h3>
+          <p>
+            냉철하고 염세적인 언행과 달리, 그 역시 한때 거대한 이상을 품었던 인물이다.
+            세계정부로부터 자유로운 이상향을 꿈꾸었다는 점에서 모순적인 면을 지닌다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>인간 불신</h3>
+          <p>
+            동료에 대한 신뢰를 부질없는 것으로 여기며,
+            타인을 쉽게 믿지 않는다. 다만 이와 별개로 허당처럼 속아넘어가는 면도 있다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>의외의 너그러움</h3>
+          <p>
+            체면을 중시하고 인간 혐오적인 태도를 보이지만,
+            의외로 끓는점이 높고 호칭 문제에도 유연하다.
+            동물에게는 상냥한 면도 있다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>조직 관리</h3>
+          <p>
+            상벌이 확실한 관리자다.
+            거짓 보고나 무능에는 가차없지만, 능력과 충성심을 입증한 부하는 확실히 대우한다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>책략가</h3>
+          <p>
+            모략과 암투에 능하다.
+            정치적 계산과 장기 계획에 뛰어나며, 작전의 변수를 여러 단계로 나누어 대비한다.
+          </p>
+        </article>
+      </div>
+
+      <div class="scene-box">
+        <p>
+          크로커다일의 가장 위험한 점은 단순한 전투력이 아니라,
+          상대가 어디서 무너질지 정확하게 계산하는 치밀함이다.
+        </p>
+      </div>
+    </section>
+
+    <section id="scent">
+      <h2>체향 <span class="fan-label">비공식 설정</span></h2>
+
+      <p>
+        <span class="pending" title="원작 설정이 아닌 드림홈 내부 설정">체향 설정</span>에서 크로커다일은
+        전체적으로 향이 강하지 않은 편이다.
+        따뜻함이나 단내보다는 차갑고 건조한 공기감이 먼저 느껴지며,
+        피부 자체는 무향에 가깝지만 묵직하고 낮은 분위기가 남는다.
+      </p>
+
+      <div class="data-grid">
+        <article class="data-card">
+          <h3>기본 체취</h3>
+          <ul>
+            <li>전반적으로 향이 강하지 않음</li>
+            <li>차갑고 건조한 느낌</li>
+            <li>땀 산미나 눅눅한 냄새가 거의 없음</li>
+            <li>피부 자체는 무향에 가까움</li>
+          </ul>
+        </article>
+
+        <article class="data-card">
+          <h3>옷에 남는 향</h3>
+          <ul>
+            <li>코트, 셔츠, 가죽 장갑에 잔향이 남음</li>
+            <li>우디한 목재 향</li>
+            <li>미세한 스파이시 톤</li>
+            <li>시가 연기에서 오는 얇은 스모크 잔향</li>
+          </ul>
+        </article>
+
+        <article class="data-card">
+          <h3>시가 잔향</h3>
+          <ul>
+            <li>묵직한 나무를 태운 듯한 낮은 톤</li>
+            <li>싸하거나 톡 쏘는 냄새는 적음</li>
+            <li>부드럽고 낮게 깔리는 스모크</li>
+            <li>옷과 머리카락 끝에 얇게 스며듦</li>
+          </ul>
+        </article>
+
+        <article class="data-card">
+          <h3>잘 느껴지는 부위</h3>
+          <ul>
+            <li>목덜미와 턱선 주변</li>
+            <li>코트의 넥라인</li>
+            <li>셔츠 칼라 부분</li>
+            <li>상체와 목 주변 중심</li>
+          </ul>
+        </article>
+      </div>
+
+      <details class="wiki-details">
+        <summary>거리별 향기 느낌</summary>
+        <div class="wiki-details-content">
+          <p>
+            먼 거리에서는 거의 무향에 가깝다.
+            30~50cm 정도 가까워지면 옷에서 올라오는 우디·스모크 잔향이 은근하게 느껴진다.
+          </p>
+          <p>
+            포옹 거리에서는 차가운 피부 무향과 우디 스모크 조합이 가장 또렷해진다.
+            목덜미에 가까워질수록 건조하고 무게감 있는 향이 강해진다.
+          </p>
+        </div>
+      </details>
+
+      <div class="wiki-note">
+        전체 이미지는 차갑고 건조한 공기,
+        우디·스파이스·스모크가 얇게 깔린 묵직한 남자향에 가깝다.
+      </div>
+    </section>
+
+    <section id="nua">
+      <h2>누아와의 관계</h2>
+
+      <p>
+        <a class="wiki-link" href="./nua.html">누아</a>에게 크로커다일은 보호자이자,
+        가장 편히 머무를 수 있는 안식처에 가까운 존재다.
+        반대로 크로커다일에게 누아는 쉽게 통제할 수 없는 존재이며,
+        언제든 제멋대로 떠날 수 있을 것 같은 불안정한 자유로움으로 남아 있다.
+      </p>
+
+      <p>
+        누아는 크로커다일이 자신을 어떻게 생각하는지에는 크게 집착하지 않는다.
+        대신 그가 밥을 먹었는지, 피곤한지, 상태가 어떤지 같은 부분에는 민감하게 반응한다.
+        이 관심은 누아식 애정 표현에 가깝다.
+      </p>
+
+      <p>
+        스킨십 역시 누아는 부담 없이 행동한다.
+        자기 감정이 이끄는 대로 기대거나 다가가며,
+        크로커다일이 움찔하거나 조심하는 반응도 대체로 무심하게 받아들인다.
+      </p>
+
+      <div class="data-grid">
+        <article class="data-card">
+          <h3>누아 → 크로커다일</h3>
+          <p>
+            크로커다일이 자신을 어떻게 생각하는지보다,
+            자신이 그를 좋아한다는 사실을 더 중요하게 여긴다.
+            애정이 계산보다 먼저 움직이는 쪽이다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>크로커다일 → 누아</h3>
+          <p>
+            누아를 붙잡고 싶어하면서도, 강제로 묶어두면 오히려 사라질 것처럼 느낀다.
+            그래서 직접적인 통제보다는 감시와 보호를 조용히 배치하는 방식에 가깝다.
+          </p>
+        </article>
+      </div>
+
+      <div class="scene-box">
+        <span class="line">누아 → 크로커다일</span>
+        <span class="line">“내가 좋아하니까, 그냥 곁에 있는 거야.”</span>
+
+        <br>
+
+        <span class="line">크로커다일 → 누아</span>
+        <span class="line">“언제 떠날지 모르겠어.”</span>
+      </div>
+
+      <div class="wiki-note">
+        이 관계의 핵심은 누아의 즉흥적이고 당연한 애정과,
+        크로커다일의 불신에서 비롯된 조심스러운 보호 본능이다.
+      </div>
+    </section>
   </main>
 </body>
 
