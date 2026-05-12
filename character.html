@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Character Archive | Day</title>
 
-  <!-- 명조체 및 고딕체 폰트 불러오기 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Serif+KR:wght@200;400;700&display=swap" rel="stylesheet">
@@ -28,13 +27,12 @@
 
     body {
       background: var(--bg-color);
-      font-family: 'Noto Serif KR', serif; /* 전체를 우아한 명조체로 설정 */
+      font-family: 'Noto Serif KR', serif;
       color: var(--dark-text);
       overflow-x: hidden;
       line-height: 1.6;
     }
 
-    /* 메인홈의 감성을 잇는 배경 장식 */
     body::before {
       content: "";
       position: fixed;
@@ -46,27 +44,17 @@
       z-index: -1;
     }
 
-    /* 흩날리는 꽃잎 효과 */
-    .petal-bg {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
-
     .character-page {
       position: relative;
       z-index: 1;
-      max-width: 1200px;
+      max-width: 1300px; /* 아이패드 가로 모드 대응을 위해 살짝 넓힘 */
       margin: 0 auto;
-      padding: 120px 24px;
+      padding: 100px 20px;
     }
 
-    /* 헤더 영역: 갤러리 전시 서문 느낌 */
     .character-hero {
       text-align: center;
-      margin-bottom: 100px;
-      opacity: 0;
+      margin-bottom: 80px;
       animation: fadeInDown 1.2s forwards;
     }
 
@@ -80,9 +68,9 @@
     }
 
     .character-hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-size: clamp(2rem, 5vw, 3.5rem);
       font-weight: 200;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       letter-spacing: 0.1em;
     }
 
@@ -94,23 +82,36 @@
       word-break: keep-all;
     }
 
-    /* 그리드 레이아웃: 비대칭적인 예술적 배치 */
+    /* ✨ 핵심 수정 부분: 아이패드 등 태블릿에서 4개가 한 줄에 나오도록 설정 */
     .character-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 40px;
+      grid-template-columns: repeat(4, 1fr); /* 4열 고정 시도 */
+      gap: 20px;
       align-items: stretch;
     }
 
-    /* 캐릭터 카드 기본 공통 스타일 */
+    /* 화면이 좁아질 때만 줄바꿈 되도록 처리 */
+    @media (max-width: 1024px) {
+      .character-grid {
+        grid-template-columns: repeat(2, 1fr); /* 태블릿 세로 모드 등에선 2열 */
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .character-grid {
+        grid-template-columns: 1fr; /* 모바일은 1열 */
+      }
+    }
+
     .character-card {
       position: relative;
       text-decoration: none;
       color: inherit;
       background: rgba(255, 255, 255, 0.5);
       backdrop-filter: blur(10px);
-      border-radius: 40px 10px 40px 10px; /* 비대칭적인 곡선 */
-      padding: 20px;
+      border-radius: 40px 10px 40px 10px;
+      padding: 16px; /* 내부 여백 살짝 조절 */
       border: 1px solid rgba(255, 255, 255, 0.8);
       transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
       display: flex;
@@ -118,49 +119,36 @@
     }
 
     .character-card:hover {
-      transform: translateY(-15px) scale(1.02);
+      transform: translateY(-12px);
       background: rgba(255, 255, 255, 0.9);
     }
 
-    /* 인물별 분위기 차별화 */
-    /* 1. 빌런 그룹 (도플라밍고, 크로커다일): 차갑고 무거운 톤 */
-    .type-villain {
-      box-shadow: 0 20px 40px var(--villain-shadow);
-    }
-    .type-villain .character-img {
-      filter: grayscale(0.3) contrast(1.1);
-    }
-    .type-villain .character-role { color: #8a707a; }
-
-    /* 2. 히어로/활기 그룹 (누아, 에이스): 따뜻하고 빛나는 톤 */
-    .type-hero {
-      box-shadow: 0 20px 40px var(--hero-shadow);
+    .type-villain { box-shadow: 0 15px 35px var(--villain-shadow); }
+    .type-villain .character-img { filter: grayscale(0.2) contrast(1.1); }
+    .type-hero { 
+      box-shadow: 0 15px 35px var(--hero-shadow); 
       border-color: rgba(255, 179, 217, 0.3);
     }
-    .type-hero .character-role { color: var(--point-pink); }
     .type-hero::after {
       content: "✦";
       position: absolute;
       top: 15px; right: 20px;
       color: var(--point-pink);
-      font-size: 1.2rem;
+      font-size: 1rem;
       opacity: 0.5;
     }
 
-    /* 메인 캐릭터 누아 특별 강조 */
     .main-character {
-      grid-column: span 1;
       border: 1px solid var(--point-pink);
       background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 240, 247, 0.9));
     }
 
     .character-img {
       width: 100%;
-      height: 350px;
-      border-radius: 30px 5px 30px 5px;
+      height: 280px; /* 높이를 살짝 줄여서 4개가 있을 때 균형을 맞춤 */
+      border-radius: 28px 5px 28px 5px;
       overflow: hidden;
-      margin-bottom: 25px;
-      position: relative;
+      margin-bottom: 20px;
     }
 
     .character-img img {
@@ -171,98 +159,78 @@
     }
 
     .character-card:hover .character-img img {
-      transform: scale(1.1);
-    }
-
-    .character-text {
-      padding: 0 10px 10px;
+      transform: scale(1.08);
     }
 
     .character-role {
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      margin-bottom: 10px;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 8px;
       display: block;
       font-family: 'Gowun Dodum', sans-serif;
+      color: var(--soft-text);
     }
 
+    .type-hero .character-role { color: var(--point-pink); }
+
     .character-text h2 {
-      font-size: 1.8rem;
+      font-size: 1.4rem; /* 폰트 크기 살짝 조정 */
       font-weight: 400;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       color: #111;
     }
 
     .character-text p {
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       color: var(--soft-text);
-      line-height: 1.8;
-      margin-bottom: 25px;
+      line-height: 1.7;
+      margin-bottom: 20px;
       word-break: keep-all;
     }
 
     .view-more {
-      font-size: 0.85rem;
+      margin-top: auto;
+      font-size: 0.8rem;
       color: var(--dark-text);
       font-weight: 700;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .view-more::after {
       content: "";
-      width: 30px;
+      width: 20px;
       height: 1px;
       background: var(--dark-text);
-      transition: width 0.3s ease;
+      transition: 0.3s;
     }
 
-    .character-card:hover .view-more::after {
-      width: 50px;
-      background: var(--point-pink);
-    }
+    .character-card:hover .view-more::after { width: 40px; background: var(--point-pink); }
 
-    /* 홈 버튼: 미니멀 아트 스타일 */
     .home-link {
       position: fixed;
-      top: 40px;
-      left: 40px;
+      top: 30px; left: 30px;
       z-index: 100;
       color: var(--dark-text);
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       letter-spacing: 0.1em;
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 10px 0;
     }
 
     .home-link::before {
       content: "";
-      width: 20px;
-      height: 20px;
+      width: 12px; height: 12px;
       border: 1px solid var(--point-pink);
       border-radius: 50%;
-      transition: all 0.3s ease;
     }
 
-    .home-link:hover::before {
-      background: var(--point-pink);
-      transform: scale(1.2);
-    }
-
-    /* 애니메이션 */
     @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-30px); }
+      from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 768px) {
-      .character-hero h1 { font-size: 2.5rem; }
-      .character-grid { grid-template-columns: 1fr; }
-      .home-link { top: 20px; left: 20px; }
     }
   </style>
 </head>
@@ -282,7 +250,6 @@
 
     <section class="character-grid">
 
-      <!-- 도플라밍고 (빌런) -->
       <a class="character-card type-villain" href="./wiki/doflamingo.html">
         <div class="character-img">
           <img src="./img/doflamingo.png" alt="도플라밍고">
@@ -295,7 +262,6 @@
         </div>
       </a>
 
-      <!-- 누아 (메인/히어로) -->
       <a class="character-card type-hero main-character" href="./wiki/nua.html">
         <div class="character-img">
           <img src="./img/nua.png" alt="아트리타스 누아">
@@ -308,7 +274,6 @@
         </div>
       </a>
 
-      <!-- 크로커다일 (빌런) -->
       <a class="character-card type-villain" href="./wiki/crocodile.html">
         <div class="character-img">
           <img src="./img/crocodile.png" alt="크로커다일">
@@ -321,7 +286,6 @@
         </div>
       </a>
 
-      <!-- 에이스 (히어로) -->
       <a class="character-card type-hero" href="./wiki/ace.html">
         <div class="character-img">
           <img src="./img/ace.png" alt="에이스">
