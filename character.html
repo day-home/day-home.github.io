@@ -6,191 +6,174 @@
   <title>Characters</title>
 
   <style>
-    .character-page {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 80px 24px;
-    }
+  /* 기본 배경을 메인 페이지와 통일해서 일관성 주기 */
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 15% 15%, rgba(255, 190, 220, 0.3), transparent 25%),
+      radial-gradient(circle at 85% 20%, rgba(255, 226, 240, 0.6), transparent 30%),
+      #fff7fb;
+    font-family: 'Gowun Dodum', sans-serif;
+    color: #444;
+  }
 
-    .character-hero {
-      margin-bottom: 42px;
-      text-align: center;
-    }
+  /* 메인 페이지의 격자 무늬 살짝 추가 */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: linear-gradient(rgba(255, 179, 217, 0.1) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255, 179, 217, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: -1;
+  }
 
-    .page-label {
-      margin-bottom: 10px;
-      font-size: 12px;
-      letter-spacing: 0.18em;
-      color: #9b7b83;
-    }
+  .character-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 100px 24px;
+  }
 
-    .character-hero h1 {
-      margin: 0 0 14px;
-      font-size: 42px;
-      font-weight: 700;
-      color: #3b2c31;
-    }
+  .character-hero {
+    margin-bottom: 60px;
+    text-align: center;
+  }
 
-    .character-hero p {
-      margin: 0 auto;
-      max-width: 520px;
-      line-height: 1.8;
-      color: #76666b;
-      font-size: 14px;
-    }
+  /* '진지함'을 주는 세리프 폰트 활용 */
+  .character-hero h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 300;
+    font-size: 3.5rem;
+    color: #333;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
 
-    .character-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 22px;
-    }
+  .page-label {
+    display: inline-block;
+    color: #ff7eb6;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+  }
 
-    .character-card {
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      min-height: 430px;
-      text-decoration: none;
-      color: inherit;
-      background: rgba(255, 252, 250, 0.9);
-      border: 1px solid rgba(145, 112, 120, 0.2);
-      border-radius: 22px;
-      box-shadow: 0 12px 30px rgba(90, 60, 70, 0.08);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    }
+  .character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 30px;
+  }
 
-    .character-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 18px 40px rgba(90, 60, 70, 0.14);
-      border-color: rgba(145, 112, 120, 0.45);
-    }
+  /* 카드 디자인: 귀여운 곡률 + 진지한 정돈감 */
+  .character-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 179, 217, 0.4);
+    border-radius: 30px; /* 더 둥글게 해서 귀여움 강조 */
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(210, 116, 160, 0.1);
+  }
 
-    .character-img {
-      height: 230px;
-      background: #f1e8e3;
-      overflow: hidden;
-    }
+  .character-card:hover {
+    transform: translateY(-8px);
+    border-color: #ff9fcb;
+    box-shadow: 0 15px 35px rgba(210, 116, 160, 0.2);
+  }
 
-    .character-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+  /* 메인 캐릭터(누아)만 특별한 강조 효과 */
+  .main-character {
+    border: 2px solid #ffb3d9;
+    background: linear-gradient(180deg, #fff, #fff0f7);
+  }
 
-    .main-character {
-      border-color: rgba(152, 108, 122, 0.45);
-      background: linear-gradient(
-        180deg,
-        rgba(255, 250, 252, 0.95),
-        rgba(255, 252, 248, 0.95)
-      );
-    }
+  .character-img {
+    height: 280px;
+    overflow: hidden;
+    position: relative;
+    /* 이미지 아래쪽을 살짝 둥글게 */
+    border-bottom: 1px solid rgba(255, 179, 217, 0.2);
+  }
 
-    .character-text {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      padding: 22px 20px 20px;
-    }
+  .character-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
 
-    .character-role {
-      margin: 0 0 8px;
-      font-size: 10px;
-      letter-spacing: 0.16em;
-      color: #a9828b;
-    }
+  .character-card:hover .character-img img {
+    transform: scale(1.05);
+  }
 
-    .character-text h2 {
-      margin: 0 0 12px;
-      font-size: 21px;
-      color: #38292e;
-    }
+  .character-text {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
 
-    .character-text p {
-      margin: 0;
-      line-height: 1.75;
-      font-size: 14px;
-      color: #6f6265;
-    }
+  .character-role {
+    font-size: 0.75rem;
+    color: #d990b4;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
 
-    .character-text span {
-      margin-top: auto;
-      padding-top: 20px;
-      font-size: 13px;
-      color: #8a4e60;
-      font-weight: 600;
-    }
+  .character-text h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    color: #38292e;
+  }
 
-    @media (max-width: 900px) {
-      .character-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
+  .character-text p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 20px;
+  }
 
-    .home-link {
-      position: fixed;
-      top: 22px;
-      left: 22px;
-      z-index: 20;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px 15px;
-      border: 1px solid rgba(255, 190, 220, 0.85);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.82);
-      backdrop-filter: blur(10px);
-      color: #b46b91;
-      text-decoration: none;
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      box-shadow: 0 8px 22px rgba(210, 116, 160, 0.14);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    }
-    
-    .home-link:hover {
-      transform: translateY(-3px);
-      border-color: #ff9fcb;
-      box-shadow: 0 12px 28px rgba(210, 116, 160, 0.2);
-    }
-    
-    .home-link:focus-visible {
-      outline: 2px solid #ff7eb6;
-      outline-offset: 3px;
-    }
-    
-    @media (max-width: 560px) {
-      .home-link {
-        top: 14px;
-        left: 14px;
-        padding: 8px 12px;
-        font-size: 12px;
-      }
-    }
+  /* 상세보기 화살표 부분 */
+  .character-text span {
+    margin-top: auto;
+    font-size: 0.85rem;
+    color: #ff7eb6;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
 
-    @media (max-width: 560px) {
-      .character-page {
-        padding: 54px 18px;
-      }
+  /* 홈 링크 스타일도 메인과 깔맞춤 */
+  .home-link {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    z-index: 100;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ffb3d9;
+    border-radius: 50px;
+    color: #b46b91;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(210, 116, 160, 0.1);
+    transition: all 0.2s;
+  }
 
-      .character-hero h1 {
-        font-size: 34px;
-      }
-
-      .character-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .character-card {
-        min-height: auto;
-      }
-
-      .character-img {
-        height: 260px;
-      }
-    }
-  </style>
+  .home-link:hover {
+    background: #fff0f7;
+    transform: translateX(-3px);
+  }
+</style>
 </head>
 
 <body>
