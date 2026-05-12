@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Character Archive | Day</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Serif+KR:wght@200;400;700&display=swap" rel="stylesheet">
@@ -13,21 +12,15 @@
     :root {
       --bg-color: #fff7fb;
       --point-pink: #ff7eb6;
+      --heavy-rose: #8a5a68;
       --dark-text: #333;
-      --soft-text: #666;
-      --villain-shadow: rgba(60, 40, 50, 0.15);
-      --hero-shadow: rgba(255, 179, 217, 0.2);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       background: var(--bg-color);
-      font-family: 'Noto Serif KR', serif;
+      font-family: 'Noto Serif KR', serif; /* 네가 좋아하는 명조체 */
       color: var(--dark-text);
       overflow-x: hidden;
       line-height: 1.6;
@@ -45,17 +38,14 @@
     }
 
     .character-page {
-      position: relative;
-      z-index: 1;
-      max-width: 1300px; /* 아이패드 가로 모드 대응을 위해 살짝 넓힘 */
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 100px 20px;
+      padding: 100px 24px;
     }
 
     .character-hero {
       text-align: center;
       margin-bottom: 80px;
-      animation: fadeInDown 1.2s forwards;
     }
 
     .page-label {
@@ -68,7 +58,7 @@
     }
 
     .character-hero h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
       font-weight: 200;
       margin-bottom: 25px;
       letter-spacing: 0.1em;
@@ -78,42 +68,29 @@
       max-width: 600px;
       margin: 0 auto;
       font-size: 1rem;
-      color: var(--soft-text);
-      word-break: keep-all;
+      color: var(--heavy-rose);
     }
 
-    /* ✨ 핵심 수정 부분: 아이패드 등 태블릿에서 4개가 한 줄에 나오도록 설정 */
+    /* 아이패드 줄바꿈 방지용 그리드 */
     .character-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr); /* 4열 고정 시도 */
+      grid-template-columns: repeat(4, 1fr);
       gap: 20px;
-      align-items: stretch;
     }
 
-    /* 화면이 좁아질 때만 줄바꿈 되도록 처리 */
-    @media (max-width: 1024px) {
-      .character-grid {
-        grid-template-columns: repeat(2, 1fr); /* 태블릿 세로 모드 등에선 2열 */
-        gap: 30px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .character-grid {
-        grid-template-columns: 1fr; /* 모바일은 1열 */
-      }
-    }
+    @media (max-width: 1024px) { .character-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; } }
+    @media (max-width: 600px) { .character-grid { grid-template-columns: 1fr; } }
 
     .character-card {
       position: relative;
       text-decoration: none;
       color: inherit;
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.6);
       backdrop-filter: blur(10px);
       border-radius: 40px 10px 40px 10px;
-      padding: 16px; /* 내부 여백 살짝 조절 */
+      padding: 20px;
       border: 1px solid rgba(255, 255, 255, 0.8);
-      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      transition: all 0.5s ease;
       display: flex;
       flex-direction: column;
     }
@@ -121,91 +98,56 @@
     .character-card:hover {
       transform: translateY(-12px);
       background: rgba(255, 255, 255, 0.9);
+      border-color: var(--point-pink);
     }
 
-    .type-villain { box-shadow: 0 15px 35px var(--villain-shadow); }
+    /* 빌런/히어로 차별화 (미세한 필터와 그림자) */
+    .type-villain { box-shadow: 0 15px 35px rgba(60, 40, 50, 0.15); }
     .type-villain .character-img { filter: grayscale(0.2) contrast(1.1); }
-    .type-hero { 
-      box-shadow: 0 15px 35px var(--hero-shadow); 
-      border-color: rgba(255, 179, 217, 0.3);
-    }
+    
+    .type-hero { box-shadow: 0 15px 35px rgba(255, 179, 217, 0.2); }
     .type-hero::after {
       content: "✦";
       position: absolute;
       top: 15px; right: 20px;
       color: var(--point-pink);
-      font-size: 1rem;
-      opacity: 0.5;
+      opacity: 0.4;
     }
 
-    .main-character {
-      border: 1px solid var(--point-pink);
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 240, 247, 0.9));
-    }
+    .main-character { border: 1px solid var(--point-pink); }
 
     .character-img {
       width: 100%;
-      height: 280px; /* 높이를 살짝 줄여서 4개가 있을 때 균형을 맞춤 */
-      border-radius: 28px 5px 28px 5px;
+      height: 280px;
+      border-radius: 30px 5px 30px 5px;
       overflow: hidden;
       margin-bottom: 20px;
     }
 
-    .character-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.8s ease;
-    }
-
-    .character-card:hover .character-img img {
-      transform: scale(1.08);
-    }
+    .character-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; }
+    .character-card:hover .character-img img { transform: scale(1.08); }
 
     .character-role {
       font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      margin-bottom: 8px;
-      display: block;
+      letter-spacing: 0.2em;
+      margin-bottom: 10px;
+      color: var(--heavy-rose);
       font-family: 'Gowun Dodum', sans-serif;
-      color: var(--soft-text);
     }
 
-    .type-hero .character-role { color: var(--point-pink); }
-
-    .character-text h2 {
-      font-size: 1.4rem; /* 폰트 크기 살짝 조정 */
-      font-weight: 400;
-      margin-bottom: 12px;
-      color: #111;
-    }
-
-    .character-text p {
-      font-size: 0.88rem;
-      color: var(--soft-text);
-      line-height: 1.7;
-      margin-bottom: 20px;
-      word-break: keep-all;
-    }
+    .character-text h2 { font-size: 1.5rem; font-weight: 400; margin-bottom: 15px; }
+    .character-text p { font-size: 0.9rem; color: #555; line-height: 1.8; word-break: keep-all; }
 
     .view-more {
       margin-top: auto;
+      padding-top: 20px;
       font-size: 0.8rem;
-      color: var(--dark-text);
       font-weight: 700;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       gap: 8px;
     }
-
-    .view-more::after {
-      content: "";
-      width: 20px;
-      height: 1px;
-      background: var(--dark-text);
-      transition: 0.3s;
-    }
-
+    .view-more::after { content: ""; width: 20px; height: 1px; background: #333; transition: 0.3s; }
     .character-card:hover .view-more::after { width: 40px; background: var(--point-pink); }
 
     .home-link {
@@ -215,23 +157,11 @@
       color: var(--dark-text);
       text-decoration: none;
       font-size: 0.85rem;
-      letter-spacing: 0.1em;
       display: flex;
       align-items: center;
       gap: 10px;
     }
-
-    .home-link::before {
-      content: "";
-      width: 12px; height: 12px;
-      border: 1px solid var(--point-pink);
-      border-radius: 50%;
-    }
-
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .home-link::before { content: ""; width: 10px; height: 10px; border: 1px solid var(--point-pink); border-radius: 50%; }
   </style>
 </head>
 <body>
@@ -241,65 +171,55 @@
   <main class="character-page">
     <header class="character-hero">
       <span class="page-label">COLLECTION OF BONDS</span>
-      <h1>Character Archive</h1>
-      <p class="hero-desc">
-        서로 다른 온도를 가진 인물들이 엮어가는 이야기.<br>
-        때로는 냉정하고, 때로는 눈부시게 활기찬 그들의 기록을 담았습니다.
-      </p>
+      <h1>Characters</h1>
+      <p class="hero-desc">세계관 속 주요 인물들의 간단한 소개입니다.<br>이름을 누르면 상세 설정 페이지로 이동합니다.</p>
     </header>
 
     <section class="character-grid">
-
+      <!-- 도플라밍고 (원래 문장 그대로) -->
       <a class="character-card type-villain" href="./wiki/doflamingo.html">
-        <div class="character-img">
-          <img src="./img/doflamingo.png" alt="도플라밍고">
-        </div>
+        <div class="character-img"><img src="./img/doflamingo.png" alt="도플라밍고"></div>
         <div class="character-text">
           <span class="character-role">PAST / OBSESSION</span>
-          <h2>Donquixote Doflamingo</h2>
-          <p>어린 시절의 파편을 쥐고 있는 위험한 보호자. 애증과 소유욕이 뒤섞인 관계의 그림자입니다.</p>
-          <span class="view-more">Archive Read</span>
+          <h2>도플라밍고</h2>
+          <p>누아의 어린 시절을 보호한 과거의 보호자. 애정과 소유, 트라우마가 뒤섞인 관계의 시작점.</p>
+          <span class="view-more">상세 보기</span>
         </div>
       </a>
 
+      <!-- 누아 (원래 문장 그대로) -->
       <a class="character-card type-hero main-character" href="./wiki/nua.html">
-        <div class="character-img">
-          <img src="./img/nua.png" alt="아트리타스 누아">
-        </div>
+        <div class="character-img"><img src="./img/nua.png" alt="아트리타스 누아"></div>
         <div class="character-text">
           <span class="character-role">ORIGINAL CHARACTER</span>
-          <h2>Artoritas Nua</h2>
-          <p>따스한 미소로 세상을 마주하는 소녀. 자유를 갈망하면서도 깊은 애착을 가슴에 품고 살아갑니다.</p>
-          <span class="view-more">Archive Read</span>
+          <h2>아트리타스 누아</h2>
+          <p>무해하게 웃지만, 감각과 애착으로 세상을 붙잡는 소녀. 자유로움을 사랑하면서도 버려짐에 대한 두려움을 품고 있다.</p>
+          <span class="view-more">상세 보기</span>
         </div>
       </a>
 
+      <!-- 크로커다일 (원래 문장 그대로) -->
       <a class="character-card type-villain" href="./wiki/crocodile.html">
-        <div class="character-img">
-          <img src="./img/crocodile.png" alt="크로커다일">
-        </div>
+        <div class="character-img"><img src="./img/crocodile.png" alt="크로커다일"></div>
         <div class="character-text">
           <span class="character-role">SHELTER / DRYNESS</span>
-          <h2>Crocodile</h2>
-          <p>모래처럼 건조하고 냉혹한 현실주의자. 그러나 역설적으로 누아에게 가장 안전한 안식처가 되어줍니다.</p>
-          <span class="view-more">Archive Read</span>
+          <h2>크로커다일</h2>
+          <p>냉철하고 건조한 현실주의자. 누아에게는 보호자이자, 가장 편히 머무를 수 있는 안식처.</p>
+          <span class="view-more">상세 보기</span>
         </div>
       </a>
 
+      <!-- 에이스 (원래 문장 그대로) -->
       <a class="character-card type-hero" href="./wiki/ace.html">
-        <div class="character-img">
-          <img src="./img/ace.png" alt="에이스">
-        </div>
+        <div class="character-img"><img src="./img/ace.png" alt="에이스"></div>
         <div class="character-text">
           <span class="character-role">FREEDOM / TRUST</span>
-          <h2>Portgas D. Ace</h2>
-          <p>구속도 거짓도 없는 맑은 신뢰의 이름. 누아에게 진정한 인간적 유대와 자유를 일깨워줍니다.</p>
-          <span class="view-more">Archive Read</span>
+          <h2>에이스</h2>
+          <p>통제도 소유도 없는 자유로운 신뢰 관계. 누아에게 동등하고 인간적인 애정을 알려주는 존재.</p>
+          <span class="view-more">상세 보기</span>
         </div>
       </a>
-
     </section>
   </main>
-
 </body>
 </html>
