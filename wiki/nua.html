@@ -331,39 +331,63 @@
       font-weight: 600;
     }
 
-    .section-toggle {
+   .section-toggle {
       margin-top: 34px;
+      border: 1px solid rgba(255, 190, 220, 0.85);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.62);
+      box-shadow: 0 10px 24px rgba(210, 116, 160, 0.1);
+      overflow: hidden;
     }
-
+    
     .section-toggle > summary {
-      margin-bottom: 14px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid rgba(255, 190, 220, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 20px;
       color: #4b3a40;
       font-size: 24px;
       font-weight: 500;
       cursor: pointer;
       list-style: none;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 240, 247, 0.95),
+        rgba(255, 255, 255, 0.78)
+      );
+      border-bottom: 1px solid rgba(255, 190, 220, 0.75);
     }
-
+    
     .section-toggle > summary::-webkit-details-marker {
       display: none;
     }
-
+    
     .section-toggle > summary::after {
-      content: " 접기";
-      margin-left: 8px;
+      content: "접기 ▲";
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(255, 179, 217, 0.24);
       color: #b46b91;
       font-size: 13px;
       font-weight: normal;
     }
-
-    .section-toggle:not([open]) > summary::after {
-      content: " 펼치기";
+    
+    .section-toggle:not([open]) > summary {
+      border-bottom: none;
     }
-
+    
+    .section-toggle:not([open]) > summary::after {
+      content: "펼치기 ▼";
+    }
+    
+    .section-toggle:not([open]) {
+      background:
+        linear-gradient(135deg, rgba(255, 240, 247, 0.9), rgba(255, 255, 255, 0.72));
+    }
+    
     .section-toggle-content {
-      padding-top: 4px;
+      padding: 18px 20px 22px;
     }
 
     @media (max-width: 700px) {
@@ -740,7 +764,7 @@
     </section>
 
     <section id="food">
-      <details class="section-toggle" open>
+      <details class="section-toggle" >
         <summary>식습관</summary>
 
         <div class="section-toggle-content">
