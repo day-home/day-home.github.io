@@ -399,304 +399,85 @@
       vertical-align: middle;
     }
 
-    /* 누아 관계 섹션: 어두운 크로커다일 배경 위에 핑크빛이 스며드는 부분 */
+        /* =================================================
+       NUA RELATION SECTION - REFINED FINAL
+    ================================================= */
+
+    /* 1. 누아 섹션 전체 배경 정리 */
     .nua-relation {
       position: relative;
       isolation: isolate;
       overflow: hidden;
       margin-top: 46px;
       padding: 30px;
-      border: 1px solid rgba(255, 182, 222, 0.72);
+      border: 1px solid rgba(255, 128, 191, 0.4);
       border-radius: 28px;
-      background:
-        radial-gradient(circle at 16% 8%, rgba(255, 205, 234, 0.62), transparent 34%),
-        radial-gradient(circle at 84% 18%, rgba(225, 174, 239, 0.36), transparent 30%),
-        radial-gradient(circle at 62% 88%, rgba(20, 80, 43, 0.48), transparent 42%),
-        linear-gradient(
-          135deg,
-          rgba(255, 242, 249, 0.9) 0%,
-          rgba(238, 220, 246, 0.76) 34%,
-          rgba(41, 77, 48, 0.68) 72%,
-          rgba(30, 17, 50, 0.74) 100%
-        );
-      box-shadow:
-        0 20px 54px rgba(255, 170, 216, 0.16),
-        0 0 60px rgba(255, 180, 225, 0.16),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+      /* 크로커다일의 어둠을 베이스로 유지 */
+      background: linear-gradient(145deg, #020a05 0%, #0d051a 100%) !important;
+      box-shadow: 0 20px 54px rgba(0, 0, 0, 0.5);
     }
 
-    .nua-relation::before {
-      content: "";
-      position: absolute;
-      z-index: 0;
-      width: 760px;
-      height: 760px;
-      left: -260px;
-      top: -260px;
-      border-radius: 50%;
-      background:
-        conic-gradient(
-          from 15deg,
-          rgba(8, 40, 20, 0.72),
-          rgba(72, 32, 96, 0.45),
-          rgba(20, 92, 48, 0.5),
-          rgba(255, 204, 235, 0.26),
-          rgba(8, 40, 20, 0.72)
-        );
-      filter: blur(18px);
-      opacity: 0.78;
-      mix-blend-mode: multiply;
-      animation: relationGreenPurpleSwirl 24s linear infinite;
-    }
-
+    /* 2. 오른쪽에서 쏟아지는 핑크 빛줄기 */
     .nua-relation::after {
       content: "";
       position: absolute;
       z-index: 0;
-      width: 680px;
-      height: 680px;
-      right: -220px;
-      top: -170px;
-      border-radius: 47% 53% 45% 55%;
-      background:
-        radial-gradient(circle at 34% 30%, rgba(255, 238, 248, 0.88), transparent 22%),
-        radial-gradient(circle at 62% 68%, rgba(255, 175, 222, 0.58), transparent 28%),
-        conic-gradient(
-          from 120deg,
-          transparent 0deg,
-          rgba(255, 185, 225, 0.12) 34deg,
-          rgba(255, 190, 230, 0.66) 86deg,
-          rgba(222, 164, 240, 0.5) 132deg,
-          transparent 176deg,
-          rgba(255, 230, 244, 0.72) 235deg,
-          rgba(255, 180, 224, 0.22) 306deg,
-          transparent 360deg
-        );
-      filter: blur(20px);
-      opacity: 0.8;
-      mix-blend-mode: screen;
-      animation: relationPinkInk 15s ease-in-out infinite alternate;
+      top: -10%;
+      right: -5%;
+      width: 40%;
+      height: 120%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 128, 191, 0.18) 40%,
+        rgba(255, 182, 222, 0.25) 85%,
+        transparent 100%
+      );
+      filter: blur(35px);
+      transform: rotate(-15deg);
+      pointer-events: none;
+      animation: nuaRightLight 6s ease-in-out infinite alternate;
     }
 
-    .nua-relation > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    .nua-relation h2 {
-      color: #3f2638;
-      border-bottom-color: rgba(196, 96, 154, 0.38);
-    }
-
-    .nua-relation p {
-      color: rgba(45, 35, 43, 0.9);
-    }
-
-    .nua-relation .wiki-link {
-      color: #9d3f76;
-      border-bottom-color: rgba(157, 63, 118, 0.65);
-    }
-
-    .nua-relation .wiki-link:hover {
-      background: rgba(255, 179, 217, 0.28);
-    }
-
-    .nua-relation .data-card {
-      background:
-        linear-gradient(
-          135deg,
-          rgba(255, 250, 253, 0.7),
-          rgba(242, 218, 246, 0.48),
-          rgba(22, 72, 38, 0.22)
-        );
-      border-color: rgba(255, 179, 217, 0.5);
-      backdrop-filter: blur(10px);
-    }
-
-    .nua-relation .data-card h3 {
-      color: #8f3f70;
-    }
-
-    .nua-relation .data-card p {
-      color: rgba(48, 36, 45, 0.88);
-    }
-
-    .nua-relation .scene-box {
-      background:
-        radial-gradient(circle at 18% 0%, rgba(255, 191, 228, 0.48), transparent 36%),
-        linear-gradient(
-          135deg,
-          rgba(255, 248, 252, 0.64),
-          rgba(229, 204, 242, 0.46),
-          rgba(21, 74, 39, 0.3)
-        );
-      border-color: rgba(255, 179, 217, 0.62);
-      backdrop-filter: blur(10px);
-    }
-
-    .nua-relation .line {
-      color: rgba(62, 38, 57, 0.9);
-    }
-
+    /* 3. 박스 디자인: 연한 핑크-보라 그라데이션 */
+    .nua-relation .data-card, 
+    .nua-relation .scene-box,
     .nua-relation .wiki-note {
-      border-left-color: #ff9fcb;
-      background:
-        linear-gradient(
-          135deg,
-          rgba(255, 235, 246, 0.66),
-          rgba(225, 199, 242, 0.38),
-          rgba(20, 70, 38, 0.28)
-        );
-      color: rgba(52, 39, 49, 0.92);
+      background: linear-gradient(
+        135deg,
+        rgba(255, 240, 250, 0.08) 0%, /* 아주 연한 핑크 */
+        rgba(230, 210, 255, 0.06) 50%, /* 아주 연한 보라 */
+        rgba(5, 15, 10, 0.6) 100%    /* 크로커다일 딥그린 */
+      ) !important;
+      border: 1px solid rgba(255, 182, 222, 0.25) !important;
       backdrop-filter: blur(10px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     }
 
-    .nua-relation .fan-label {
-      background: rgba(255, 179, 217, 0.42);
-      color: #8f3f70;
+    /* 4. 글자색 중구난방 해결 */
+    .nua-relation h2 { color: #f1e8f5 !important; border-bottom-color: var(--pink-main) !important; }
+    .nua-relation h3 { color: var(--pink-soft) !important; }
+    .nua-relation p, .nua-relation li, .nua-relation .line { 
+      color: rgba(239, 232, 242, 0.9) !important; 
     }
 
-    @keyframes crocodilePageInk {
-      0% {
-        transform: rotate(0deg) scale(1);
-      }
+    /* 5. 배경 소용돌이에 밝은 핑크 하이라이트 추가 */
+    .nua-pink-bg::before {
+      background: 
+        repeating-radial-gradient(circle at 20% 80%, transparent 0, transparent 40px, var(--pink-main) 41px, transparent 42px),
+        radial-gradient(circle at 22% 78%, #fff0f9 0%, transparent 40%); /* 부분적 밝은 핑크 */
+      filter: blur(2px) drop-shadow(0 0 12px var(--pink-main));
+    }
 
-      50% {
-        transform: rotate(180deg) scale(1.08);
-      }
-
-      100% {
-        transform: rotate(360deg) scale(1);
-      }
+    /* 6. 애니메이션 모음 */
+    @keyframes nuaRightLight {
+      0% { opacity: 0.4; transform: rotate(-15deg) translateX(10px); }
+      100% { opacity: 0.8; transform: rotate(-15deg) translateX(-15px); }
     }
 
     @keyframes relationGreenPurpleSwirl {
-      0% {
-        transform: rotate(0deg) scale(1);
-      }
-
-      50% {
-        transform: rotate(180deg) scale(1.08);
-      }
-
-      100% {
-        transform: rotate(360deg) scale(1);
-      }
-    }
-
-    @keyframes relationPinkInk {
-      0% {
-        transform: translate(0, 0) rotate(0deg) scale(1);
-        opacity: 0.58;
-      }
-
-      45% {
-        transform: translate(-82px, 58px) rotate(95deg) scale(1.14);
-        opacity: 0.9;
-      }
-
-      100% {
-        transform: translate(-145px, 24px) rotate(165deg) scale(1.05);
-        opacity: 0.72;
-      }
-    }
-
-    @media (max-width: 700px) {
-      .data-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .nua-relation {
-        padding: 24px;
-      }
-    }
-
-    @media (max-width: 560px) {
-      body {
-        padding: 28px 14px;
-      }
-
-      .wiki-page {
-        padding: 24px;
-        border-radius: 24px;
-      }
-
-      h1 {
-        font-size: 31px;
-      }
-
-      .info-box div {
-        grid-template-columns: 1fr;
-        gap: 4px;
-      }
-
-      .nua-relation {
-        padding: 22px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      body::before,
-      .nua-relation::before,
-      .nua-relation::after {
-        animation: none !important;
-      }
-    }
-
-        /* =================================================
-       NUA ARRIVAL EFFECT - THIN SPIRAL LINE VERSION
-    ================================================= */
-
-    .nua-pink-bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* 얇은 선 형태의 소용돌이 효과 */
-    .nua-pink-bg::before,
-    .nua-pink-bg::after {
-      content: "";
-      position: absolute;
-      bottom: -10%;
-      width: 100vw;
-      height: 100vh;
-      opacity: 0;
-      transition: opacity 2s ease, transform 3s ease;
-    }
-
-    /* 왼쪽 소용돌이 선 */
-    .nua-pink-bg::before {
-      left: -25%;
-      background: 
-        repeating-radial-gradient(circle at 20% 80%, transparent 0, transparent 40px, var(--pink-main) 41px, transparent 42px),
-        repeating-radial-gradient(circle at 15% 85%, transparent 0, transparent 70px, var(--pink-soft) 71px, transparent 72px);
-      filter: blur(1.5px) drop-shadow(0 0 5px var(--pink-main));
-      mask-image: radial-gradient(ellipse at 20% 80%, black, transparent 70%);
-      -webkit-mask-image: radial-gradient(ellipse at 20% 80%, black, transparent 70%);
-    }
-
-    /* 오른쪽 소용돌이 선 */
-    .nua-pink-bg::after {
-      right: -25%;
-      background: 
-        repeating-radial-gradient(circle at 80% 85%, transparent 0, transparent 35px, var(--pink-main) 36px, transparent 37px),
-        repeating-radial-gradient(circle at 85% 90%, transparent 0, transparent 65px, var(--pink-soft) 66px, transparent 67px);
-      filter: blur(1.5px) drop-shadow(0 0 5px var(--pink-main));
-      mask-image: radial-gradient(ellipse at 80% 85%, black, transparent 70%);
-      -webkit-mask-image: radial-gradient(ellipse at 80% 85%, black, transparent 70%);
-    }
-
-    /* 누아 모드 활성화 시 선들이 일렁이며 등장 */
-    body.nua-mode .nua-pink-bg::before {
-      opacity: 0.35;
-      animation: nuaLineSway 10s infinite alternate ease-in-out;
-    }
-
-    body.nua-mode .nua-pink-bg::after {
-      opacity: 0.25;
-      animation: nuaLineSway 12s infinite alternate-reverse ease-in-out;
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     @keyframes nuaLineSway {
@@ -705,113 +486,11 @@
       100% { transform: scale(1.05) rotate(-2deg) translateY(-15px); }
     }
 
-    /* 누아 관계 섹션 박스 디자인 (묵직함 + 귀여움 한방울) */
-    .nua-relation .data-card, 
-    .nua-relation .scene-box {
-      background: rgba(5, 12, 8, 0.92) !important; /* 다시 묵직하게 */
-      border: 1px solid rgba(255, 128, 191, 0.25) !important; /* 얇은 핑크 실선 테두리 */
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6) !important;
-      backdrop-filter: none;
-      overflow: hidden;
+    /* 모바일 대응 */
+    @media (max-width: 700px) {
+      .nua-relation::after { width: 60%; }
     }
 
-    /* 카드 제목 핑크색으로 강조 */
-    .nua-relation .data-card h3 {
-      color: var(--pink-main) !important;
-    }
-
-    .nua-relation h2 {
-      color: #f1e8f5;
-      border-bottom-color: var(--pink-main);
-    }
-
-    
-    @media (prefers-reduced-motion: reduce) {
-      .nua-pink-bg {
-        animation: none !important;
-      }
-    }
-
-    .fixed-home-link {
-  position: fixed;
-  top: 18px;
-  left: 18px;
-  z-index: 999;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 9px 14px;
-  border: 1px solid rgba(255, 190, 220, 0.75);
-  border-radius: 999px;
-  background: rgba(255, 248, 252, 0.82);
-  backdrop-filter: blur(12px);
-  color: #9b4f75;
-  text-decoration: none;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  box-shadow: 0 8px 22px rgba(80, 30, 60, 0.18);
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease,
-    background 0.25s ease;
-}
-
-.fixed-home-link:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255, 159, 203, 0.95);
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 12px 28px rgba(80, 30, 60, 0.24);
-}
-
-.fixed-home-link:focus-visible {
-  outline: 2px solid #ff9fcb;
-  outline-offset: 3px;
-}
-
-@media (max-width: 560px) {
-  .fixed-home-link {
-    top: 12px;
-    left: 12px;
-    padding: 8px 12px;
-    font-size: 12px;
-  }
-}
-
-
-/* 카드 위로 지나가는 아주 낮은 투명도의 핑크 안개 */
-.nua-relation .data-card::after,
-.nua-relation .scene-box::after,
-.nua-relation .wiki-note::after {
-  content: "";
-  position: absolute;
-  inset: -35%;
-  pointer-events: none;
-  opacity: 0;
-  background:
-    radial-gradient(ellipse at 18% 72%, rgba(255, 204, 235, 0.26), transparent 32%),
-    radial-gradient(ellipse at 84% 66%, rgba(255, 175, 222, 0.2), transparent 36%),
-    linear-gradient(
-      105deg,
-      transparent 0%,
-      rgba(255, 205, 235, 0.12) 38%,
-      rgba(255, 179, 217, 0.18) 48%,
-      rgba(210, 160, 230, 0.1) 58%,
-      transparent 76%
-    );
-  filter: blur(18px);
-  mix-blend-mode: screen;
-  transform: translateX(-22%) translateY(8%);
-  transition: opacity 2.6s ease;
-  animation: cardPinkMist 34s ease-in-out infinite alternate;
-}
-
-/* 누아 모드일 때만 상자에 아주 약하게 나타남 */
-body.nua-mode .nua-relation .data-card::after,
-body.nua-mode .nua-relation .scene-box::after,
-body.nua-mode .nua-relation .wiki-note::after {
-  opacity: 0.18;
-}
   </style>
 </head>
 
