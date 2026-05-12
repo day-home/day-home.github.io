@@ -1104,13 +1104,312 @@ body.nua-mode .wiki-page {
     transition: opacity 0.6s ease;
   }
 }
+
+    /* =================================================
+   NUA ARRIVAL EFFECT - LOW SOFT MIST VERSION
+   누아와의 관계가 화면에 들어오면
+   아래 양쪽 모서리에서 얇고 은근한 핑크 안개가 스며듦
+================================================= */
+
+.nua-pink-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* 왼쪽 아래 모서리에서 깔리는 얇은 안개 */
+.nua-pink-bg::before {
+  content: "";
+  position: absolute;
+  left: -58vw;
+  bottom: -18vh;
+  width: 72vw;
+  height: 34vh;
+  border-radius: 65% 35% 58% 42%;
+  opacity: 0;
+  transform: translateX(-10vw) translateY(5vh) rotate(-8deg) scale(0.92);
+  transition:
+    opacity 3.2s ease,
+    transform 4.2s cubic-bezier(0.22, 0.8, 0.25, 1);
+  background:
+    radial-gradient(ellipse at 72% 48%, rgba(255, 220, 242, 0.62), transparent 32%),
+    radial-gradient(ellipse at 58% 62%, rgba(255, 165, 218, 0.32), transparent 44%),
+    conic-gradient(
+      from 150deg at 66% 50%,
+      transparent 0deg,
+      rgba(255, 190, 228, 0.06) 38deg,
+      rgba(255, 190, 228, 0.34) 82deg,
+      rgba(208, 154, 230, 0.18) 126deg,
+      transparent 178deg,
+      rgba(255, 230, 244, 0.28) 238deg,
+      rgba(255, 178, 222, 0.08) 304deg,
+      transparent 360deg
+    );
+  filter: blur(42px);
+  mix-blend-mode: screen;
+  animation: nuaLeftLowMist 42s ease-in-out infinite alternate;
+}
+
+/* 오른쪽 아래 모서리에서 깔리는 얇은 안개 */
+.nua-pink-bg::after {
+  content: "";
+  position: absolute;
+  right: -60vw;
+  bottom: -17vh;
+  width: 74vw;
+  height: 32vh;
+  border-radius: 38% 62% 44% 56%;
+  opacity: 0;
+  transform: translateX(10vw) translateY(5vh) rotate(7deg) scale(0.92);
+  transition:
+    opacity 3.4s ease,
+    transform 4.6s cubic-bezier(0.22, 0.8, 0.25, 1);
+  background:
+    radial-gradient(ellipse at 28% 48%, rgba(255, 230, 246, 0.58), transparent 31%),
+    radial-gradient(ellipse at 42% 66%, rgba(255, 160, 216, 0.28), transparent 45%),
+    conic-gradient(
+      from 42deg at 38% 52%,
+      transparent 0deg,
+      rgba(255, 192, 231, 0.08) 40deg,
+      rgba(255, 182, 224, 0.31) 88deg,
+      rgba(211, 156, 232, 0.18) 134deg,
+      transparent 184deg,
+      rgba(255, 226, 244, 0.28) 252deg,
+      rgba(255, 175, 222, 0.08) 312deg,
+      transparent 360deg
+    );
+  filter: blur(44px);
+  mix-blend-mode: screen;
+  animation: nuaRightLowMist 46s ease-in-out infinite alternate;
+}
+
+/* 누아와의 관계가 화면에 들어왔을 때: 양쪽에서 천천히 안쪽으로 */
+body.nua-mode .nua-pink-bg::before {
+  opacity: 0.46;
+  transform: translateX(34vw) translateY(0) rotate(-3deg) scale(1.04);
+}
+
+body.nua-mode .nua-pink-bg::after {
+  opacity: 0.42;
+  transform: translateX(-34vw) translateY(0) rotate(3deg) scale(1.05);
+}
+
+/* 전체 카드에도 아주 약한 핑크 반사광 */
+body.nua-mode .wiki-page {
+  box-shadow:
+    0 22px 58px rgba(0, 0, 0, 0.38),
+    0 0 56px rgba(255, 179, 217, 0.07),
+    inset 0 0 0 1px rgba(255, 210, 235, 0.07);
+}
+
+/* 누아와의 관계 섹션 자체는 핑크 박스가 아니라 일반 섹션처럼 유지 */
+.nua-relation {
+  position: relative;
+  isolation: auto;
+  overflow: visible;
+  margin-top: 46px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* 예전에 만든 핑크 박스용 가상요소 끄기 */
+.nua-relation::before,
+.nua-relation::after {
+  content: none !important;
+}
+
+/* 관계 섹션 제목만 살짝 핑크 기운 */
+.nua-relation h2 {
+  color: #f1e8f5;
+  border-bottom-color: rgba(255, 179, 217, 0.42);
+}
+
+.nua-relation p {
+  color: rgba(239, 232, 242, 0.88);
+}
+
+.nua-relation .wiki-link {
+  color: #ffd2eb;
+  border-bottom-color: rgba(255, 210, 235, 0.72);
+}
+
+.nua-relation .wiki-link:hover {
+  background: rgba(255, 179, 217, 0.16);
+}
+
+/* 관계 섹션 안의 상자들도 핑크 안개가 아주 약하게 비침 */
+.nua-relation .data-card,
+.nua-relation .scene-box,
+.nua-relation .wiki-note {
+  position: relative;
+  overflow: hidden;
+}
+
+/* 카드 위로 지나가는 아주 낮은 투명도의 핑크 안개 */
+.nua-relation .data-card::after,
+.nua-relation .scene-box::after,
+.nua-relation .wiki-note::after {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(ellipse at 18% 72%, rgba(255, 204, 235, 0.26), transparent 32%),
+    radial-gradient(ellipse at 84% 66%, rgba(255, 175, 222, 0.2), transparent 36%),
+    linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(255, 205, 235, 0.12) 38%,
+      rgba(255, 179, 217, 0.18) 48%,
+      rgba(210, 160, 230, 0.1) 58%,
+      transparent 76%
+    );
+  filter: blur(18px);
+  mix-blend-mode: screen;
+  transform: translateX(-22%) translateY(8%);
+  transition: opacity 2.6s ease;
+  animation: cardPinkMist 34s ease-in-out infinite alternate;
+}
+
+/* 누아 모드일 때만 상자에 아주 약하게 나타남 */
+body.nua-mode .nua-relation .data-card::after,
+body.nua-mode .nua-relation .scene-box::after,
+body.nua-mode .nua-relation .wiki-note::after {
+  opacity: 0.18;
+}
+
+/* 카드 자체는 어두운 크로커다일 톤 유지 */
+.nua-relation .data-card {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(12, 42, 24, 0.64),
+      rgba(31, 17, 50, 0.58)
+    );
+  border-color: rgba(255, 179, 217, 0.24);
+  backdrop-filter: none;
+}
+
+.nua-relation .data-card h3 {
+  color: #ffd2eb;
+}
+
+.nua-relation .data-card p {
+  color: rgba(239, 232, 242, 0.86);
+}
+
+.nua-relation .scene-box {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15, 48, 28, 0.72),
+      rgba(40, 22, 65, 0.62)
+    );
+  border-color: rgba(255, 179, 217, 0.28);
+  backdrop-filter: none;
+}
+
+.nua-relation .line {
+  color: rgba(255, 235, 246, 0.9);
+}
+
+.nua-relation .wiki-note {
+  border-left-color: #ffb3d9;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(54, 25, 84, 0.52),
+      rgba(11, 42, 25, 0.58)
+    );
+  color: rgba(242, 232, 244, 0.9);
+}
+
+.nua-relation .fan-label {
+  background: rgba(255, 179, 217, 0.18);
+  color: #ffd2eb;
+}
+
+/* 왼쪽 안개: 얇게 두둥실 */
+@keyframes nuaLeftLowMist {
+  0% {
+    background-position: 0% 50%;
+    border-radius: 65% 35% 58% 42%;
+    filter: blur(44px);
+  }
+
+  45% {
+    background-position: 34% 54%;
+    border-radius: 58% 42% 46% 54%;
+    filter: blur(50px);
+  }
+
+  100% {
+    background-position: 68% 48%;
+    border-radius: 62% 38% 54% 46%;
+    filter: blur(42px);
+  }
+}
+
+/* 오른쪽 안개: 얇게 두둥실 */
+@keyframes nuaRightLowMist {
+  0% {
+    background-position: 100% 52%;
+    border-radius: 38% 62% 44% 56%;
+    filter: blur(46px);
+  }
+
+  50% {
+    background-position: 62% 48%;
+    border-radius: 48% 52% 58% 42%;
+    filter: blur(52px);
+  }
+
+  100% {
+    background-position: 32% 54%;
+    border-radius: 42% 58% 48% 52%;
+    filter: blur(43px);
+  }
+}
+
+/* 상자 위를 아주 느리게 지나가는 연한 핑크 안개 */
+@keyframes cardPinkMist {
+  0% {
+    transform: translateX(-28%) translateY(10%) rotate(-4deg);
+  }
+
+  50% {
+    transform: translateX(4%) translateY(2%) rotate(3deg);
+  }
+
+  100% {
+    transform: translateX(24%) translateY(8%) rotate(-2deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nua-pink-bg::before,
+  .nua-pink-bg::after,
+  .nua-relation .data-card::after,
+  .nua-relation .scene-box::after,
+  .nua-relation .wiki-note::after {
+    animation: none !important;
+    transition: opacity 0.6s ease;
+  }
+}
+    
   </style>
 </head>
 
 <body>
-  <a class="fixed-home-link" href="../index.html">← HOME</a>
-  
   <div class="nua-pink-bg" aria-hidden="true"></div>
+  
+  <a class="fixed-home-link" href="../index.html">← HOME</a>
 
   <main class="wiki-page">
     <a class="back-link" href="../character.html">← 캐릭터 목록으로 돌아가기</a>
