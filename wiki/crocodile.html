@@ -14,112 +14,804 @@
 
   <style>
         :root {
-      --deep-bg: #030805; /* 위압감 있는 딥 그린 블랙 */
-      --croc-green: #0a1f13;
-      --croc-purple: #12091d;
-      --nua-pink: rgba(255, 192, 203, 0.12); /* 촌스럽지 않은 은은한 샴페인 핑크 */
-      --text-main: #e0d8e5;
-      --border-subtle: rgba(255, 255, 255, 0.05);
+      --green-dark: #020a05;
+      --green-main: #051a0d;
+      --green-deep: #082613;
+      --purple-dark: #0d051a;
+      --purple-main: #2a1045;
+      --purple-soft: #caa7df;
+      --text-main: rgba(239, 232, 242, 0.88);
+      --text-soft: rgba(238, 224, 238, 0.74);
+      --border-main: rgba(136, 92, 160, 0.42);
+      --pink-main: #ff80bf; /* 더 귀여운 핑크 */
+      --pink-soft: #ffb3d9;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+        body {
       position: relative;
       min-height: 100vh;
       padding: 40px 20px;
       overflow-x: hidden;
-      /* 크로커다일의 묵직한 기본 배경 */
-      background: 
-        radial-gradient(circle at 50% 0%, var(--croc-green), transparent),
-        linear-gradient(135deg, var(--deep-bg) 0%, var(--croc-purple) 100%);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(10, 50, 30, 0.8), transparent 40%),
+        radial-gradient(circle at 85% 15%, rgba(40, 20, 70, 0.8), transparent 40%),
+        linear-gradient(135deg, #020a05 0%, #08180f 40%, #0d051a 100%);
       color: var(--text-main);
       font-family: 'Gowun Dodum', sans-serif;
-      transition: background 1.5s ease;
+      scroll-behavior: smooth;
     }
 
-    /* [중요] 안개 효과 레이어 */
-    .nua-pink-bg {
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -35%;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        conic-gradient(
+          from 30deg at 28% 38%,
+          rgba(8, 36, 18, 0.95),
+          rgba(39, 18, 70, 0.58),
+          rgba(12, 72, 34, 0.64),
+          rgba(8, 7, 22, 0.82),
+          rgba(8, 36, 18, 0.95)
+        ),
+        radial-gradient(circle at 70% 30%, rgba(72, 30, 95, 0.36), transparent 34%),
+        radial-gradient(circle at 24% 74%, rgba(14, 75, 36, 0.46), transparent 38%);
+      filter: blur(30px);
+      opacity: 0.62;
+      mix-blend-mode: screen;
+      animation: crocodilePageInk 32s linear infinite;
+    }
+
+    body::after {
+      content: "";
       position: fixed;
       inset: 0;
-      z-index: 0; /* 배경보다는 위, 글보다는 아래 */
+      z-index: 0;
       pointer-events: none;
+      background:
+        linear-gradient(rgba(8, 28, 16, 0.22) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(45, 20, 76, 0.18) 1px, transparent 1px),
+        radial-gradient(circle at center, transparent 18%, rgba(0, 0, 0, 0.45) 100%);
+      background-size: 42px 42px, 42px 42px, auto;
+      opacity: 0.58;
     }
 
-    .nua-pink-bg::before,
-    .nua-pink-bg::after {
-      content: "";
-      position: absolute;
-      bottom: -15%;
-      width: 70vw;
-      height: 60vh;
-      filter: blur(100px); /* 안개처럼 뭉개기 */
-      opacity: 0;
-      transition: all 3s cubic-bezier(0.4, 0, 0.2, 1);
-      mix-blend-mode: screen; /* 배경과 화사하게 섞임 */
-    }
-
-    .nua-pink-bg::before {
-      left: -20%;
-      background: radial-gradient(circle, rgba(255, 105, 180, 0.25), transparent 70%);
-      transform: scale(0.8) rotate(-10deg);
-    }
-
-    .nua-pink-bg::after {
-      right: -20%;
-      background: radial-gradient(circle, rgba(202, 167, 223, 0.2), transparent 70%);
-      transform: scale(0.8) rotate(10deg);
-    }
-
-    /* 누아 모드 활성화 시 (안개가 소용돌이치며 밀려옴) */
-    body.nua-mode .nua-pink-bg::before {
-      opacity: 0.7;
-      transform: translateX(15%) translateY(-10%) scale(1.2) rotate(20deg);
-    }
-
-    body.nua-mode .nua-pink-bg::after {
-      opacity: 0.5;
-      transform: translateX(-15%) translateY(-12%) scale(1.1) rotate(-20deg);
-    }
-
-    /* 본문 카드 디자인 */
     .wiki-page {
       position: relative;
       z-index: 1;
       max-width: 920px;
       margin: 0 auto;
       padding: 34px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(99, 63, 132, 0.52);
       border-radius: 28px;
-      background: rgba(10, 15, 12, 0.85); /* 묵직한 블랙 */
-      backdrop-filter: blur(15px);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(10, 26, 16, 0.9),
+          rgba(22, 13, 38, 0.84)
+        );
+      backdrop-filter: blur(14px);
+      box-shadow:
+        0 22px 58px rgba(0, 0, 0, 0.4),
+        inset 0 0 0 1px rgba(225, 205, 235, 0.07);
     }
 
-    /* 누아와의 관계 섹션 내 박스들 - '귀귀움 한 방울' */
+    .back-link {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: #b58ad1;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .back-link:hover {
+      color: #f0c7e8;
+      text-decoration: underline;
+    }
+
+    .wiki-header {
+      margin-bottom: 30px;
+      padding-bottom: 24px;
+      border-bottom: 1px dashed rgba(153, 103, 178, 0.42);
+    }
+
+    .wiki-label {
+      margin-bottom: 10px;
+      color: #b58ad1;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      font-weight: bold;
+    }
+
+    h1 {
+      margin-bottom: 12px;
+      color: #f1e8f5;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 40px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    .subtitle {
+      color: var(--text-soft);
+      line-height: 1.8;
+    }
+
+    .wiki-note {
+      margin: 16px 0;
+      padding: 14px 16px;
+      border-left: 4px solid #8b63b0;
+      border-radius: 14px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(54, 25, 84, 0.56),
+          rgba(11, 42, 25, 0.62)
+        );
+      color: rgba(242, 232, 244, 0.9);
+      line-height: 1.8;
+    }
+
+    .info-box {
+      margin: 28px 0;
+      padding: 22px;
+      border: 1px solid rgba(136, 92, 160, 0.46);
+      border-radius: 22px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(13, 39, 22, 0.68),
+          rgba(33, 18, 52, 0.6)
+        );
+    }
+
+    .profile-img {
+      display: block;
+      width: min(100%, 520px);
+      height: auto;
+      max-height: none;
+      object-fit: contain;
+      margin: 0 auto 20px;
+      border: 8px solid rgba(239, 232, 242, 0.92);
+      border-radius: 22px;
+      box-shadow:
+        0 14px 32px rgba(0, 0, 0, 0.38),
+        0 0 30px rgba(90, 42, 128, 0.16);
+    }
+
+    .info-box dl {
+      display: grid;
+      gap: 12px;
+    }
+
+    .info-box div {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 14px;
+    }
+
+    .info-box dt {
+      color: #b58ad1;
+      font-weight: bold;
+    }
+
+    .info-box dd {
+      color: rgba(239, 232, 242, 0.86);
+    }
+
+    .small-note {
+      color: rgba(212, 190, 224, 0.8);
+      font-size: 0.9em;
+    }
+
+    .pending {
+      color: #d8b5ea;
+      border-bottom: 1px dashed rgba(216, 181, 234, 0.7);
+      cursor: help;
+    }
+
+    .wiki-toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 24px 0 8px;
+      padding: 14px;
+      border: 1px solid rgba(136, 92, 160, 0.38);
+      border-radius: 18px;
+      background: rgba(10, 26, 16, 0.58);
+    }
+
+    .wiki-toc a {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(92, 54, 130, 0.32);
+      color: #e8c6ef;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .wiki-toc a:hover {
+      background: rgba(136, 92, 160, 0.48);
+    }
+
+    section {
+      margin-top: 36px;
+    }
+
+    h2 {
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(153, 103, 178, 0.42);
+      color: #eadff2;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 25px;
+      font-weight: 500;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      color: #caa7df;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: 14px;
+      line-height: 1.9;
+      color: var(--text-main);
+    }
+
+    ul {
+      padding-left: 18px;
+    }
+
+    li {
+      line-height: 1.8;
+      color: var(--text-main);
+    }
+
+    .wiki-link {
+      color: #d8b5ea;
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(216, 181, 234, 0.7);
+    }
+
+    .wiki-link:hover {
+      background: rgba(216, 181, 234, 0.14);
+    }
+
+    .keyword-list,
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .keyword-list span,
+    .tag-list span,
+    .fan-label {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(103, 55, 138, 0.34);
+      color: #e7c8ef;
+      font-size: 13px;
+    }
+
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .data-card {
+      padding: 18px;
+      border: 1px solid rgba(113, 86, 140, 0.4);
+      border-radius: 18px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(12, 42, 24, 0.66),
+          rgba(26, 15, 43, 0.58)
+        );
+    }
+
+    .data-card h3 {
+      color: #caa7df;
+    }
+
+    .data-card p,
+    .data-card li {
+      color: rgba(239, 232, 242, 0.84);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .scene-box {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(15, 48, 28, 0.72),
+          rgba(40, 22, 65, 0.64)
+        );
+      border: 1px dashed rgba(132, 92, 160, 0.5);
+    }
+
+    .scene-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .line {
+      display: block;
+      margin: 8px 0;
+      color: rgba(239, 223, 244, 0.9);
+      line-height: 1.8;
+    }
+
+    .wiki-details {
+      margin-top: 18px;
+      border: 1px solid rgba(136, 92, 160, 0.42);
+      border-radius: 18px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(13, 39, 22, 0.58),
+          rgba(31, 17, 50, 0.54)
+        );
+      overflow: hidden;
+    }
+
+    .wiki-details summary {
+      padding: 15px 18px;
+      color: #d2a9e8;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .wiki-details-content {
+      padding: 0 18px 18px;
+    }
+
+    .fan-label {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 3px 8px;
+      font-family: 'Gowun Dodum', sans-serif;
+      font-size: 12px;
+      vertical-align: middle;
+    }
+
+    /* 누아 관계 섹션: 어두운 크로커다일 배경 위에 핑크빛이 스며드는 부분 */
+    .nua-relation {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      margin-top: 46px;
+      padding: 30px;
+      border: 1px solid rgba(255, 182, 222, 0.72);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 16% 8%, rgba(255, 205, 234, 0.62), transparent 34%),
+        radial-gradient(circle at 84% 18%, rgba(225, 174, 239, 0.36), transparent 30%),
+        radial-gradient(circle at 62% 88%, rgba(20, 80, 43, 0.48), transparent 42%),
+        linear-gradient(
+          135deg,
+          rgba(255, 242, 249, 0.9) 0%,
+          rgba(238, 220, 246, 0.76) 34%,
+          rgba(41, 77, 48, 0.68) 72%,
+          rgba(30, 17, 50, 0.74) 100%
+        );
+      box-shadow:
+        0 20px 54px rgba(255, 170, 216, 0.16),
+        0 0 60px rgba(255, 180, 225, 0.16),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+    }
+
+    .nua-relation::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      width: 760px;
+      height: 760px;
+      left: -260px;
+      top: -260px;
+      border-radius: 50%;
+      background:
+        conic-gradient(
+          from 15deg,
+          rgba(8, 40, 20, 0.72),
+          rgba(72, 32, 96, 0.45),
+          rgba(20, 92, 48, 0.5),
+          rgba(255, 204, 235, 0.26),
+          rgba(8, 40, 20, 0.72)
+        );
+      filter: blur(18px);
+      opacity: 0.78;
+      mix-blend-mode: multiply;
+      animation: relationGreenPurpleSwirl 24s linear infinite;
+    }
+
+    .nua-relation::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      width: 680px;
+      height: 680px;
+      right: -220px;
+      top: -170px;
+      border-radius: 47% 53% 45% 55%;
+      background:
+        radial-gradient(circle at 34% 30%, rgba(255, 238, 248, 0.88), transparent 22%),
+        radial-gradient(circle at 62% 68%, rgba(255, 175, 222, 0.58), transparent 28%),
+        conic-gradient(
+          from 120deg,
+          transparent 0deg,
+          rgba(255, 185, 225, 0.12) 34deg,
+          rgba(255, 190, 230, 0.66) 86deg,
+          rgba(222, 164, 240, 0.5) 132deg,
+          transparent 176deg,
+          rgba(255, 230, 244, 0.72) 235deg,
+          rgba(255, 180, 224, 0.22) 306deg,
+          transparent 360deg
+        );
+      filter: blur(20px);
+      opacity: 0.8;
+      mix-blend-mode: screen;
+      animation: relationPinkInk 15s ease-in-out infinite alternate;
+    }
+
+    .nua-relation > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .nua-relation h2 {
+      color: #3f2638;
+      border-bottom-color: rgba(196, 96, 154, 0.38);
+    }
+
+    .nua-relation p {
+      color: rgba(45, 35, 43, 0.9);
+    }
+
+    .nua-relation .wiki-link {
+      color: #9d3f76;
+      border-bottom-color: rgba(157, 63, 118, 0.65);
+    }
+
+    .nua-relation .wiki-link:hover {
+      background: rgba(255, 179, 217, 0.28);
+    }
+
+    .nua-relation .data-card {
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255, 250, 253, 0.7),
+          rgba(242, 218, 246, 0.48),
+          rgba(22, 72, 38, 0.22)
+        );
+      border-color: rgba(255, 179, 217, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .nua-relation .data-card h3 {
+      color: #8f3f70;
+    }
+
+    .nua-relation .data-card p {
+      color: rgba(48, 36, 45, 0.88);
+    }
+
+    .nua-relation .scene-box {
+      background:
+        radial-gradient(circle at 18% 0%, rgba(255, 191, 228, 0.48), transparent 36%),
+        linear-gradient(
+          135deg,
+          rgba(255, 248, 252, 0.64),
+          rgba(229, 204, 242, 0.46),
+          rgba(21, 74, 39, 0.3)
+        );
+      border-color: rgba(255, 179, 217, 0.62);
+      backdrop-filter: blur(10px);
+    }
+
+    .nua-relation .line {
+      color: rgba(62, 38, 57, 0.9);
+    }
+
+    .nua-relation .wiki-note {
+      border-left-color: #ff9fcb;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255, 235, 246, 0.66),
+          rgba(225, 199, 242, 0.38),
+          rgba(20, 70, 38, 0.28)
+        );
+      color: rgba(52, 39, 49, 0.92);
+      backdrop-filter: blur(10px);
+    }
+
+    .nua-relation .fan-label {
+      background: rgba(255, 179, 217, 0.42);
+      color: #8f3f70;
+    }
+
+    @keyframes crocodilePageInk {
+      0% {
+        transform: rotate(0deg) scale(1);
+      }
+
+      50% {
+        transform: rotate(180deg) scale(1.08);
+      }
+
+      100% {
+        transform: rotate(360deg) scale(1);
+      }
+    }
+
+    @keyframes relationGreenPurpleSwirl {
+      0% {
+        transform: rotate(0deg) scale(1);
+      }
+
+      50% {
+        transform: rotate(180deg) scale(1.08);
+      }
+
+      100% {
+        transform: rotate(360deg) scale(1);
+      }
+    }
+
+    @keyframes relationPinkInk {
+      0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 0.58;
+      }
+
+      45% {
+        transform: translate(-82px, 58px) rotate(95deg) scale(1.14);
+        opacity: 0.9;
+      }
+
+      100% {
+        transform: translate(-145px, 24px) rotate(165deg) scale(1.05);
+        opacity: 0.72;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .data-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nua-relation {
+        padding: 24px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        padding: 28px 14px;
+      }
+
+      .wiki-page {
+        padding: 24px;
+        border-radius: 24px;
+      }
+
+      h1 {
+        font-size: 31px;
+      }
+
+      .info-box div {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .nua-relation {
+        padding: 22px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      body::before,
+      .nua-relation::before,
+      .nua-relation::after {
+        animation: none !important;
+      }
+    }
+
+        /* =================================================
+       NUA ARRIVAL EFFECT - THIN SPIRAL LINE VERSION
+    ================================================= */
+
+    .nua-pink-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* 얇은 선 형태의 소용돌이 효과 */
+    .nua-pink-bg::before,
+    .nua-pink-bg::after {
+      content: "";
+      position: absolute;
+      bottom: -10%;
+      width: 100vw;
+      height: 100vh;
+      opacity: 0;
+      transition: opacity 2s ease, transform 3s ease;
+    }
+
+    /* 왼쪽 소용돌이 선 */
+    .nua-pink-bg::before {
+      left: -25%;
+      background: 
+        repeating-radial-gradient(circle at 20% 80%, transparent 0, transparent 40px, var(--pink-main) 41px, transparent 42px),
+        repeating-radial-gradient(circle at 15% 85%, transparent 0, transparent 70px, var(--pink-soft) 71px, transparent 72px);
+      filter: blur(1.5px) drop-shadow(0 0 5px var(--pink-main));
+      mask-image: radial-gradient(ellipse at 20% 80%, black, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at 20% 80%, black, transparent 70%);
+    }
+
+    /* 오른쪽 소용돌이 선 */
+    .nua-pink-bg::after {
+      right: -25%;
+      background: 
+        repeating-radial-gradient(circle at 80% 85%, transparent 0, transparent 35px, var(--pink-main) 36px, transparent 37px),
+        repeating-radial-gradient(circle at 85% 90%, transparent 0, transparent 65px, var(--pink-soft) 66px, transparent 67px);
+      filter: blur(1.5px) drop-shadow(0 0 5px var(--pink-main));
+      mask-image: radial-gradient(ellipse at 80% 85%, black, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at 80% 85%, black, transparent 70%);
+    }
+
+    /* 누아 모드 활성화 시 선들이 일렁이며 등장 */
+    body.nua-mode .nua-pink-bg::before {
+      opacity: 0.35;
+      animation: nuaLineSway 10s infinite alternate ease-in-out;
+    }
+
+    body.nua-mode .nua-pink-bg::after {
+      opacity: 0.25;
+      animation: nuaLineSway 12s infinite alternate-reverse ease-in-out;
+    }
+
+    @keyframes nuaLineSway {
+      0% { transform: scale(1) rotate(0deg) translateY(0); }
+      50% { transform: scale(1.1) rotate(4deg) translateY(-30px); }
+      100% { transform: scale(1.05) rotate(-2deg) translateY(-15px); }
+    }
+
+    /* 누아 관계 섹션 박스 디자인 (묵직함 + 귀여움 한방울) */
     .nua-relation .data-card, 
     .nua-relation .scene-box {
-      background: rgba(20, 10, 25, 0.6); /* 아주 어두운 보라빛 */
-      border: 1px solid rgba(255, 182, 193, 0.15); /* 얇은 핑크 테두리 */
-      border-radius: 20px;
-      padding: 20px;
-      transition: all 1s ease;
+      background: rgba(5, 12, 8, 0.92) !important; /* 다시 묵직하게 */
+      border: 1px solid rgba(255, 128, 191, 0.25) !important; /* 얇은 핑크 실선 테두리 */
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6) !important;
+      backdrop-filter: none;
+      overflow: hidden;
     }
 
-    body.nua-mode .nua-relation .data-card {
-      border-color: rgba(255, 182, 193, 0.3);
-      box-shadow: 0 0 25px rgba(255, 182, 193, 0.08);
+    /* 카드 제목 핑크색으로 강조 */
+    .nua-relation .data-card h3 {
+      color: var(--pink-main) !important;
     }
 
-    /* 나머지 필요한 기본 스타일들 */
-    h1 { font-family: 'Noto Serif KR', serif; font-size: 40px; margin-bottom: 12px; }
-    h2 { font-family: 'Noto Serif KR', serif; font-size: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin: 30px 0 15px; }
-    .info-box { background: rgba(255,255,255,0.03); border-radius: 22px; padding: 20px; margin: 20px 0; }
-    .profile-img { width: 100%; border-radius: 15px; border: 5px solid rgba(255,255,255,0.1); }
-    .wiki-note { border-left: 4px solid #8b63b0; background: rgba(139, 99, 176, 0.1); padding: 15px; border-radius: 10px; margin: 20px 0; }
-    .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-    @media (max-width: 600px) { .data-grid { grid-template-columns: 1fr; } }
+    .nua-relation h2 {
+      color: #f1e8f5;
+      border-bottom-color: var(--pink-main);
+    }
 
+    
+    @media (prefers-reduced-motion: reduce) {
+      .nua-pink-bg {
+        animation: none !important;
+      }
+    }
+
+    .fixed-home-link {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 999;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
+  border: 1px solid rgba(255, 190, 220, 0.75);
+  border-radius: 999px;
+  background: rgba(255, 248, 252, 0.82);
+  backdrop-filter: blur(12px);
+  color: #9b4f75;
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  box-shadow: 0 8px 22px rgba(80, 30, 60, 0.18);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.fixed-home-link:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 159, 203, 0.95);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 12px 28px rgba(80, 30, 60, 0.24);
+}
+
+.fixed-home-link:focus-visible {
+  outline: 2px solid #ff9fcb;
+  outline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  .fixed-home-link {
+    top: 12px;
+    left: 12px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
+
+
+/* 카드 위로 지나가는 아주 낮은 투명도의 핑크 안개 */
+.nua-relation .data-card::after,
+.nua-relation .scene-box::after,
+.nua-relation .wiki-note::after {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(ellipse at 18% 72%, rgba(255, 204, 235, 0.26), transparent 32%),
+    radial-gradient(ellipse at 84% 66%, rgba(255, 175, 222, 0.2), transparent 36%),
+    linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(255, 205, 235, 0.12) 38%,
+      rgba(255, 179, 217, 0.18) 48%,
+      rgba(210, 160, 230, 0.1) 58%,
+      transparent 76%
+    );
+  filter: blur(18px);
+  mix-blend-mode: screen;
+  transform: translateX(-22%) translateY(8%);
+  transition: opacity 2.6s ease;
+  animation: cardPinkMist 34s ease-in-out infinite alternate;
+}
+
+/* 누아 모드일 때만 상자에 아주 약하게 나타남 */
+body.nua-mode .nua-relation .data-card::after,
+body.nua-mode .nua-relation .scene-box::after,
+body.nua-mode .nua-relation .wiki-note::after {
+  opacity: 0.18;
+}
   </style>
 </head>
 
