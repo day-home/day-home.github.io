@@ -4,14 +4,995 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>도플라밍고</title>
+  <title>돈키호테 도플라밍고</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Serif+KR:wght@300;500;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 40px 20px;
+      background:
+        radial-gradient(circle at 16% 15%, rgba(255, 158, 205, 0.48), transparent 30%),
+        radial-gradient(circle at 85% 22%, rgba(255, 214, 236, 0.9), transparent 34%),
+        radial-gradient(circle at 50% 95%, rgba(134, 80, 123, 0.22), transparent 38%),
+        #fff6fb;
+      color: #443a42;
+      font-family: 'Gowun Dodum', sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(226, 129, 183, 0.13) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(226, 129, 183, 0.13) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(circle at center, black, transparent 78%);
+      opacity: 0.55;
+    }
+
+    body::after {
+      content: "✦";
+      position: fixed;
+      right: 9vw;
+      top: 10vh;
+      color: rgba(219, 91, 166, 0.25);
+      font-size: 92px;
+      pointer-events: none;
+    }
+
+    .wiki-page {
+      position: relative;
+      z-index: 1;
+      max-width: 930px;
+      margin: 0 auto;
+      padding: 34px;
+      border: 1px solid rgba(219, 118, 177, 0.52);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(12px);
+      box-shadow:
+        0 18px 50px rgba(161, 72, 124, 0.16),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: #a54d7c;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .wiki-header {
+      margin-bottom: 30px;
+      padding-bottom: 24px;
+      border-bottom: 1px dashed rgba(219, 118, 177, 0.58);
+    }
+
+    .wiki-label {
+      margin-bottom: 10px;
+      color: #d35f9c;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      font-weight: bold;
+    }
+
+    h1 {
+      margin-bottom: 12px;
+      color: #332832;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 40px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    .subtitle {
+      color: #755f6d;
+      line-height: 1.8;
+    }
+
+    .wiki-note {
+      margin: 16px 0;
+      padding: 14px 16px;
+      border-left: 4px solid #e387b7;
+      border-radius: 14px;
+      background: rgba(255, 240, 248, 0.78);
+      color: #755f6d;
+      line-height: 1.8;
+    }
+
+    .info-box {
+      margin: 28px 0;
+      padding: 22px;
+      border: 1px solid rgba(219, 118, 177, 0.48);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .profile-img {
+      display: block;
+      width: min(100%, 520px);
+      height: auto;
+      max-height: none;
+      object-fit: contain;
+      margin: 0 auto 20px;
+      border: 8px solid #fff;
+      border-radius: 22px;
+      box-shadow: 0 10px 24px rgba(161, 72, 124, 0.17);
+    }
+
+    .info-box dl {
+      display: grid;
+      gap: 12px;
+    }
+
+    .info-box div {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 14px;
+    }
+
+    .info-box dt {
+      color: #a54d7c;
+      font-weight: bold;
+    }
+
+    .info-box dd {
+      color: #51464e;
+    }
+
+    .small-note {
+      color: #9a788d;
+      font-size: 0.9em;
+    }
+
+    .pending {
+      color: #7b5d71;
+      border-bottom: 1px dashed rgba(165, 77, 124, 0.75);
+      cursor: help;
+    }
+
+    .wiki-toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 24px 0 8px;
+      padding: 14px;
+      border: 1px solid rgba(219, 118, 177, 0.38);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.55);
+    }
+
+    .wiki-toc a {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(227, 135, 183, 0.16);
+      color: #9b4773;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .wiki-toc a:hover {
+      background: rgba(227, 135, 183, 0.28);
+    }
+
+    section {
+      margin-top: 36px;
+    }
+
+    h2 {
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(219, 118, 177, 0.42);
+      color: #3f2f3b;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 25px;
+      font-weight: 500;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      color: #9b4773;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: 14px;
+      line-height: 1.9;
+      color: #51464e;
+    }
+
+    ul {
+      padding-left: 18px;
+    }
+
+    li {
+      line-height: 1.8;
+      color: #51464e;
+    }
+
+    .wiki-link {
+      color: #a54d7c;
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(165, 77, 124, 0.7);
+    }
+
+    .wiki-link:hover {
+      background: rgba(227, 135, 183, 0.18);
+    }
+
+    .keyword-list,
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .keyword-list span,
+    .tag-list span {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(227, 135, 183, 0.18);
+      color: #9b4773;
+      font-size: 13px;
+    }
+
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .data-card {
+      padding: 18px;
+      border: 1px solid rgba(219, 118, 177, 0.38);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.66);
+    }
+
+    .scene-box {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255, 240, 248, 0.92), rgba(255, 255, 255, 0.76));
+      border: 1px dashed rgba(219, 118, 177, 0.58);
+    }
+
+    .scene-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .line {
+      display: block;
+      margin: 8px 0;
+      color: #755f6d;
+      line-height: 1.8;
+    }
+
+    .wiki-details {
+      margin-top: 18px;
+      border: 1px solid rgba(219, 118, 177, 0.38);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.63);
+      overflow: hidden;
+    }
+
+    .wiki-details summary {
+      padding: 15px 18px;
+      color: #a54d7c;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .wiki-details-content {
+      padding: 0 18px 18px;
+    }
+
+    .fan-label {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(227, 135, 183, 0.18);
+      color: #a54d7c;
+      font-family: 'Gowun Dodum', sans-serif;
+      font-size: 12px;
+      vertical-align: middle;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .timeline-item {
+      padding: 16px 18px;
+      border-left: 4px solid rgba(227, 135, 183, 0.75);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.66);
+    }
+
+    .timeline-item strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #9b4773;
+    }
+
+    @media (max-width: 700px) {
+      .data-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        padding: 28px 14px;
+      }
+
+      .wiki-page {
+        padding: 24px;
+        border-radius: 24px;
+      }
+
+      h1 {
+        font-size: 31px;
+      }
+
+      .info-box div {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <main>
-    <a href="../character.html">← 캐릭터 목록으로 돌아가기</a>
-    <h1>도플라밍고</h1>
-    <p>누아의 과거와 깊게 얽힌 인물.</p>
+  <main class="wiki-page">
+    <a class="back-link" href="../character.html">← 캐릭터 목록으로 돌아가기</a>
+
+    <header class="wiki-header">
+      <p class="wiki-label">CANON CHARACTER / DREAM ARCHIVE</p>
+      <h1>돈키호테 도플라밍고</h1>
+      <p class="subtitle">
+        강력한 힘과 카리스마, 지략을 모두 갖춘 악의 인물.
+        누아에게는 과거의 보호자이자, 애정과 트라우마가 동시에 얽힌 존재다.
+      </p>
+    </header>
+
+    <div class="wiki-note">
+      점선 밑줄이 표시된 항목은 원작 설정이 아닌 드림홈 내부 설정이거나 아직 확정되지 않은 설정입니다.
+    </div>
+
+    <aside class="info-box">
+      <img class="profile-img" src="../img/doflamingo.png" alt="돈키호테 도플라밍고">
+
+      <dl>
+        <div>
+          <dt>이름</dt>
+          <dd>돈키호테 도플라밍고</dd>
+        </div>
+
+        <div>
+          <dt>이명</dt>
+          <dd>천야차 <span class="small-note">(天夜叉)</span> / JOKER</dd>
+        </div>
+
+        <div>
+          <dt>생일</dt>
+          <dd>10월 23일 <span class="small-note">/ 전갈자리</span></dd>
+        </div>
+
+        <div>
+          <dt>나이</dt>
+          <dd>
+            <span class="pending" title="드림홈 타임라인에 따라 추후 조정 가능">39세</span>
+          </dd>
+        </div>
+
+        <div>
+          <dt>신장</dt>
+          <dd>305cm</dd>
+        </div>
+
+        <div>
+          <dt>혈액형</dt>
+          <dd>X형 <span class="small-note">ABO식으로는 A형</span></dd>
+        </div>
+
+        <div>
+          <dt>능력</dt>
+          <dd>실실 열매, 견문색 패기, 무장색 패기, 패왕색 패기</dd>
+        </div>
+
+        <div>
+          <dt>소속</dt>
+          <dd>돈키호테 패밀리 / 前 드레스로자 국왕 / JOKER</dd>
+        </div>
+
+        <div>
+          <dt>좋아하는 음식</dt>
+          <dd>랍스터</dd>
+        </div>
+
+        <div>
+          <dt>싫어하는 음식</dt>
+          <dd>바베큐 <span class="small-note">어린 시절의 트라우마와 관련</span></dd>
+        </div>
+
+        <div>
+          <dt>관계</dt>
+          <dd>
+            <span class="pending" title="드림홈 내부 설정">누아의 과거 보호자이자 트라우마의 원인</span>
+          </dd>
+        </div>
+      </dl>
+    </aside>
+
+    <nav class="wiki-toc" aria-label="문서 목차">
+      <a href="#overview">개요</a>
+      <a href="#ability">능력</a>
+      <a href="#appearance">외관</a>
+      <a href="#personality">성격</a>
+      <a href="#work">JOKER</a>
+      <a href="#past">과거</a>
+      <a href="#family">인간관계</a>
+      <a href="#nua">누아와의 관계</a>
+      <a href="#trauma">버림 사건</a>
+      <a href="#scar">흉터</a>
+    </nav>
+
+    <section id="overview">
+      <h2>개요</h2>
+
+      <p>
+        도플라밍고는 폭력성과 카리스마, 지략을 동시에 지닌 인물이다.
+        단순히 힘으로 찍어누르는 타입이 아니라, 화려한 언변과 심리전,
+        미리 깔아둔 함정으로 상대를 농락하는 데 능하다.
+      </p>
+
+      <p>
+        그에게 가족은 강한 의미를 갖지만, 그 가족의 개념은 따뜻함만으로 이루어져 있지 않다.
+        자신이 가족이라고 인정한 이들에게는 관대하고 보호적이지만,
+        동시에 자신을 위해 희생할 각오를 요구하는 지배적인 면도 강하다.
+      </p>
+
+      <div class="keyword-list">
+        <span>천야차</span>
+        <span>JOKER</span>
+        <span>지략가</span>
+        <span>폭력성</span>
+        <span>소유욕</span>
+        <span>패밀리</span>
+        <span>트라우마</span>
+      </div>
+    </section>
+
+    <section id="ability">
+      <h2>능력</h2>
+
+      <p>
+        도플라밍고는 초인계 악마의 열매인 실실 열매의 능력자다.
+        실을 자유롭게 다루며 공격, 방어, 이동, 조작, 응급처치까지 다양한 방식으로 활용한다.
+        능력의 범위가 넓고 응용력이 뛰어나, 전투에서도 상황 장악력이 매우 높은 편이다.
+      </p>
+
+      <div class="data-grid">
+        <article class="data-card">
+          <h3>실실 열매</h3>
+          <p>
+            실을 만들어내고 조종하는 능력. 원거리 공격, 근거리 체술 보조,
+            방어, 이동, 포박 등 거의 모든 상황에 활용된다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>기생실</h3>
+          <p>
+            상대의 몸을 조종해 의지와 상관없이 움직이게 할 수 있다.
+            약자를 단번에 제압하거나, 전장을 혼란스럽게 만드는 데 적합하다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>새장</h3>
+          <p>
+            넓은 지역을 실로 둘러싸 서서히 조여오는 광역 장악기.
+            전장을 봉쇄하고 상대의 선택지를 줄이는 방식으로 작용한다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>응급처치</h3>
+          <p>
+            실로 신체의 손상 부위를 꿰매어 응급처치를 할 수 있다.
+            치명상에도 버티는 데 도움을 주며, 능력 활용도의 높은 예시로 볼 수 있다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>각성</h3>
+          <p>
+            주변 환경을 실로 바꾸어 물량과 범위로 상대를 압박한다.
+            단순한 능력 사용을 넘어 전장 자체를 자신의 무대로 만드는 방식이다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>패기</h3>
+          <p>
+            견문색, 무장색, 패왕색 패기를 모두 지녔다.
+            압도적인 한 방보다는 균형 잡힌 전투력과 지략을 함께 사용하는 타입이다.
+          </p>
+        </article>
+      </div>
+
+      <div class="wiki-note">
+        도플라밍고의 가장 큰 강점은 단순한 전투력보다 지략이다.
+        그는 힘이 부족해서 책략을 쓰는 것이 아니라, 상대를 말과 판으로 농락하는 행위 자체를 즐기는 쪽에 가깝다.
+      </div>
+    </section>
+
+    <section id="appearance">
+      <h2>외관</h2>
+
+      <p>
+        금발의 단발머리와 선글라스, 분홍색 깃털 코트가 강한 인상을 남긴다.
+        선글라스는 거의 항상 착용하고 있으며, 그 아래의 눈은 과거 회상에서 일부 드러난 바 있다.
+      </p>
+
+      <p>
+        젊은 시절에는 정장과 핑크 털코트를 갖춘 스타일을 보였고,
+        현재는 흰 셔츠와 하와이안 바지 위에 분홍 털코트를 걸치는 식의 독특한 차림을 한다.
+        전체적으로 화려하고 과시적인 분위기가 강하다.
+      </p>
+
+      <div class="data-grid">
+        <article class="data-card">
+          <h3>기본 인상</h3>
+          <ul>
+            <li>금발 단발머리</li>
+            <li>항상 착용하는 선글라스</li>
+            <li>비릿하게 웃는 표정</li>
+            <li>크고 위압적인 체격</li>
+          </ul>
+        </article>
+
+        <article class="data-card">
+          <h3>복장</h3>
+          <ul>
+            <li>분홍색 깃털 코트</li>
+            <li>흰색 셔츠</li>
+            <li>하와이안 바지</li>
+            <li>화려하고 자유분방한 스타일</li>
+          </ul>
+        </article>
+
+        <article class="data-card">
+          <h3>분위기</h3>
+          <ul>
+            <li>패셔니스타에 가까운 인상</li>
+            <li>과시적이고 여유로운 태도</li>
+            <li>늘 상대보다 위에 서 있는 듯한 느낌</li>
+            <li>불쾌할 정도로 느긋한 카리스마</li>
+          </ul>
+        </article>
+
+        <article class="data-card">
+          <h3>기타</h3>
+          <ul>
+            <li>웃음소리는 “음훗훗훗”</li>
+            <li>무서울 것이 없다는 듯한 미소</li>
+            <li>상대의 반응을 즐기는 듯한 표정</li>
+            <li>화려함과 폭력성이 동시에 느껴짐</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="personality">
+      <h2>성격</h2>
+
+      <p>
+        도플라밍고는 잔학하고 호전적이며, 인간의 내재된 폭력성을 긍정하는 인물이다.
+        어린 시절의 박해와 상실은 그의 악의 성향을 더욱 강화했고,
+        세계와 인간을 바라보는 방식에도 깊은 흔적을 남겼다.
+      </p>
+
+      <p>
+        그는 배신을 결코 용납하지 않으며, 사람을 평가할 때 그 사람이 자라온 환경을 중요하게 본다.
+        자신이 가족이라고 인정한 이들에게는 대가 없는 지원과 보호를 제공하지만,
+        그만큼 그들도 자신을 위해 목숨을 걸어야 한다고 여긴다.
+      </p>
+
+      <div class="data-grid">
+        <article class="data-card">
+          <h3>가족관</h3>
+          <p>
+            패밀리의 간부들을 진심으로 자신의 가족처럼 대한다.
+            실패에는 관대하지만, 배신에는 매우 가혹하다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>소유와 보호</h3>
+          <p>
+            보호는 따뜻함만이 아니라 소유와 지배의 방식으로도 드러난다.
+            자신이 아끼는 존재는 자신의 세계 안에 있어야 한다고 여긴다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>지략</h3>
+          <p>
+            대화를 통해 상대를 흔들고, 수많은 함정을 깔아두며,
+            상대가 선택했다고 믿는 상황마저 자신의 판 안에 넣으려 한다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>잔혹성</h3>
+          <p>
+            폭력과 혼란을 두려워하지 않으며,
+            오히려 그것이 세계의 본질이라는 듯 행동한다.
+          </p>
+        </article>
+      </div>
+
+      <div class="wiki-note">
+        도플라밍고는 온화함과 잔혹함이 분리되어 있지 않은 인물이다.
+        그에게 보호받는다는 것은 동시에 그의 세계 안에 묶인다는 의미가 될 수 있다.
+      </div>
+    </section>
+
+    <section id="work">
+      <h2>JOKER</h2>
+
+      <p>
+        도플라밍고는 신세계의 뒷세계에서 거물 브로커 JOKER로 악명을 떨친다.
+        섬, 노예, 무기, 물품 등 다양한 거래에 손을 뻗었으며,
+        정치력과 재력, 폭력으로 어둠의 질서를 움직였다.
+      </p>
+
+      <p>
+        드레스로자의 왕위를 찬탈해 해적이면서도 왕으로 군림했고,
+        국가 간 전쟁과 혼란을 일으키는 뒷세계의 큰손으로 자리했다.
+        돈키호테 패밀리가 붕괴된 이후, 그가 독점하던 공급망이 끊기며 신세계의 정세가 흔들릴 정도였다.
+      </p>
+
+      <div class="tag-list">
+        <span>브로커</span>
+        <span>무기 거래</span>
+        <span>스마일</span>
+        <span>드레스로자</span>
+        <span>정치력</span>
+        <span>뒷세계</span>
+      </div>
+    </section>
+
+    <section id="past">
+      <h2>과거</h2>
+
+      <p>
+        도플라밍고는 과거 세계귀족, 즉 천룡인이었다.
+        그러나 아버지가 천룡인의 지위를 포기하고 하계로 내려오면서 그의 삶은 급격히 추락한다.
+        이후 그는 박해와 폭력을 겪으며, 인간과 세계에 대한 증오를 키우게 된다.
+      </p>
+
+      <p>
+        그는 자신을 거부한 천룡인들을 배신자로 여기며 증오했고,
+        동시에 자신을 린치한 군중들을 통해 인간은 힘의 유무와 상관없이 악하다고 믿게 되었다.
+        하계에서 해적이 된 이유 역시, 천룡인이 좌지우지하는 세계를 파괴하려는 증오와 맞닿아 있다.
+      </p>
+
+      <div class="data-grid">
+        <article class="data-card">
+          <h3>천룡인의 혈통</h3>
+          <p>
+            자신이 고귀한 혈족이라는 사실에 강한 자부심을 가진다.
+            그러나 그 혈통은 동시에 그의 추락과 증오의 원인이 되었다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>박해</h3>
+          <p>
+            어린 시절 겪은 잔혹한 박해는 도플라밍고의 세계관을 뒤틀었다.
+            이후 그는 인간의 악의와 폭력을 당연한 것으로 받아들이게 된다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>호밍</h3>
+          <p>
+            아버지 돈키호테 호밍은 도플라밍고에게 인생을 망친 무능한 존재로 남았다.
+            그는 깊은 원망 끝에 아버지를 직접 죽인다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>로시난테</h3>
+          <p>
+            하나뿐인 남동생. 배신을 알게 되었을 때 도플라밍고는 큰 충격을 받았고,
+            이후 그의 가족관은 더욱 패밀리 중심으로 굳어진다.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="family">
+      <h2>인간관계</h2>
+
+      <p>
+        돈키호테 패밀리는 도플라밍고에게 단순한 부하 집단이 아니다.
+        밑바닥에서 함께 올라왔거나, 자신처럼 불행한 처지에 놓였던 아이들을 거두어 형성된 가족에 가깝다.
+        그래서 간부 이상의 멤버들에게는 대체로 관대하고 보호적인 태도를 보인다.
+      </p>
+
+      <p>
+        그러나 이 가족성은 선한 의미로만 존재하지 않는다.
+        패밀리는 도플라밍고의 악의 안에서 성장했고,
+        그의 세계관과 폭력성을 함께 공유하는 집단이 되었다.
+        도플라밍고는 그들을 아끼지만, 동시에 자신을 위해 희생할 수 있어야 한다고 여긴다.
+      </p>
+
+      <details class="wiki-details">
+        <summary>돈키호테 패밀리</summary>
+        <div class="wiki-details-content">
+          <p>
+            간부 이상의 멤버들은 도플라밍고를 ‘영 보스’ 혹은 ‘도피’라 부르며 따른다.
+            도플라밍고 역시 그들에게 대체로 너그러운 태도를 보이며,
+            실수를 저질러도 쉽게 질책하지 않는다.
+          </p>
+          <p>
+            다만 이 관대함은 패밀리라는 울타리 안에서만 작동한다.
+            약한 자, 쓸모없다고 판단한 자, 배신자는 그 보호의 대상이 아니다.
+          </p>
+        </div>
+      </details>
+    </section>
+
+    <section id="nua">
+      <h2>누아와의 관계 <span class="fan-label">드림 설정</span></h2>
+
+      <p>
+        <a class="wiki-link" href="./nua.html">누아</a>는 어린 시절 드레스로자 왕성에서 도플라밍고의 보호 아래 지냈다.
+        5살에서 7살 무렵까지는 왕성에 있었고, 이후에는 드레스로자 외곽으로 옮겨져 생활했다.
+        이는 도플라밍고가 드레스로자의 어두운 진실을 누아에게 감추려 했기 때문이다.
+      </p>
+
+      <p>
+        도플라밍고는 누아를 손끝 하나 다치지 않게, 온실 속 화초처럼 키웠다.
+        그가 누아에게 허락한 접촉은 보호자다운 포옹과 뽀뽀 정도였고,
+        누아는 어린아이의 방식으로 “도피랑 결혼할 거야”라고 말할 만큼 그를 진심으로 좋아했다.
+      </p>
+
+      <p>
+        그는 누아가 가지고 싶어하는 것과 먹고 싶어하는 것을 대부분 사주었고,
+        그 영향으로 누아의 자유분방함은 더욱 강해졌다.
+        또한 도플라밍고는 누아에게 피아노를 가르쳤다.
+        클래식을 즐겨 듣는 그에게 누아의 연주는 꽤 나쁘지 않은 것이었다.
+      </p>
+
+      <div class="data-grid">
+        <article class="data-card">
+          <h3>도플라밍고 → 누아</h3>
+          <p>
+            가지고 싶었지만 완전히 소유하지 못한 존재.
+            잠시 무너뜨려 다시 데려오려 했으나, 그 계획이 어긋나 크로커다일에게 빼앗겼다고 느낀다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>누아 → 도플라밍고</h3>
+          <p>
+            한때는 가장 사랑했던 보호자.
+            그러나 버림받은 기억이 깊은 트라우마로 남았고,
+            현재의 감정은 애정과 공포, 회귀 본능이 뒤섞여 있다.
+          </p>
+        </article>
+      </div>
+
+      <div class="wiki-note">
+        도플라밍고에게 누아는 보호의 대상이면서 동시에 소유하고 싶은 존재다.
+        누아에게 도플라밍고는 사랑을 처음 배운 사람인 동시에, 가장 깊은 상처를 남긴 사람이다.
+      </div>
+    </section>
+
+    <section id="trauma">
+      <h2>버림 사건 <span class="fan-label">드림 설정</span></h2>
+
+      <p>
+        누아는 본래 활발하고 자유로운 영혼의 소유자다.
+        이리저리 돌아다니고 새로운 것을 탐험하는 것을 좋아하며,
+        자유를 빼앗기는 일은 누아에게 정신적 붕괴로 이어질 수 있는 치명적인 약점이었다.
+        도플라밍고는 이 사실을 누구보다 잘 알고 있었다.
+      </p>
+
+      <p>
+        그는 누아를 자기 곁에서 벗어나지 못하게 만들기 위해,
+        한 번 완전히 무너뜨린 뒤 다시 구원자로 나타나는 계획을 세운다.
+        누아를 드레스로자에서 아주 먼 축제섬으로 데려가 아침부터 밤까지 함께 즐거운 시간을 보내고,
+        무도회 테라스에서 야경을 바라보던 순간 차갑게 내친다.
+      </p>
+
+      <div class="scene-box">
+        <span class="line">“훗훗훗. 누아… 너는 더 이상 쓸모가 없다.”</span>
+      </div>
+
+      <p>
+        이 말은 누아의 존재 가치를 부정하는 선언이었고,
+        사랑하던 보호자에게 버림받은 누아는 정신적으로 크게 무너진다.
+        그러나 도플라밍고의 의도는 정말로 누아를 버리는 것이 아니라,
+        시간이 지난 뒤 다시 데려와 절대 자신의 곁을 떠나지 못하게 만드는 것이었다.
+      </p>
+
+      <p>
+        문제는 누아가 사라졌다는 점이다.
+        도플라밍고는 직접 지켜보지 못하는 대신 감시망을 남겨두었으나,
+        축제섬에는 사람이 많았고 일반 병사들은 충분히 유능하지 못했다.
+        충격 속에서 정처 없이 돌아다니던 누아는 컨테이너 안에서 잠들었고,
+        우연히 선박에 실려 도플라밍고의 시야에서 벗어난다.
+      </p>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <strong>축제섬</strong>
+          누아는 도플라밍고와 하루 종일 즐거운 시간을 보낸다.
+        </div>
+
+        <div class="timeline-item">
+          <strong>무도회 테라스</strong>
+          도플라밍고는 누아에게 “더 이상 쓸모가 없다”는 식의 말을 남기고 의도적으로 버린다.
+        </div>
+
+        <div class="timeline-item">
+          <strong>감시망 이탈</strong>
+          정신적 충격으로 방황하던 누아가 컨테이너 안에서 잠들고, 선박을 통해 섬을 벗어난다.
+        </div>
+
+        <div class="timeline-item">
+          <strong>크로커다일의 영역</strong>
+          여러 배를 거쳐 우연히 <a class="wiki-link" href="./crocodile.html">크로커다일</a>의 영역에 들어간다.
+        </div>
+
+        <div class="timeline-item">
+          <strong>1~2년 후</strong>
+          칠무해 정기 소집일, 도플라밍고는 크로커다일에게서 익숙한 흔적을 감지하고 누아가 살아 있음을 눈치챈다.
+        </div>
+      </div>
+
+      <details class="wiki-details">
+        <summary>칠무해 정기 소집일</summary>
+        <div class="wiki-details-content">
+          <p>
+            도플라밍고는 크로커다일 옆을 스쳐 지나가다 익숙한 냄새와 흔적을 감지한다.
+            그리고 누아가 한동안 발견되지 않았던 이유가 크로커다일 때문이라는 사실을 곧장 파악한다.
+          </p>
+          <p>
+            이 시점에서 누아는 회의에 함께 있지 않고, 크로커다일의 집무실 쪽에서 머무르고 있다.
+            도플라밍고는 누아가 살아있다는 것과, 그녀가 크로커다일의 보호 아래 있다는 것을 확인한다.
+          </p>
+          <div class="scene-box">
+            <span class="line">대사 후보</span>
+            <span class="line">“내 귀여운 멍멍이를 찾았군…”</span>
+            <span class="line small-note">※ 문구는 추후 수정 가능.</span>
+          </div>
+        </div>
+      </details>
+
+      <div class="wiki-note">
+        이 사건 이후 도플라밍고는 누아에게 가장 큰 트라우마를 남긴 존재가 된다.
+        그러나 시간이 흐르며 그는 더 이상 크로커다일과 누아의 관계를 완전히 뒤흔드는 절대적인 존재는 아니다.
+      </div>
+    </section>
+
+    <section id="after">
+      <h2>재회 이후 <span class="fan-label">드림 설정</span></h2>
+
+      <p>
+        결국 도플라밍고와 누아는 다시 만난다.
+        처음의 누아는 이를 악물고 울지 않으려 애쓰지만,
+        도플라밍고는 그녀를 다시 데려오기 위해 감언이설과 익숙한 다정함을 섞어 접근한다.
+      </p>
+
+      <p>
+        중후반 시점에 이르면 두 사람의 관계는 어느 정도 회복된다.
+        누아는 능청스럽게 사랑한다고 말할 수 있을 정도가 되고,
+        도플라밍고 역시 누아를 즐겁게 해주기 위해 함께 시간을 보내거나 여행을 제안한다.
+        다만 그 목적은 순수한 화해라기보다, 누아가 스스로 자신을 원하게 만들기 위한 계산에 가깝다.
+      </p>
+
+      <p>
+        겨울섬에 여행 온 사실을 누구에게도 말하지 않았는데도,
+        도플라밍고가 어찌 알았는지 찾아오는 장면은 이런 관계를 잘 보여준다.
+        지금은 과거보다 양호한 관계가 되었고 서로 애칭을 부를 수 있을 정도지만,
+        도플라밍고는 여전히 누아를 완전히 소유할 기회를 노리고 있다.
+      </p>
+
+      <div class="wiki-note">
+        현재의 누아는 마음이 힘들어질 때 종종 도플라밍고를 찾아가 안길 수 있다.
+        하지만 그가 크로커다일만큼 안정적인 존재가 된 것은 아니며,
+        오히려 애정과 불안이 동시에 남아 있는 과거의 그림자에 가깝다.
+      </div>
+    </section>
+
+    <section id="scar">
+      <h2>입술 아래 흉터 <span class="fan-label">드림 설정</span></h2>
+
+      <p>
+        누아의 입술 아래에 있는 옅은 흉터는 어린 시절 패밀리와 놀러 나갔다가 생긴 상처다.
+        누아가 장난을 치다 넘어졌고, 상처에서 피가 많이 나자 패밀리가 급히 도플라밍고에게 데려왔다.
+      </p>
+
+      <p>
+        도플라밍고는 생각보다 피가 많이 흐르는 것을 보고 놀랐고,
+        실실 열매의 능력으로 상처를 꿰매 응급처치했다.
+        이 기억은 이후 누아가 평범한 바늘로 상처를 꿰매는 일을 어색해하고 조금 무서워하는 이유가 된다.
+      </p>
+
+      <div class="wiki-note">
+        시점은 누아가 6살 무렵으로 두면 자연스럽다.
+        드레스로자 왕성에서 지내던 시기와도 맞고, 도플라밍고가 직접 돌보던 분위기도 살릴 수 있다.
+      </div>
+    </section>
+
+    <section id="summary">
+      <h2>관계 요약</h2>
+
+      <div class="data-grid">
+        <article class="data-card">
+          <h3>도플라밍고에게 누아란</h3>
+          <p>
+            가지고 싶었지만 완전히 손에 넣지 못한 존재.
+            온실 속 화초처럼 키웠고, 무너뜨려 다시 데려오려 했으나
+            계획이 어긋나 크로커다일에게 향해버린 존재다.
+          </p>
+        </article>
+
+        <article class="data-card">
+          <h3>누아에게 도플라밍고란</h3>
+          <p>
+            한때 가장 사랑했던 보호자.
+            지금은 애정과 트라우마, 회귀 본능이 동시에 얽힌 인물이며,
+            마음이 약해질 때 찾아가고 싶어지는 과거의 그림자다.
+          </p>
+        </article>
+      </div>
+
+      <div class="scene-box">
+        <p>
+          도플라밍고는 누아를 빼앗겼다고 느끼고,
+          누아는 도플라밍고에게 버림받았다고 기억한다.
+          두 사람의 관계는 같은 사건을 완전히 다른 방향에서 바라보는 데서 시작된다.
+        </p>
+      </div>
+    </section>
   </main>
 </body>
 
