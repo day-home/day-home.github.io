@@ -3,259 +3,339 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Characters</title>
+  <title>Character Archive | Day</title>
+
+  <!-- 명조체 및 고딕체 폰트 불러오기 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Serif+KR:wght@200;400;700&display=swap" rel="stylesheet">
 
   <style>
-  /* 기본 배경을 메인 페이지와 통일해서 일관성 주기 */
-  body {
-    margin: 0;
-    min-height: 100vh;
-    background:
-      radial-gradient(circle at 15% 15%, rgba(255, 190, 220, 0.3), transparent 25%),
-      radial-gradient(circle at 85% 20%, rgba(255, 226, 240, 0.6), transparent 30%),
-      #fff7fb;
-    font-family: 'Gowun Dodum', sans-serif;
-    color: #444;
-  }
+    :root {
+      --bg-color: #fff7fb;
+      --point-pink: #ff7eb6;
+      --dark-text: #333;
+      --soft-text: #666;
+      --villain-shadow: rgba(60, 40, 50, 0.15);
+      --hero-shadow: rgba(255, 179, 217, 0.2);
+    }
 
-  /* 메인 페이지의 격자 무늬 살짝 추가 */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background-image: linear-gradient(rgba(255, 179, 217, 0.1) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(255, 179, 217, 0.1) 1px, transparent 1px);
-    background-size: 40px 40px;
-    z-index: -1;
-  }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  .character-page {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 100px 24px;
-  }
+    body {
+      background: var(--bg-color);
+      font-family: 'Noto Serif KR', serif; /* 전체를 우아한 명조체로 설정 */
+      color: var(--dark-text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
 
-  .character-hero {
-    margin-bottom: 60px;
-    text-align: center;
-  }
+    /* 메인홈의 감성을 잇는 배경 장식 */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255, 179, 217, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 179, 217, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: -1;
+    }
 
-  /* '진지함'을 주는 세리프 폰트 활용 */
-  .character-hero h1 {
-    font-family: 'Noto Serif KR', serif;
-    font-weight: 300;
-    font-size: 3.5rem;
-    color: #333;
-    margin-bottom: 16px;
-    letter-spacing: 0.05em;
-  }
+    /* 흩날리는 꽃잎 효과 */
+    .petal-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  .page-label {
-    display: inline-block;
-    color: #ff7eb6;
-    font-size: 0.85rem;
-    font-weight: bold;
-    letter-spacing: 0.2em;
-    margin-bottom: 12px;
-  }
+    .character-page {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 24px;
+    }
 
-  .character-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 30px;
-  }
+    /* 헤더 영역: 갤러리 전시 서문 느낌 */
+    .character-hero {
+      text-align: center;
+      margin-bottom: 100px;
+      opacity: 0;
+      animation: fadeInDown 1.2s forwards;
+    }
 
-  /* 카드 디자인: 귀여운 곡률 + 진지한 정돈감 */
-  .character-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 179, 217, 0.4);
-    border-radius: 30px; /* 더 둥글게 해서 귀여움 강조 */
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 25px rgba(210, 116, 160, 0.1);
-  }
+    .page-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.4em;
+      color: var(--point-pink);
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: block;
+    }
 
-  .character-card:hover {
-    transform: translateY(-8px);
-    border-color: #ff9fcb;
-    box-shadow: 0 15px 35px rgba(210, 116, 160, 0.2);
-  }
+    .character-hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 200;
+      margin-bottom: 30px;
+      letter-spacing: 0.1em;
+    }
 
-  /* 메인 캐릭터(누아)만 특별한 강조 효과 */
-  .main-character {
-    border: 2px solid #ffb3d9;
-    background: linear-gradient(180deg, #fff, #fff0f7);
-  }
+    .hero-desc {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1rem;
+      color: var(--soft-text);
+      word-break: keep-all;
+    }
 
-  .character-img {
-    height: 280px;
-    overflow: hidden;
-    position: relative;
-    /* 이미지 아래쪽을 살짝 둥글게 */
-    border-bottom: 1px solid rgba(255, 179, 217, 0.2);
-  }
+    /* 그리드 레이아웃: 비대칭적인 예술적 배치 */
+    .character-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 40px;
+      align-items: stretch;
+    }
 
-  .character-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
+    /* 캐릭터 카드 기본 공통 스타일 */
+    .character-card {
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 40px 10px 40px 10px; /* 비대칭적인 곡선 */
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      display: flex;
+      flex-direction: column;
+    }
 
-  .character-card:hover .character-img img {
-    transform: scale(1.05);
-  }
+    .character-card:hover {
+      transform: translateY(-15px) scale(1.02);
+      background: rgba(255, 255, 255, 0.9);
+    }
 
-  .character-text {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-  }
+    /* 인물별 분위기 차별화 */
+    /* 1. 빌런 그룹 (도플라밍고, 크로커다일): 차갑고 무거운 톤 */
+    .type-villain {
+      box-shadow: 0 20px 40px var(--villain-shadow);
+    }
+    .type-villain .character-img {
+      filter: grayscale(0.3) contrast(1.1);
+    }
+    .type-villain .character-role { color: #8a707a; }
 
-  .character-role {
-    font-size: 0.75rem;
-    color: #d990b4;
-    font-weight: bold;
-    margin-bottom: 8px;
-  }
+    /* 2. 히어로/활기 그룹 (누아, 에이스): 따뜻하고 빛나는 톤 */
+    .type-hero {
+      box-shadow: 0 20px 40px var(--hero-shadow);
+      border-color: rgba(255, 179, 217, 0.3);
+    }
+    .type-hero .character-role { color: var(--point-pink); }
+    .type-hero::after {
+      content: "✦";
+      position: absolute;
+      top: 15px; right: 20px;
+      color: var(--point-pink);
+      font-size: 1.2rem;
+      opacity: 0.5;
+    }
 
-  .character-text h2 {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 1.5rem;
-    margin-bottom: 12px;
-    color: #38292e;
-  }
+    /* 메인 캐릭터 누아 특별 강조 */
+    .main-character {
+      grid-column: span 1;
+      border: 1px solid var(--point-pink);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 240, 247, 0.9));
+    }
 
-  .character-text p {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #666;
-    margin-bottom: 20px;
-  }
+    .character-img {
+      width: 100%;
+      height: 350px;
+      border-radius: 30px 5px 30px 5px;
+      overflow: hidden;
+      margin-bottom: 25px;
+      position: relative;
+    }
 
-  /* 상세보기 화살표 부분 */
-  .character-text span {
-    margin-top: auto;
-    font-size: 0.85rem;
-    color: #ff7eb6;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
+    .character-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
 
-  /* 홈 링크 스타일도 메인과 깔맞춤 */
-  .home-link {
-    position: fixed;
-    top: 24px;
-    left: 24px;
-    z-index: 100;
-    padding: 10px 20px;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid #ffb3d9;
-    border-radius: 50px;
-    color: #b46b91;
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(210, 116, 160, 0.1);
-    transition: all 0.2s;
-  }
+    .character-card:hover .character-img img {
+      transform: scale(1.1);
+    }
 
-  .home-link:hover {
-    background: #fff0f7;
-    transform: translateX(-3px);
-  }
-</style>
+    .character-text {
+      padding: 0 10px 10px;
+    }
+
+    .character-role {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      margin-bottom: 10px;
+      display: block;
+      font-family: 'Gowun Dodum', sans-serif;
+    }
+
+    .character-text h2 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 15px;
+      color: #111;
+    }
+
+    .character-text p {
+      font-size: 0.95rem;
+      color: var(--soft-text);
+      line-height: 1.8;
+      margin-bottom: 25px;
+      word-break: keep-all;
+    }
+
+    .view-more {
+      font-size: 0.85rem;
+      color: var(--dark-text);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .view-more::after {
+      content: "";
+      width: 30px;
+      height: 1px;
+      background: var(--dark-text);
+      transition: width 0.3s ease;
+    }
+
+    .character-card:hover .view-more::after {
+      width: 50px;
+      background: var(--point-pink);
+    }
+
+    /* 홈 버튼: 미니멀 아트 스타일 */
+    .home-link {
+      position: fixed;
+      top: 40px;
+      left: 40px;
+      z-index: 100;
+      color: var(--dark-text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+    }
+
+    .home-link::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--point-pink);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .home-link:hover::before {
+      background: var(--point-pink);
+      transform: scale(1.2);
+    }
+
+    /* 애니메이션 */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .character-hero h1 { font-size: 2.5rem; }
+      .character-grid { grid-template-columns: 1fr; }
+      .home-link { top: 20px; left: 20px; }
+    }
+  </style>
 </head>
-
 <body>
-  <a class="home-link" href="./index.html">← HOME</a>
-  
+
+  <a class="home-link" href="./index.html">BACK TO HOME</a>
+
   <main class="character-page">
-    <section class="character-hero">
-      <p class="page-label">CHARACTER ARCHIVE</p>
-      <h1>Characters</h1>
-      <p>
-        세계관 속 주요 인물들의 간단한 소개입니다.
-        이름을 누르면 상세 설정 페이지로 이동합니다.
+    <header class="character-hero">
+      <span class="page-label">COLLECTION OF BONDS</span>
+      <h1>Character Archive</h1>
+      <p class="hero-desc">
+        서로 다른 온도를 가진 인물들이 엮어가는 이야기.<br>
+        때로는 냉정하고, 때로는 눈부시게 활기찬 그들의 기록을 담았습니다.
       </p>
-    </section>
+    </header>
 
     <section class="character-grid">
 
-      <a class="character-card" href="./wiki/doflamingo.html">
+      <!-- 도플라밍고 (빌런) -->
+      <a class="character-card type-villain" href="./wiki/doflamingo.html">
         <div class="character-img">
           <img src="./img/doflamingo.png" alt="도플라밍고">
         </div>
-
         <div class="character-text">
-          <p class="character-role">PAST / OBSESSION</p>
-          <h2>도플라밍고</h2>
-          <p>
-            누아의 어린 시절을 보호한 과거의 보호자.
-            애정과 소유, 트라우마가 뒤섞인 관계의 시작점.
-          </p>
-          <span>상세 보기 →</span>
+          <span class="character-role">PAST / OBSESSION</span>
+          <h2>Donquixote Doflamingo</h2>
+          <p>어린 시절의 파편을 쥐고 있는 위험한 보호자. 애증과 소유욕이 뒤섞인 관계의 그림자입니다.</p>
+          <span class="view-more">Archive Read</span>
         </div>
       </a>
 
-      <a class="character-card main-character" href="./wiki/nua.html">
+      <!-- 누아 (메인/히어로) -->
+      <a class="character-card type-hero main-character" href="./wiki/nua.html">
         <div class="character-img">
           <img src="./img/nua.png" alt="아트리타스 누아">
         </div>
-
         <div class="character-text">
-          <p class="character-role">ORIGINAL CHARACTER</p>
-          <h2>아트리타스 누아</h2>
-          <p>
-            무해하게 웃지만, 감각과 애착으로 세상을 붙잡는 소녀.
-            자유로움을 사랑하면서도 버려짐에 대한 두려움을 품고 있다.
-          </p>
-          <span>상세 보기 →</span>
+          <span class="character-role">ORIGINAL CHARACTER</span>
+          <h2>Artoritas Nua</h2>
+          <p>따스한 미소로 세상을 마주하는 소녀. 자유를 갈망하면서도 깊은 애착을 가슴에 품고 살아갑니다.</p>
+          <span class="view-more">Archive Read</span>
         </div>
       </a>
 
-      <a class="character-card" href="./wiki/crocodile.html">
+      <!-- 크로커다일 (빌런) -->
+      <a class="character-card type-villain" href="./wiki/crocodile.html">
         <div class="character-img">
           <img src="./img/crocodile.png" alt="크로커다일">
         </div>
-
         <div class="character-text">
-          <p class="character-role">SHELTER / DRYNESS</p>
-          <h2>크로커다일</h2>
-          <p>
-            냉철하고 건조한 현실주의자.
-            누아에게는 보호자이자, 가장 편히 머무를 수 있는 안식처.
-          </p>
-          <span>상세 보기 →</span>
+          <span class="character-role">SHELTER / DRYNESS</span>
+          <h2>Crocodile</h2>
+          <p>모래처럼 건조하고 냉혹한 현실주의자. 그러나 역설적으로 누아에게 가장 안전한 안식처가 되어줍니다.</p>
+          <span class="view-more">Archive Read</span>
         </div>
       </a>
 
-      <a class="character-card" href="./wiki/ace.html">
+      <!-- 에이스 (히어로) -->
+      <a class="character-card type-hero" href="./wiki/ace.html">
         <div class="character-img">
           <img src="./img/ace.png" alt="에이스">
         </div>
-
         <div class="character-text">
-          <p class="character-role">FREEDOM / TRUST</p>
-          <h2>에이스</h2>
-          <p>
-            통제도 소유도 없는 자유로운 신뢰 관계.
-            누아에게 동등하고 인간적인 애정을 알려주는 존재.
-          </p>
-          <span>상세 보기 →</span>
+          <span class="character-role">FREEDOM / TRUST</span>
+          <h2>Portgas D. Ace</h2>
+          <p>구속도 거짓도 없는 맑은 신뢰의 이름. 누아에게 진정한 인간적 유대와 자유를 일깨워줍니다.</p>
+          <span class="view-more">Archive Read</span>
         </div>
       </a>
 
     </section>
   </main>
+
 </body>
 </html>
