@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TIMELINE | NUA</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Serif+KR:wght@200;400;700&display=swap" rel="stylesheet">
@@ -12,9 +14,9 @@
     :root {
       --bg-color: #fffafc;
       --main-pink: #ffb3d9;
-      --heavy-rose: #8a5a68;
+      --heavy-rose: #8a5a68; /* 분위기를 잡는 핵심 컬러 */
       --soft-pink: #ffeef6;
-      --glass-white: rgba(255, 255, 255, 0.8);
+      --glass-white: rgba(255, 255, 255, 0.85);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,21 +26,22 @@
       background: var(--bg-color);
       font-family: 'Noto Serif KR', serif;
       color: #333;
+      overflow-x: hidden;
       line-height: 1.6;
     }
 
-    /* 배경 디자인 유지 */
+    /* 배경: 은은한 격자와 장미빛 그라데이션 */
     body::before {
       content: "";
       position: fixed; inset: 0;
       background-image: 
-        linear-gradient(rgba(255, 179, 217, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 179, 217, 0.08) 1px, transparent 1px);
-      background-size: 40px 40px;
+        linear-gradient(rgba(138, 90, 104, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(138, 90, 104, 0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
       z-index: -1;
     }
 
-    /* 꽃잎 효과 */
+    /* 꽃잎 애니메이션 */
     .petal {
       position: fixed; z-index: 0; width: 12px; height: 18px;
       border-radius: 50% 50% 50% 0; background: rgba(255, 179, 217, 0.3);
@@ -46,109 +49,144 @@
     }
     @keyframes fall {
       0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+      15% { opacity: 1; }
       100% { transform: translateY(110vh) rotate(240deg); opacity: 0; }
     }
 
+    /* HOME 버튼: 너의 요청대로 기능 유지 + 디자인 강화 */
     .home-button {
       position: fixed; top: 25px; left: 25px; z-index: 100;
-      text-decoration: none; color: var(--heavy-rose); font-size: 0.8rem;
-      letter-spacing: 0.1em; font-weight: bold;
+      text-decoration: none; color: var(--heavy-rose);
+      font-size: 0.85rem; letter-spacing: 0.2em; font-weight: 700;
+      background: var(--glass-white); padding: 10px 20px;
+      border-radius: 50px; border: 1px solid var(--soft-pink);
+      box-shadow: 0 4px 15px rgba(138, 90, 104, 0.1);
+      transition: 0.3s;
     }
+    .home-button:hover { background: var(--heavy-rose); color: #fff; transform: translateY(-2px); }
 
-    main { max-width: 800px; margin: 0 auto; padding: 100px 24px; }
+    main { max-width: 900px; margin: 0 auto; padding: 100px 24px; }
 
-    .page-hero { text-align: center; margin-bottom: 80px; }
-    .kicker { font-size: 0.7rem; letter-spacing: 0.4em; color: var(--point-pink); font-weight: 700; margin-bottom: 10px; display: block; }
-    h1 { font-size: 3rem; font-weight: 200; letter-spacing: 0.1em; color: #111; }
+    /* 헤더 섹션 */
+    .page-hero { text-align: center; margin-bottom: 100px; position: relative; }
+    .kicker { font-size: 0.75rem; letter-spacing: 0.5em; color: var(--heavy-rose); font-weight: 700; margin-bottom: 15px; display: block; }
+    h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 200; letter-spacing: 0.2em; color: #111; margin-bottom: 20px; }
+    .subtitle { font-size: 1rem; color: #7a5a68; font-family: 'Gowun Dodum', sans-serif; line-height: 1.8; }
 
-    /* 타임라인 구조: 왼쪽 정렬로 통일 (가독성 핵심) */
-    .timeline { position: relative; padding-left: 40px; }
+    /* 타임라인 메인: 가독성을 위해 한 줄 정렬 */
+    .timeline { position: relative; padding-left: 50px; }
     
+    /* 세로 라인 */
     .timeline::before {
       content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
-      background: linear-gradient(to bottom, var(--main-pink), var(--heavy-rose), var(--main-pink));
+      background: linear-gradient(to bottom, transparent, var(--main-pink), var(--heavy-rose), var(--main-pink), transparent);
     }
 
     .timeline-item {
-      position: relative; margin-bottom: 60px;
-      opacity: 0; transform: translateX(-20px); transition: 0.8s ease;
+      position: relative; margin-bottom: 80px;
+      opacity: 0; transform: translateX(-20px); transition: 1s ease;
     }
     .timeline-item.visible { opacity: 1; transform: translateX(0); }
 
-    /* 날짜/시기 표시: 선 바로 옆에 배치 */
+    /* 시기 표시 */
     .timeline-period {
       font-size: 0.9rem; font-weight: 700; color: var(--heavy-rose);
-      margin-bottom: 12px; display: block; letter-spacing: 0.1em;
+      letter-spacing: 0.1em; margin-bottom: 15px; display: block;
     }
 
-    /* 카드 디자인: 가독성 중심의 깔끔한 박스 */
+    /* 카드 디자인: 가독성 + 분위기 합치기 */
     .timeline-card {
-      background: var(--glass-white); backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 179, 217, 0.4);
-      border-radius: 20px; padding: 30px;
-      box-shadow: 0 10px 30px rgba(138, 90, 104, 0.05);
+      position: relative; background: var(--glass-white); backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 179, 217, 0.3);
+      border-radius: 0 40px 0 40px; padding: 40px;
+      box-shadow: 0 15px 40px rgba(138, 90, 104, 0.08);
+    }
+    .timeline-card::after {
+      content: "✦"; position: absolute; top: 20px; right: 25px;
+      color: var(--main-pink); opacity: 0.3; font-size: 1.5rem;
     }
 
     .timeline-card h2 {
-      font-size: 1.4rem; font-weight: 400; color: #111; margin-bottom: 15px;
+      font-size: 1.6rem; font-weight: 400; color: #222;
+      margin-bottom: 20px; border-bottom: 1px solid var(--soft-pink); padding-bottom: 15px;
     }
 
     .age {
       font-family: 'Gowun Dodum', sans-serif;
-      font-size: 0.8rem; color: var(--heavy-rose);
-      background: var(--soft-pink); padding: 5px 12px;
-      border-radius: 4px; display: inline-block; margin-bottom: 15px;
+      font-size: 0.85rem; color: var(--heavy-rose);
+      background: var(--soft-pink); padding: 8px 15px;
+      border-radius: 8px; display: inline-block; margin-bottom: 20px;
+      line-height: 1.6;
     }
 
     .timeline-card ul { list-style: none; }
     .timeline-card li {
-      position: relative; padding-left: 18px; margin-bottom: 8px;
-      font-size: 0.95rem; color: #444; line-height: 1.7;
+      position: relative; padding-left: 20px; margin-bottom: 10px;
+      font-size: 0.98rem; color: #444; line-height: 1.8; word-break: keep-all;
     }
     .timeline-card li::before {
-      content: "✦"; position: absolute; left: 0; color: var(--main-pink); font-size: 0.7rem; top: 2px;
+      content: "✧"; position: absolute; left: 0; color: var(--main-pink); font-weight: bold;
     }
 
-    .bridge-card { border: 1px dashed var(--heavy-rose); background: #fffafc; }
+    /* 특별 구간: 2년 공백기 */
+    .bridge-card {
+      border: 1px dashed var(--heavy-rose);
+      background: linear-gradient(135deg, #fff3f8, #ffffff);
+    }
+    .note {
+      margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--soft-pink);
+      font-style: italic; font-size: 0.9rem; color: var(--heavy-rose); opacity: 0.8;
+    }
 
-    /* 중앙 포인트 */
+    /* 포인트 도트 */
     .timeline-dot {
-      position: absolute; left: -45px; top: 5px; width: 9px; height: 9px;
-      background: var(--heavy-rose); border-radius: 50%;
-      box-shadow: 0 0 0 5px var(--bg-color), 0 0 0 6px var(--main-pink);
+      position: absolute; left: -56px; top: 5px; width: 12px; height: 12px;
+      background: #fff; border: 2px solid var(--heavy-rose);
+      border-radius: 50%; z-index: 5; box-shadow: 0 0 10px var(--main-pink);
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       .timeline { padding-left: 30px; }
-      .timeline-dot { left: -35px; }
-      h1 { font-size: 2.2rem; }
+      .timeline-dot { left: -36px; }
+      .timeline-card { padding: 30px 20px; }
+      h1 { font-size: 2.5rem; }
     }
   </style>
 </head>
+
 <body>
-  <a href="index.html" class="home-button">BACK</a>
-  <span class="petal" style="left:20%; animation-delay:1s;"></span>
-  <span class="petal" style="left:80%; animation-delay:3s;"></span>
+  <!-- 너의 모든 버튼과 요소를 살렸어! -->
+  <a href="index.html" class="home-button">HOME</a>
+
+  <span class="petal" style="left:10%; animation-delay:0s;"></span>
+  <span class="petal" style="left:40%; animation-delay:2s;"></span>
+  <span class="petal" style="left:70%; animation-delay:4s;"></span>
+  <span class="petal" style="left:90%; animation-delay:6s;"></span>
 
   <main>
     <header class="page-hero">
-      <h1>Timeline</h1>
-      <p style="color: #8a5a68; margin-top: 10px;">누아와 그들의 기록</p>
+      <span class="kicker">DREAM CHRONICLE</span>
+      <h1>TIMELINE</h1>
+      <p class="subtitle">
+        드림 시간순 사건 & 설정 정리<br>
+        시간대별 사건과 캐릭터 나이
+      </p>
     </header>
 
     <section class="timeline">
+
       <!-- 0~6세 -->
       <article class="timeline-item">
         <div class="timeline-dot"></div>
-        <span class="timeline-period">01. 0 ~ 6세</span>
+        <span class="timeline-period">0~6세</span>
         <div class="timeline-card">
           <h2>드레스로자의 온실</h2>
-          <div class="age">누아 0~6세 / 도플라밍고 22~28세 / 크로커다일 27~33세</div>
+          <p class="age">누아 0~6세 / 도플라밍고 22~28세 / 크로커다일 27~33세 / 에이스 3~9세 / 루피 0~6세</p>
           <ul>
             <li>누아는 드레스로자 본성 및 외곽 별채에서 도플라밍고에게 길러짐</li>
             <li>세상과 단절된 “온실 속 화초” 상태</li>
             <li>도플라밍고는 보호자이자 누아의 절대적인 애착 대상</li>
-            <li>이미 소유욕 기반의 통제를 시작함</li>
+            <li>도플라밍고는 이미 소유욕 기반의 통제를 시작함</li>
           </ul>
         </div>
       </article>
@@ -156,48 +194,459 @@
       <!-- 6~14세 -->
       <article class="timeline-item">
         <div class="timeline-dot"></div>
-        <span class="timeline-period">02. 6 ~ 14세</span>
+        <span class="timeline-period">6~14세</span>
         <div class="timeline-card">
           <h2>외곽 별채의 성장기</h2>
-          <div class="age">누아 6~14세 / 도플라밍고 28~36세 / 크로커다일 33~41세</div>
+          <p class="age">누아 6~14세 / 도플라밍고 28~36세 / 크로커다일 33~41세 / 에이스 9~17세 / 루피 6~14세</p>
           <ul>
-            <li>누아는 드레스로자 외곽에서 거주하며 패밀리와 접촉</li>
+            <li>누아는 드레스로자 외곽에서 거주</li>
+            <li>가끔 본성에 출입하며 돈키호테 패밀리와 접촉함</li>
             <li>도플라밍고는 누아의 자유에 불만을 가짐</li>
-            <li>트라우마를 심어 재구속하려는 계획이 자리 잡음</li>
+            <li>언젠가 트라우마를 심어 재구속하려는 계획이 자리 잡기 시작함</li>
+            <li>누아는 세상 경험 없이 순수하고 깨끗한 상태를 유지함</li>
           </ul>
         </div>
       </article>
 
-      <!-- 2년 공백기 (강조) -->
+      <!-- 14~15세 -->
       <article class="timeline-item">
         <div class="timeline-dot"></div>
-        <span class="timeline-period">SPECIAL. 2년 공백기</span>
-        <div class="timeline-card bridge-card">
-          <h2>흔들린 뒤의 재구성</h2>
-          <div class="age">정상전쟁 이후 ~ 2년</div>
+        <span class="timeline-period">14~15세</span>
+        <div class="timeline-card">
+          <h2>계획적 버림과 표류</h2>
+          <p class="age">누아 14~15세 / 도플라밍고 36~37세 / 크로커다일 41~42세 / 에이스 17~18세 / 루피 14~15세</p>
           <ul>
-            <li>도플라밍고의 회유와 집착이 본격화되는 구간</li>
-            <li>전쟁 이후 흔들린 누아의 감정 상태를 정리</li>
-            <li>크로커다일과의 관계가 깊어지는 시기</li>
+            <li>도플라밍고는 누아와 함께 여행을 떠난 뒤 계획적으로 버림</li>
+            <li>누아는 버려졌다는 충격으로 멘탈이 붕괴된 채 섬에 표류함</li>
+            <li>이후 소규모 섬을 경유함</li>
+            <li>해류와 상선의 도움으로 알라바스타 근처에 도착함</li>
+            <li>크로커다일과 첫 조우하고, 교화를 명목으로 가정부로 들어가 보호받기 시작함</li>
+            <li>도플라밍고는 초반에 방심했고, 추적에 실패함</li>
           </ul>
-          <p style="margin-top:15px; font-size:0.85rem; color:#8a5a68; font-style:italic;">
-            "이 2년의 공백은 오다가 베풀어준 비어있는 도화지."
-          </p>
         </div>
       </article>
 
-      <!-- 나머지 항목들도 같은 방식으로 추가... -->
+      <!-- 15~16세 -->
+      <article class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="timeline-period">15~16세</span>
+        <div class="timeline-card">
+          <h2>크로커다일과의 동거 1년차</h2>
+          <p class="age">누아 15~16세 / 도플라밍고 37~38세 / 크로커다일 42~43세 / 에이스 18~19세 / 루피 15~16세</p>
+          <ul>
+            <li>누아는 크로커다일에게 강하게 붙어 있는 껌딱지 상태가 됨</li>
+            <li>크로커다일과의 관계를 통해 치유 관계가 확립됨</li>
+            <li>누아의 정신은 조금씩 회복될 기미를 보임</li>
+            <li>알라바스타 근처에서 에이스와 첫 만남을 가짐</li>
+            <li>짧은 항해와 사소한 모험을 통해 에이스와 친구 관계 형성</li>
+            <li>이 시기부터 삼각 구도의 복선이 준비됨</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 17세 1부 -->
+      <article class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="timeline-period">17세<br>(원작 1부 시점)</span>
+        <div class="timeline-card">
+          <h2>알라바스타 사건 이후</h2>
+          <p class="age">누아 17세 / 도플라밍고 39세 / 크로커다일 44세 / 에이스 20세 / 루피 17세</p>
+          <ul>
+            <li>알라바스타 사건에서 크로커다일이 루피에게 패배</li>
+            <li>드림 설정: 부하와 누아의 개입으로 탈출 및 도주 처리</li>
+            <li>크로커다일 칠무해 자격은 박탈되었으나 누아와의 생활 지속</li>
+            <li>도플라밍고는 아직 누아의 위치를 모름 (사망 추정 중)</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 17세 정상전쟁 -->
+      <article class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="timeline-period">17세<br>(정상전쟁)</span>
+        <div class="timeline-card">
+          <h2>마린포드 참전</h2>
+          <p class="age">누아 17세 / 도플라밍고 39세 / 크로커다일 44세 / 에이스 20세 / 루피 17세</p>
+          <ul>
+            <li>누아는 에이스를 구하기 위해 정상전쟁에 참전함</li>
+            <li>크로커다일은 보호 목적과 개인적 의도로 전장에 개입</li>
+            <li>도플라밍고는 전쟁 중 누아를 발견하고 심리전 시작</li>
+            <li>이 시점 이후 도플라밍고와의 본격적인 재회 및 회유 시작</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 2년 공백기 -->
+      <article class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="timeline-period">2년 공백기</span>
+        <div class="timeline-card bridge-card">
+          <h2>흔들린 뒤의 재구성</h2>
+          <p class="age">정상전쟁 이후 ~ 2년</p>
+          <ul>
+            <li>도플라밍고의 회유, 집착, 심리전이 본격화되는 구간</li>
+            <li>전쟁 이후 흔들린 누아의 감정과 상태를 정리</li>
+            <li>크로커다일과의 관계가 보호와 불안 사이에서 깊어짐</li>
+          </ul>
+          <p class="note">"이 2년의 공백은 오다가 베풀어준 비어있는 도화지."</p>
+        </div>
+      </article>
+
+      <!-- 19세 2부 -->
+      <article class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="timeline-period">19세<br>(원작 2부 시점)</span>
+        <div class="timeline-card">
+          <h2>관계 안정기와 후반 구도</h2>
+          <p class="age">누아 19세 / 도플라밍고 41세 / 크로커다일 46세 / 에이스 22세 / 루피 19세</p>
+          <ul>
+            <li>정상전쟁 이후 각자 변화함</li>
+            <li>도플라밍고는 루피에게 패배 후 수감 상태가 됨</li>
+            <li>누아와 크로커다일의 관계는 안정기에 진입</li>
+            <li>삼각관계의 후반부 서사 진행</li>
+          </ul>
+        </div>
+      </article>
 
     </section>
   </main>
 
   <script>
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.timeline-item').forEach(item => observer.observe(item));
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = document.querySelectorAll('.timeline-item');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, { threshold: 0.1 });
+      items.forEach(item => observer.observe(item));
+    });
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIMELINE | NUA</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Serif+KR:wght@200;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #fffafc;
+      --main-pink: #ffb3d9;
+      --heavy-rose: #8a5a68; /* 분위기를 잡는 핵심 컬러 */
+      --soft-pink: #ffeef6;
+      --glass-white: rgba(255, 255, 255, 0.85);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-color);
+      font-family: 'Noto Serif KR', serif;
+      color: #333;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* 배경: 은은한 격자와 장미빛 그라데이션 */
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      background-image: 
+        linear-gradient(rgba(138, 90, 104, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(138, 90, 104, 0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: -1;
+    }
+
+    /* 꽃잎 애니메이션 */
+    .petal {
+      position: fixed; z-index: 0; width: 12px; height: 18px;
+      border-radius: 50% 50% 50% 0; background: rgba(255, 179, 217, 0.3);
+      pointer-events: none; animation: fall 10s linear infinite;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+      15% { opacity: 1; }
+      100% { transform: translateY(110vh) rotate(240deg); opacity: 0; }
+    }
+
+    /* HOME 버튼: 너의 요청대로 기능 유지 + 디자인 강화 */
+    .home-button {
+      position: fixed; top: 25px; left: 25px; z-index: 100;
+      text-decoration: none; color: var(--heavy-rose);
+      font-size: 0.85rem; letter-spacing: 0.2em; font-weight: 700;
+      background: var(--glass-white); padding: 10px 20px;
+      border-radius: 50px; border: 1px solid var(--soft-pink);
+      box-shadow: 0 4px 15px rgba(138, 90, 104, 0.1);
+      transition: 0.3s;
+    }
+    .home-button:hover { background: var(--heavy-rose); color: #fff; transform: translateY(-2px); }
+
+    main { max-width: 900px; margin: 0 auto; padding: 100px 24px; }
+
+    /* 헤더 섹션 */
+    .page-hero { text-align: center; margin-bottom: 100px; position: relative; }
+    .kicker { font-size: 0.75rem; letter-spacing: 0.5em; color: var(--heavy-rose); font-weight: 700; margin-bottom: 15px; display: block; }
+    h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 200; letter-spacing: 0.2em; color: #111; margin-bottom: 20px; }
+    .subtitle { font-size: 1rem; color: #7a5a68; font-family: 'Gowun Dodum', sans-serif; line-height: 1.8; }
+
+    /* 타임라인 메인: 가독성을 위해 한 줄 정렬 */
+    .timeline { position: relative; padding-left: 50px; }
+    
+    /* 세로 라인 */
+    .timeline::before {
+      content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--main-pink), var(--heavy-rose), var(--main-pink), transparent);
+    }
+
+    .timeline-item {
+      position: relative; margin-bottom: 80px;
+      opacity: 0; transform: translateX(-20px); transition: 1s ease;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateX(0); }
+
+    /* 시기 표시 */
+    .timeline-period {
+      font-size: 0.9rem; font-weight: 700; color: var(--heavy-rose);
+      letter-spacing: 0.1em; margin-bottom: 15px; display: block;
+    }
+
+    /* 카드 디자인: 가독성 + 분위기 합치기 */
+    .timeline-card {
+      position: relative; background: var(--glass-white); backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 179, 217, 0.3);
+      border-radius: 0 40px 0 40px; padding: 40px;
+      box-shadow: 0 15px 40px rgba(138, 90, 104, 0.08);
+    }
+    .timeline-card::after {
+      content: "✦"; position: absolute; top: 20px; right: 25px;
+      color: var(--main-pink); opacity: 0.3; font-size: 1.5rem;
+    }
+
+    .timeline-card h2 {
+      font-size: 1.6rem; font-weight: 400; color: #222;
+      margin-bottom: 20px; border-bottom: 1px solid var(--soft-pink); padding-bottom: 15px;
+    }
+
+    .age {
+      font-family: 'Gowun Dodum', sans-serif;
+      font-size: 0.85rem; color: var(--heavy-rose);
+      background: var(--soft-pink); padding: 8px 15px;
+      border-radius: 8px; display: inline-block; margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .timeline-card ul { list-style: none; }
+    .timeline-card li {
+      position: relative; padding-left: 20px; margin-bottom: 10px;
+      font-size: 0.98rem; color: #444; line-height: 1.8; word-break: keep-all;
+    }
+    .timeline-card li::before {
+      content: "✧"; position: absolute; left: 0; color: var(--main-pink); font-weight: bold;
+    }
+
+    /* 특별 구간: 2년 공백기 */
+    .bridge-card {
+      border: 1px dashed var(--heavy-rose);
+      background: linear-gradient(135deg, #fff3f8, #ffffff);
+    }
+    .note {
+      margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--soft-pink);
+      font-style: italic; font-size: 0.9rem; color: var(--heavy-rose); opacity: 0.8;
+    }
+
+    /* 포인트 도트 */
+    .timeline-dot {
+      position: absolute; left: -56px; top: 5px; width: 12px; height: 12px;
+      background: #fff; border: 2px solid var(--heavy-rose);
+      border-radius: 50%; z-index: 5; box-shadow: 0 0 10px var(--main-pink);
+    }
+
+    @media (max-width: 768px) {
+      .timeline { padding-left: 30px; }
+      .timeline-dot { left: -36px; }
+      .timeline-card { padding: 30px 20px; }
+      h1 { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 너의 모든 버튼과 요소를 살렸어! -->
+  <a href="index.html" class="home-button">HOME</a>
+
+  <span class="petal" style="left:10%; animation-delay:0s;"></span>
+  <span class="petal" style="left:40%; animation-delay:2s;"></span>
+  <span class="petal" style="left:70%; animation-delay:4s;"></span>
+  <span class="petal" style="left:90%; animation-delay:6s;"></span>
+
+  <main>
+    <header class="page-hero">
+      <span class="kicker">DREAM CHRONICLE</span>
+      <h1>TIMELINE</h1>
+      <p class="subtitle">
+        드림 시간순 사건 & 설정 정리<br>
+        시간대별 사건과 캐릭터 나이
+      </p>
+    </header>
+
+    <section class="timeline">
+
+      <!-- 0~6세 -->
+      <article class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="timeline-period">0~6세</span>
+        <div class="timeline-card">
+          <h2>드레스로자의 온실</h2>
+          <p class="age">누아 0~6세 / 도플라밍고 22~28세 / 크로커다일 27~33세 / 에이스 3~9세 / 루피 0~6세</p>
+          <ul>
+            <li>누아는 드레스로자 본성 및 외곽 별채에서 도플라밍고에게 길러짐</li>
+            <li>세상과 단절된 “온실 속 화초” 상태</li>
+            <li>도플라밍고는 보호자이자 누아의 절대적인 애착 대상</li>
+            <li>도플라밍고는 이미 소유욕 기반의 통제를 시작함</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 6~14세 -->
+      <article class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="timeline-period">6~14세</span>
+        <div class="timeline-card">
+          <h2>외곽 별채의 성장기</h2>
+          <p class="age">누아 6~14세 / 도플라밍고 28~36세 / 크로커다일 33~41세 / 에이스 9~17세 / 루피 6~14세</p>
+          <ul>
+            <li>누아는 드레스로자 외곽에서 거주</li>
+            <li>가끔 본성에 출입하며 돈키호테 패밀리와 접촉함</li>
+            <li>도플라밍고는 누아의 자유에 불만을 가짐</li>
+            <li>언젠가 트라우마를 심어 재구속하려는 계획이 자리 잡기 시작함</li>
+            <li>누아는 세상 경험 없이 순수하고 깨끗한 상태를 유지함</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 14~15세 -->
+      <article class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="timeline-period">14~15세</span>
+        <div class="timeline-card">
+          <h2>계획적 버림과 표류</h2>
+          <p class="age">누아 14~15세 / 도플라밍고 36~37세 / 크로커다일 41~42세 / 에이스 17~18세 / 루피 14~15세</p>
+          <ul>
+            <li>도플라밍고는 누아와 함께 여행을 떠난 뒤 계획적으로 버림</li>
+            <li>누아는 버려졌다는 충격으로 멘탈이 붕괴된 채 섬에 표류함</li>
+            <li>이후 소규모 섬을 경유함</li>
+            <li>해류와 상선의 도움으로 알라바스타 근처에 도착함</li>
+            <li>크로커다일과 첫 조우하고, 교화를 명목으로 가정부로 들어가 보호받기 시작함</li>
+            <li>도플라밍고는 초반에 방심했고, 추적에 실패함</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 15~16세 -->
+      <article class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="timeline-period">15~16세</span>
+        <div class="timeline-card">
+          <h2>크로커다일과의 동거 1년차</h2>
+          <p class="age">누아 15~16세 / 도플라밍고 37~38세 / 크로커다일 42~43세 / 에이스 18~19세 / 루피 15~16세</p>
+          <ul>
+            <li>누아는 크로커다일에게 강하게 붙어 있는 껌딱지 상태가 됨</li>
+            <li>크로커다일과의 관계를 통해 치유 관계가 확립됨</li>
+            <li>누아의 정신은 조금씩 회복될 기미를 보임</li>
+            <li>알라바스타 근처에서 에이스와 첫 만남을 가짐</li>
+            <li>짧은 항해와 사소한 모험을 통해 에이스와 친구 관계 형성</li>
+            <li>이 시기부터 삼각 구도의 복선이 준비됨</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 17세 1부 -->
+      <article class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="timeline-period">17세<br>(원작 1부 시점)</span>
+        <div class="timeline-card">
+          <h2>알라바스타 사건 이후</h2>
+          <p class="age">누아 17세 / 도플라밍고 39세 / 크로커다일 44세 / 에이스 20세 / 루피 17세</p>
+          <ul>
+            <li>알라바스타 사건에서 크로커다일이 루피에게 패배</li>
+            <li>드림 설정: 부하와 누아의 개입으로 탈출 및 도주 처리</li>
+            <li>크로커다일 칠무해 자격은 박탈되었으나 누아와의 생활 지속</li>
+            <li>도플라밍고는 아직 누아의 위치를 모름 (사망 추정 중)</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 17세 정상전쟁 -->
+      <article class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="timeline-period">17세<br>(정상전쟁)</span>
+        <div class="timeline-card">
+          <h2>마린포드 참전</h2>
+          <p class="age">누아 17세 / 도플라밍고 39세 / 크로커다일 44세 / 에이스 20세 / 루피 17세</p>
+          <ul>
+            <li>누아는 에이스를 구하기 위해 정상전쟁에 참전함</li>
+            <li>크로커다일은 보호 목적과 개인적 의도로 전장에 개입</li>
+            <li>도플라밍고는 전쟁 중 누아를 발견하고 심리전 시작</li>
+            <li>이 시점 이후 도플라밍고와의 본격적인 재회 및 회유 시작</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 2년 공백기 -->
+      <article class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="timeline-period">2년 공백기</span>
+        <div class="timeline-card bridge-card">
+          <h2>흔들린 뒤의 재구성</h2>
+          <p class="age">정상전쟁 이후 ~ 2년</p>
+          <ul>
+            <li>도플라밍고의 회유, 집착, 심리전이 본격화되는 구간</li>
+            <li>전쟁 이후 흔들린 누아의 감정과 상태를 정리</li>
+            <li>크로커다일과의 관계가 보호와 불안 사이에서 깊어짐</li>
+          </ul>
+          <p class="note">"이 2년의 공백은 오다가 베풀어준 비어있는 도화지."</p>
+        </div>
+      </article>
+
+      <!-- 19세 2부 -->
+      <article class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="timeline-period">19세<br>(원작 2부 시점)</span>
+        <div class="timeline-card">
+          <h2>관계 안정기와 후반 구도</h2>
+          <p class="age">누아 19세 / 도플라밍고 41세 / 크로커다일 46세 / 에이스 22세 / 루피 19세</p>
+          <ul>
+            <li>정상전쟁 이후 각자 변화함</li>
+            <li>도플라밍고는 루피에게 패배 후 수감 상태가 됨</li>
+            <li>누아와 크로커다일의 관계는 안정기에 진입</li>
+            <li>삼각관계의 후반부 서사 진행</li>
+          </ul>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = document.querySelectorAll('.timeline-item');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, { threshold: 0.1 });
+      items.forEach(item => observer.observe(item));
+    });
   </script>
 </body>
 </html>
